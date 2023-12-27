@@ -6109,7 +6109,6 @@ FamilyTree._defaultConfig = function (e) {
         }));
         else {
             s = JSON.stringify(s);
-
             var result = {};
             const root = n[0];
             var z = JSON.parse(s);
@@ -6144,7 +6143,7 @@ FamilyTree._defaultConfig = function (e) {
                             }
                     }
             FamilyTree.remote._proceed(e, d, r, i);
-            //for debugging console.log("result" + JSON.stringify(d));
+            // for debugging console.log("result" + JSON.stringify(d));
             // let t={
             //     "base": {
             //         "orientation": 3,
