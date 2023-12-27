@@ -6109,19 +6109,10 @@ FamilyTree._defaultConfig = function (e) {
         }));
         else {
             s = JSON.stringify(s);
-            // var d = FamilyTree.localStorage.getItem(s);
-            // d && (d = JSON.parse(d)), d && !d.limit ? FamilyTree.remote._proceed(e, d, r, i) : FamilyTree.remote._findRegion((function (t) {
-            //     FamilyTree._ajax(t, "post", s, "json", (function (t) {
-            //         t.error ? i(2) : (FamilyTree.remote._proceed(e, t, r, i), FamilyTree.localStorage.setItem(s, JSON.stringify(t)),console.log("s"+s) )
-            //     }))
-            // })) 
-            // console.log("d"+JSON.stringify(d));
-
 
             var result = {};
             const root = n[0];
             var z = JSON.parse(s);
-            // console.log(s);
             let totalnodes = z.n.length;
             // let nodePointer = FamilyTree.remote.findnodePointer(root, z);
             d = FamilyTree.remote.findchildsposition(totalnodes, r, root, z, 0, 0,
@@ -6189,22 +6180,7 @@ FamilyTree._defaultConfig = function (e) {
             for (var a = 0; a < e.length; a++) FamilyTree.remote._fromResDTO(e[a], t, 0, e, i);
             r()
         }
-        // }, FamilyTree.remote._findRegion = function (e) {
-        //     var t = FamilyTree.localStorage.getItem("funcUrl");
-        //     if (t) e(t);
-        //     else {
-        //         for (var i = ["au-e", "au-se", "brs", "ca", "ca-e", "easia", "eus-2", "eus", "fr", "ind", "jp-e", "jp-w", "kr", "n-eu", "se-asia", "s-ind", "uk-s", "uk-w", "us", "us-n-c", "us-s-c", "w-c-us", "w-eu", "w-ind", "w-us-2", "wus"], r = [], a = 0; a < i.length; a++) r.push(new XMLHttpRequest);
-        //         for (a = 0; a < i.length; a++) ! function () {
-        //             var t = "https://" + i[a] + "-balkangraph.azurewebsites.net/api/OrgChartJS",
-        //                 n = r[a];
-        //             n.onreadystatechange = function () {
-        //                 if (4 == this.readyState && 200 == this.status) {
-        //                     FamilyTree.localStorage.setItem("funcUrl", t), e(t);
-        //                     for (var i = 0; i < r.length; i++) r[i].abort()
-        //                 }
-        //             }, n.open("GET", t, !0), n.send()
-        //         }()
-        //     }
+
     },
     FamilyTree.remote.findtotalchildren = function (node, r, d) {
         if (r[node] == undefined)
@@ -6245,8 +6221,8 @@ FamilyTree._defaultConfig = function (e) {
         let totalesposas = 0;
         if (rrr[node] != undefined) {
             if (rrr[node].pids != undefined) {
-                //la lista de esposas esta en rrr[node].pids
-                //el total deberia ser rrr[node].pids.length
+                // la lista de esposas esta en rrr[node].pids
+                // el total deberia ser rrr[node].pids.length
                 // pero si alguna esposa no tiene datos, entonces no aparece en rrr[node].c
                 // por ello el total de esposas son las que estan en pids y tambien en c
                 for (let n = 0; n < rrr[node].pids.length; n++) {
@@ -6269,24 +6245,6 @@ FamilyTree._defaultConfig = function (e) {
             }
         }
         return totalnodes; //stands for not found
-    },
-    FamilyTree.remote.ajusta_postion_padres = function (key, d, offsetx, offsety, result) {
-        let parentslist = d.n ? d.n.filter(item => item.p[0] === parseInt(key)) : [];
-        if (parentslist[0]) {
-            let father = parentslist[0].p[2];
-            let mother = parentslist[0].p[1];
-            // if (father != null && result[father]  ) {
-            //     result_copy[father].pos[0] = offsetx + result[father].p[0];
-            //     result_copy[father].pos[1] = offsety + result[father].p[1]; 
-            //     FamilyTree.remote.ajusta_postion_padres(father, offsetx, offsety, result);
-            // }
-            // if (mother != null && result[mother]  ) {
-            //     result_copy[mother].pos[0] = offsetx + result[mother].p[0];
-            //     result_copy[mother].pos[1] = offsety + result[mother].p[1]; 
-            //     FamilyTree.remote.ajusta_postion_padres(mother, offsetx, offsety, result);
-            // }
-        }
-        return true
     },
     //this function corrects the position of children when changing to a new tree
     FamilyTree.remote.actualizaposchildren = function (sibling, offsetx, offsety, d, rrr) {
@@ -6318,7 +6276,6 @@ FamilyTree._defaultConfig = function (e) {
             } else {
                 //los hijos del hermano sibling:
                 const siblingKid = d.n[siblingkeypointer].c[j];
-                //const siblingcouplePointer = FamilyTree.remote.findnodePointer(d.n[siblingkeypointer].c[j], d);
                 if (!result_copy[siblingKid]) {
                     result_copy[siblingKid] = {};
                 }
@@ -6327,14 +6284,8 @@ FamilyTree._defaultConfig = function (e) {
                     result_copy[siblingKid].pos[1] += offsety;
                     result_copy[siblingKid].updated = true;
                 }
-                // const siblingKidPointer = FamilyTree.remote.findnodePointer(siblingKid, d);
-                // const siblingKidtotalesposas = FamilyTree.remote.getTotalesposas(siblingKid, siblingKidPointer, d, rrr);
-                // let sibling = d.n[nodePointer].c[j];
-                // for (k=0;)
                 FamilyTree.remote.actualizaposchildren(siblingKid, offsetx, offsety, d, rrr);
             }
-            // let totalchidren = FamilyTree.remote.findtotalchildren(d.n[nodePointer].c[j - 1], rrr, d);
-
         }
     },
     FamilyTree.remote.findchildsposition = function (
@@ -6377,8 +6328,7 @@ FamilyTree._defaultConfig = function (e) {
                         let slotsforwives = 0;
                         let brothernodePointer = FamilyTree.remote.findnodePointer(d.n[nodePointer].c[j - 1], d);
                         let childtotalesposasBrother = FamilyTree.remote.getTotalesposas(d.n[nodePointer].c[j - 1], brothernodePointer, d, rrr);
-                        // let hasanywife =FamilyTree.remote.findcoupleposition(
-                        // d.n[nodePointer].c[j-1],d.n[childnodePointer].c[0], rrr);   
+
                         slotsforwives = (childtotalesposasBrother > 1) ? 2 : 1;
                         //si este hijo tambien tiene mas de 1 esposa, entonces aumentamos tambien.
                         let childtotalesposas = FamilyTree.remote.getTotalesposas(d.n[nodePointer].c[j], childnodePointer, d, rrr);
@@ -6425,13 +6375,8 @@ FamilyTree._defaultConfig = function (e) {
                         }
                     }
                 } else {
-                    // if(result[d.n[nodePointer].c[j]].p!= undefined){
-                    //     if(maxy < result[d.n[nodePointer].c[j]].p[1]+ heightbox + siblingSeparation)
-                    //         maxy=result[d.n[nodePointer].c[j]].p[1]+ heightbox + siblingSeparation;
-                    // }
                     haswife = true;
                 }
-                //  }
             }
             //miramos si alguno de los hermanos tiene offset
             //borramos el campo offset-x-y y se lo aplicamos a todos los hermanos y parejas.
@@ -6462,12 +6407,10 @@ FamilyTree._defaultConfig = function (e) {
                     if (j != found) {
                         let sibling = d.n[nodePointer].c[j];
                         FamilyTree.remote.actualizaposchildren(sibling, result_copy[foundnode].offsetx, result_copy[foundnode].offsety, d, rrr);
-
-
                     }
                 }
             }
-        }//selina
+        }
         //ahora calculamos nuestra propia posicion:
         let mstring = {};
         const iamiswife = FamilyTree.remote.findcoupleposition(node, parent, rrr);
@@ -6506,7 +6449,6 @@ FamilyTree._defaultConfig = function (e) {
         if (d.n[nodePointer].hasOwnProperty("c")) {
             const totalesposas = FamilyTree.remote.getTotalesposas(node, nodePointer, d, rrr);
             for (let j = 0; j < d.n[nodePointer].c.length; j++) {
-                // let childnodePointer = FamilyTree.remote.findnodePointer(d.n[nodePointer].c[j], d); 
                 var iswife = FamilyTree.remote.findcoupleposition(d.n[nodePointer].c[j], node, rrr);
                 // 1-0=1
                 // 2-1=1 
@@ -6543,11 +6485,6 @@ FamilyTree._defaultConfig = function (e) {
             }
         }
         for (const key in result) {
-            // if (result[key].p && result_copy[key]?.offsetx) { 
-            //     result[key].p[0] += result_copy[key]?.offsetx;
-            //     result[key].p[1] += result_copy[key]?.offsety;
-            //     result_copy[key] = { ...(result_copy[key] ?? {}), pos: [...result[key].p] };
-            // } else 
             if (result[key].p && !result_copy[key]?.pos) {
                 if (result_copy[key]?.newoffsetx > 0) {
                     result[key].p[0] += result_copy[key].newoffsetx;
@@ -6560,15 +6497,11 @@ FamilyTree._defaultConfig = function (e) {
                 result_copy[key] = { ...(result_copy[key] ?? {}), pos: [...result[key].p] };
             } else if (result[key].p && result_copy[key]?.pos) {
                 //only if both parents are not calculated, offset used for brothers and sisters, couples and children
-
                 let parentslist = d.n ? d.n.filter(item => item.p[0] === parseInt(key)) : [];
                 if (result[key].p != result_copy[key].pos && !result_copy[parentslist[0].p[1]]?.pos) {
                     result_copy[key].offsetx = result_copy[key].pos[0] - result[key].p[0];
                     result_copy[key].offsety = result_copy[key].pos[1] - result[key].p[1];
                 }
-
-
-
                 //ahora los padres
                 const parentA = parentslist[0].p[1];
                 const temp = d.n ? d.n.filter(item => item.p[0] === parseInt(parentA)) : [];
@@ -6595,7 +6528,6 @@ FamilyTree._defaultConfig = function (e) {
                 result[key].p = result_copy[key].pos;
                 //hay que ajustar el offset en la posicion todos los antepasados
                 //los descendientes no tienen que cambiar.
-                // FamilyTree.remote.ajusta_postion_padres(key, d, offsetx, offsety, result);
             }
         }
         return result;
