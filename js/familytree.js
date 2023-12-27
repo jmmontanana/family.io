@@ -259,7 +259,12 @@ FamilyTree._defaultConfig = function (e) {
             }))
         } else console.error("Cannot load the family with size 0! If you are using the FamilyTree within tabs set FamilyTree.LAZY_LOADING to true! ")
 }, FamilyTree.prototype._setInitialSizeIfNotSet = function () {
-    this.element.style.overflow = "hidden", this.element.style.position = "relative", 0 == this.element.offsetHeight && (this.element.style.height = "100%", 0 == this.element.offsetHeight && (this.element.style.height = "700px")), 0 == this.element.offsetWidth && (this.element.style.width = "100%", 0 == this.element.offsetWidth && (this.element.style.width = "700px"))
+    this.element.style.overflow = "hidden",
+        this.element.style.position = "relative",
+        0 == this.element.offsetHeight && (this.element.style.height = "100%",
+            0 == this.element.offsetHeight && (this.element.style.height = "700px")),
+        0 == this.element.offsetWidth && (this.element.style.width = "100%",
+            0 == this.element.offsetWidth && (this.element.style.width = "700px"))
 }, FamilyTree.prototype.width = function () {
     return this.element.offsetWidth
 }, FamilyTree.prototype.height = function () {
@@ -4546,7 +4551,7 @@ FamilyTree._defaultConfig = function (e) {
                 left: 0,
                 bottom: 0,
                 width: e + "px",
-                "overflow-x": "scroll",
+                "overflow-x": "hidden",//"scroll"
                 height: "20px"
             }), this.element.appendChild(this.bar), this.bar.appendChild(this.innerBar), this.bar.addEventListener("scroll", (function () {
                 if (this.ignore) this.ignore = !1;
@@ -4626,7 +4631,7 @@ FamilyTree._defaultConfig = function (e) {
                 right: 0,
                 bottom: 0,
                 height: e + "px",
-                "overflow-y": "scroll",
+                "overflow-y": "hidden",//"scroll",
                 width: "20px"
             }), this.element.appendChild(this.bar), this.bar.appendChild(this.innerBar), this.bar.addEventListener("scroll", (function () {
                 if (this.ignore) this.ignore = !1;
