@@ -10,7 +10,7 @@
     <link rel="icon" href="img/logo.png" />
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <style type="text/css">
-      .orgchart .second-menu-icon {
+      .second-menu-icon {
         transition: opacity 0.5s;
         opacity: 0;
         right: -5px;
@@ -19,19 +19,19 @@
         position: absolute;
       }
 
-      .orgchart .second-menu-icon::before {
+      .second-menu-icon::before {
         background-color: rgba(68, 157, 68, 0.5);
       }
 
-      .orgchart .second-menu-icon:hover::before {
+      .second-menu-icon:hover::before {
         background-color: #449d44;
       }
 
-      .orgchart .node:hover .second-menu-icon {
+      .node:hover .second-menu-icon {
         opacity: 1;
       }
 
-      .orgchart .node .second-menu {
+      .node .second-menu {
         display: none;
         position: absolute;
         top: 0;
@@ -42,7 +42,7 @@
         z-index: 1;
       }
 
-      .orgchart .node .second-menu .avatar {
+      .node .second-menu .avatar {
         width: 60px;
         height: 60px;
         border-radius: 30px;
@@ -50,76 +50,59 @@
         margin: 5px;
       }
 
-      .orgchart {
-        background: #fff;
-      }
-
-      .orgchart td.left,
-      .orgchart td.right,
-      .orgchart td.top {
+      td.left,
+      td.right,
+      td.top {
         border-color: #aaa;
       }
 
-      .orgchart td > .down {
+      td > .down {
         background-color: #aaa;
       }
 
-      .orgchart .middle-level .title {
+      .middle-level .title {
         background-color: #006699;
       }
 
-      .orgchart .middle-level .content {
+      .middle-level .content {
         border-color: #006699;
       }
 
-      .orgchart .product-dept .title {
+      .product-dept .title {
         background-color: #009933;
       }
 
-      .orgchart .product-dept .content {
+      .product-dept .content {
         border-color: #009933;
       }
 
-      .orgchart .rd-dept .title {
+      .rd-dept .title {
         background-color: #993366;
       }
 
-      .orgchart .rd-dept .content {
+      .rd-dept .content {
         border-color: #993366;
       }
 
-      .orgchart .pipeline1 .title {
+      .pipeline1 .title {
         background-color: #996633;
       }
 
-      .orgchart .pipeline1 .content {
+      .pipeline1 .content {
         border-color: #996633;
       }
 
-      .orgchart .frontend1 .title {
+      .frontend1 .title {
         background-color: #cc0066;
       }
 
-      .orgchart .frontend1 .content {
+      .frontend1 .content {
         border-color: #cc0066;
       }
     </style>
 
     <script type="text/javascript" src="js/familytree.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="js/jquery.orgchart.js"></script> -->
-
-    <!-- <script type="text/javascript" async="" src="js/OrgChartJS2.js"></script>
- <script type="text/javascript" async="" src="js/OrgChartJS21.js"></script> -->
-    <!-- <script>
- window.dataLayer = window.dataLayer || [];
- function gtag() {
- dataLayer.push(arguments);
- }
- gtag('js', new Date());
- gtag('config', 'UA-127890191-1');
- </script> -->
-    <!-- <script src="js/orgchart.js"></script> -->
   </head>
 
   <body>
@@ -2961,10 +2944,34 @@
               photo: "img/JoséMtnezLlop.jpg",
             },
 
-            // {id:7117,pids:[7217],mid:7018,fid:6918,apellidos:"Martínez Fabra",name:"Miguel",gender:"male"},
-            // {id:7217,pids:[7117],mid:null,fid:null,apellidos:"Merino",name:"Amparo",gender:"female"},
+            {
+              id: 7117,
+              pids: [7217],
+              mid: 7018,
+              fid: 6918,
+              apellidos: "Martínez Fabra",
+              name: "Miguel",
+              gender: "male",
+            },
+            {
+              id: 7217,
+              pids: [7117],
+              mid: null,
+              fid: null,
+              apellidos: "Merino",
+              name: "Amparo",
+              gender: "female",
+            },
 
-            // {id:7617,pids:[null],mid:7418,fid:7518,apellidos:"1 Sancho Martínez",name:"Manuel",gender:"male"},
+            {
+              id: 7617,
+              pids: [null],
+              mid: 7418,
+              fid: 7518,
+              apellidos: "1 Sancho Martínez",
+              name: "Manuel",
+              gender: "male",
+            },
 
             {
               id: 7717,
@@ -3756,6 +3763,14 @@
               gender: "female",
             },
             {
+              id: 8028,
+              pids: [null],
+              mid: 8024,
+              fid: 8124,
+              apellidos: "... Urios",
+              gender: "male",
+            },
+            {
               id: 8124,
               pids: [8024],
               mid: null,
@@ -4207,8 +4222,14 @@
               name: "Rafael",
               gender: "male",
             },
-            // {id:10533,pids:[10433],mid:null,fid:null,apellidos:"no lo se",gender:"female"},
-
+            {
+              id: 10533,
+              pids: [10433],
+              mid: null,
+              fid: null,
+              apellidos: "no lo se",
+              gender: "female",
+            },
             {
               id: 10633,
               pids: [null],
@@ -5945,7 +5966,7 @@
               mid: 1733,
               fid: 1633,
               apellidos: "6 Aliaga Tomás",
-              name: "Vicente",
+              name: "Vicente Atanasio",
               gender: "male",
             },
             {
@@ -6240,7 +6261,6 @@
               apellidos: "Planchat Aliaga",
               name: "Asun",
               gender: "female",
-              photo: "img/Asun.jpg",
             },
             {
               id: 2635,
@@ -6476,7 +6496,7 @@
               name: "Alicia",
               gender: "female",
             },
-            // {id:10135,pids:[10235],mid:null,fid:null,apellidos:"novia",name:"novia",gender:"female"},
+
             {
               id: 10235,
               pids: [10135],
@@ -6487,6 +6507,28 @@
               gender: "male",
               birthDate: "1978",
               photo: "img/NachoBallesterAliaga.jpg",
+            },
+            {
+              id: 10135,
+              pids: [10235],
+              mid: null,
+              fid: null,
+              apellidos: "no lo se",
+              gender: "female",
+            },
+            {
+              id: 10239,
+              pids: [null],
+              mid: 10135,
+              fid: 10235,
+              apellidos: "1 Ballester ...",
+            },
+            {
+              id: 10241,
+              pids: [null],
+              mid: 10135,
+              fid: 10235,
+              apellidos: "2 Ballester ...",
             },
             {
               id: 11135,
@@ -6960,6 +7002,23 @@
               birthDate: "1978",
               photo: "img/JorgeAliagaAra.jpg",
             },
+            {
+              id: 8140,
+              pids: [null],
+              mid: null,
+              fid: 8136,
+              apellidos: "1 Aliaga ...",
+              gender: "male",
+            },
+            {
+              id: 8142,
+              pids: [null],
+              mid: null,
+              fid: 8136,
+              apellidos: "2 Aliaga ...",
+              gender: "male",
+            },
+
             {
               id: 8536,
               pids: [8636],
