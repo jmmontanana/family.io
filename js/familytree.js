@@ -6144,7 +6144,7 @@ FamilyTree._defaultConfig = function (e) {
                             }
                     }
             FamilyTree.remote._proceed(e, d, r, i);
-            console.log("result" + JSON.stringify(d));
+            //for debugging console.log("result" + JSON.stringify(d));
             // let t={
             //     "base": {
             //         "orientation": 3,
