@@ -364,7 +364,8 @@ FamilyTree._defaultConfig = function (e) {
         this._hideBeforeAnimationCompleted = !0
     }
 }, FamilyTree.prototype._showAfterAnimation = function () {
-    for (var e = this.element.getElementsByTagName("text"), t = 0; t < e.length; t++) e[t].style.display = "";
+    for (var e = this.element.getElementsByTagName("text"), t = 0; t < e.length; t++)
+        e[t].style.display = "";
     var i = this.element.getElementsByTagName("image");
     for (t = 0; t < i.length; t++) i[t].style.display = "";
     var r = this.element.querySelectorAll("[" + FamilyTree.attr.link_id + "]");
@@ -429,291 +430,294 @@ FamilyTree._defaultConfig = function (e) {
     })), i.rids) : []
 }, FamilyTree.prototype._nodeHasHiddenParent = function (e) {
     return !(e.parent || FamilyTree.isNEU(e.pid) || !this.getNode(e.pid)) || (!(!e.isPartner || FamilyTree.isNEU(e.mid) || !this.getNode(e.mid)) || (!(!e.isPartner || FamilyTree.isNEU(e.fid) || !this.getNode(e.fid)) || !!(e.isPartner && e.pids.length > 1)))
-}, FamilyTree.prototype._center = FamilyTree.prototype.center, FamilyTree.prototype.center = function (e, t, i) {
-    var r = this.getRecentRootsByNodeId(e);
-    Array.isArray(this.config.roots) || (roots = []), FamilyTree._changeRootOption(this.config.roots, r, this.manager.rootList), this._center(e, t, i)
-}, FamilyTree.prototype.onUpdateNode = function (e) {
-    return this.on("update", (function (t, i) {
-        return e.call(t, i)
-    }))
-}, FamilyTree.prototype.onNodeTreeMenuShow = function (e) {
-    return this.on("node-tree-menu-show", (function (t, i) {
-        return e.call(t, i)
-    }))
-}, FamilyTree.prototype.onRemoveNode = null, FamilyTree.prototype.onAddNode = null, FamilyTree.localStorage = {}, FamilyTree.localStorage.getItem = function (e) {
-    var t = localStorage.getItem("to_date");
-    if (t) {
-        if ((t = new Date(t)) < new Date) {
-            for (var i = 0, r = localStorage.length; i < r; ++i) {
-                var a = localStorage.key(i);
-                a && a.startsWith && a.startsWith('{"n"') && localStorage.removeItem(a)
+}, FamilyTree.prototype._center = FamilyTree.prototype.center,
+    FamilyTree.prototype.center = function (e, t, i) {
+        var r = this.getRecentRootsByNodeId(e);
+        Array.isArray(this.config.roots) || (roots = []), FamilyTree._changeRootOption(this.config.roots, r, this.manager.rootList), this._center(e, t, i)
+    }, FamilyTree.prototype.onUpdateNode = function (e) {
+        return this.on("update", (function (t, i) {
+            return e.call(t, i)
+        }))
+    }, FamilyTree.prototype.onNodeTreeMenuShow = function (e) {
+        return this.on("node-tree-menu-show", (function (t, i) {
+            return e.call(t, i)
+        }))
+    }, FamilyTree.prototype.onRemoveNode = null, FamilyTree.prototype.onAddNode = null,
+    FamilyTree.localStorage = {},
+    FamilyTree.localStorage.getItem = function (e) {
+        var t = localStorage.getItem("to_date");
+        if (t) {
+            if ((t = new Date(t)) < new Date) {
+                for (var i = 0, r = localStorage.length; i < r; ++i) {
+                    var a = localStorage.key(i);
+                    a && a.startsWith && a.startsWith('{"n"') && localStorage.removeItem(a)
+                }
+                localStorage.removeItem("to_date")
             }
-            localStorage.removeItem("to_date")
+        } else (t = new Date).setDate(t.getDate() + 5), t = t.toISOString(), localStorage.setItem("to_date", t);
+        return localStorage.getItem(e)
+    }, FamilyTree.localStorage.setItem = function (e, t) {
+        try {
+            localStorage.setItem(e, t)
+        } catch (e) {
+            e.code == e.QUOTA_EXCEEDED_ERR ? (console.warn("Local storage quota exceeded"), localStorage.clear()) : (console.error("Local storage error code:" + e.code), console.error(e))
         }
-    } else (t = new Date).setDate(t.getDate() + 5), t = t.toISOString(), localStorage.setItem("to_date", t);
-    return localStorage.getItem(e)
-}, FamilyTree.localStorage.setItem = function (e, t) {
-    try {
-        localStorage.setItem(e, t)
-    } catch (e) {
-        e.code == e.QUOTA_EXCEEDED_ERR ? (console.warn("Local storage quota exceeded"), localStorage.clear()) : (console.error("Local storage error code:" + e.code), console.error(e))
-    }
-}, FamilyTree.prototype.canUpdateLink = function (e, t) {
-    if (null == t || null == t) return !1;
-    if (null == e || null == e) return !1;
-    if (e == t) return !1;
-    var i = this.getNode(t),
-        r = this.getNode(e);
-    return !(i && r && (i.isPartner || i.hasPartners && r.isAssistant || i.hasAssistants && r.isPartner)) && !this.isChild(e, t)
-}, FamilyTree.prototype._canUpdateLink = FamilyTree.prototype.canUpdateLink, FamilyTree.prototype.updateNode = function (e, t, i) {
-    var r = this,
-        a = this.get(e.id);
-    if (!0 === i) return !1;
-    this.update(e);
-    var n = this.getNode(e.id),
-        l = n.pid;
-    null == l && (l = n.stpid), this._draw(!1, FamilyTree.action.update, {
-        id: l
-    }, (function () {
-        r.ripple(e.id), t && t(), FamilyTree.events.publish("updated", [r, a, e]), r.filterUI.update()
-    }))
-}, FamilyTree.prototype.update = function (e) {
-    for (var t = 0; t < this.config.nodes.length; t++)
-        if (this.config.nodes[t].id == e.id) {
-            this.config.nodes[t] = e;
-            break
-        } return this
-}, FamilyTree.prototype.removeNode = function (e, t, i) {
-    var r = this;
-    if (!this.canRemove(e)) return !1;
-    var a = this._getNewPidsAndStpidsForIds(e);
-    if (!0 === i) return !1;
-    return this.remove(e), this._draw(!1, FamilyTree.action.update, null, (function () {
-        r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("removed", [r, e, a]), r.filterUI.update()
-    })), !0
-}, FamilyTree.prototype.remove = function (e) {
-    var t = this.get(e);
-    if (t)
-        for (var i = this.config.nodes.length - 1; i >= 0; i--) this.config.nodes[i].pid != e && this.config.nodes[i].stpid != e || (this.config.nodes[i].pid = t.pid, this.config.nodes[i].stpid = t.stpid), this.config.nodes[i].id == e && this.config.nodes.splice(i, 1);
-    return this
-}, FamilyTree.prototype._getNewPidsAndStpidsForIds = function (e) {
-    var t = this.get(e),
-        i = {},
-        r = {};
-    if (t)
-        for (var a = this.config.nodes.length - 1; a >= 0; a--) this.config.nodes[a].pid == e ? i[this.config.nodes[a].id] = t.pid : this.config.nodes[a].stpid == e && (r[this.config.nodes[a].id] = t.stpid);
-    return {
-        newPidsForIds: i,
-        newStpidsForIds: r
-    }
-}, FamilyTree.prototype.addNode = function (e, t, i) {
-    var r = this;
-    if (!0 === i) return !1;
-    this.add(e), r._draw(!1, FamilyTree.action.insert, {
-        id: e.pid,
-        insertedNodeId: e.id
-    }, (function () {
-        r.ripple(e.id), t && t(), FamilyTree.events.publish("added", [r, e.id]), r.filterUI.update()
-    })), FamilyTree.events.publish("adding", [r, e.id])
-}, FamilyTree.prototype.add = function (e) {
-    return null == e.id && console.error("Call addNode without id"), this.config.nodes.push(e), this
-}, FamilyTree.prototype._get = function (e) {
-    for (var t = 0; t < this.config.nodes.length; t++)
-        if (this.config.nodes[t].id == e) return this.config.nodes[t];
-    return null
-}, FamilyTree.prototype.get = function (e) {
-    for (var t = 0; t < this.config.nodes.length; t++)
-        if (this.config.nodes[t].id == e) return JSON.parse(JSON.stringify(this.config.nodes[t]));
-    return null
-}, FamilyTree.prototype.canRemove = function (e) {
-    var t = this.getNode(e);
-    return !!t && (!t.hasPartners && !t.hasAssistants)
-}, FamilyTree.prototype.addChildNode = function (e, t, i) {
-    this.hideTreeMenu(!1);
-    var r = this;
-    if (!e || FamilyTree.isNEU(e.mid) && FamilyTree.isNEU(e.fid)) console.error("addSonNode invalid data");
-    else {
-        FamilyTree.isNEU(e.id) && (e.id = this.generateId());
-        var a = {
-            addNodesData: [e],
-            updateNodesData: [],
-            removeNodeId: null
-        };
-        if (!1 !== this._fireUpdate_addUpdateRemove(a, i)) {
-            var n = "";
-            FamilyTree.isNEU(a.addNodesData[0].pid) ? FamilyTree.isNEU(a.addNodesData[0].mid) ? FamilyTree.isNEU(a.addNodesData[0].fid) || (n = a.addNodesData[0].fid) : n = a.addNodesData[0].mid : n = a.addNodesData[0].pid, r._draw(!1, FamilyTree.action.insert, {
-                id: n,
-                insertedNodeId: a.addNodesData[0].id
-            }, (function () {
-                r.ripple(a.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, a]), r.filterUI.update()
-            })), FamilyTree.events.publish("updating", [r, a])
+    }, FamilyTree.prototype.canUpdateLink = function (e, t) {
+        if (null == t || null == t) return !1;
+        if (null == e || null == e) return !1;
+        if (e == t) return !1;
+        var i = this.getNode(t),
+            r = this.getNode(e);
+        return !(i && r && (i.isPartner || i.hasPartners && r.isAssistant || i.hasAssistants && r.isPartner)) && !this.isChild(e, t)
+    }, FamilyTree.prototype._canUpdateLink = FamilyTree.prototype.canUpdateLink, FamilyTree.prototype.updateNode = function (e, t, i) {
+        var r = this,
+            a = this.get(e.id);
+        if (!0 === i) return !1;
+        this.update(e);
+        var n = this.getNode(e.id),
+            l = n.pid;
+        null == l && (l = n.stpid), this._draw(!1, FamilyTree.action.update, {
+            id: l
+        }, (function () {
+            r.ripple(e.id), t && t(), FamilyTree.events.publish("updated", [r, a, e]), r.filterUI.update()
+        }))
+    }, FamilyTree.prototype.update = function (e) {
+        for (var t = 0; t < this.config.nodes.length; t++)
+            if (this.config.nodes[t].id == e.id) {
+                this.config.nodes[t] = e;
+                break
+            } return this
+    }, FamilyTree.prototype.removeNode = function (e, t, i) {
+        var r = this;
+        if (!this.canRemove(e)) return !1;
+        var a = this._getNewPidsAndStpidsForIds(e);
+        if (!0 === i) return !1;
+        return this.remove(e), this._draw(!1, FamilyTree.action.update, null, (function () {
+            r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("removed", [r, e, a]), r.filterUI.update()
+        })), !0
+    }, FamilyTree.prototype.remove = function (e) {
+        var t = this.get(e);
+        if (t)
+            for (var i = this.config.nodes.length - 1; i >= 0; i--) this.config.nodes[i].pid != e && this.config.nodes[i].stpid != e || (this.config.nodes[i].pid = t.pid, this.config.nodes[i].stpid = t.stpid), this.config.nodes[i].id == e && this.config.nodes.splice(i, 1);
+        return this
+    }, FamilyTree.prototype._getNewPidsAndStpidsForIds = function (e) {
+        // var t = this.get(e),
+        //     i = {},
+        //     r = {};
+        // if (t)
+        //     for (var a = this.config.nodes.length - 1; a >= 0; a--) this.config.nodes[a].pid == e ? i[this.config.nodes[a].id] = t.pid : this.config.nodes[a].stpid == e && (r[this.config.nodes[a].id] = t.stpid);
+        // return {
+        //     newPidsForIds: i,
+        //     newStpidsForIds: r
+        // }
+    }, FamilyTree.prototype.addNode = function (e, t, i) {
+        var r = this;
+        if (!0 === i) return !1;
+        this.add(e), r._draw(!1, FamilyTree.action.insert, {
+            id: e.pid,
+            insertedNodeId: e.id
+        }, (function () {
+            r.ripple(e.id), t && t(), FamilyTree.events.publish("added", [r, e.id]), r.filterUI.update()
+        })), FamilyTree.events.publish("adding", [r, e.id])
+    }, FamilyTree.prototype.add = function (e) {
+        return null == e.id && console.error("Call addNode without id"), this.config.nodes.push(e), this
+    }, FamilyTree.prototype._get = function (e) {
+        for (var t = 0; t < this.config.nodes.length; t++)
+            if (this.config.nodes[t].id == e) return this.config.nodes[t];
+        return null
+    }, FamilyTree.prototype.get = function (e) {
+        for (var t = 0; t < this.config.nodes.length; t++)
+            if (this.config.nodes[t].id == e) return JSON.parse(JSON.stringify(this.config.nodes[t]));
+        return null
+    }, FamilyTree.prototype.canRemove = function (e) {
+        var t = this.getNode(e);
+        return !!t && (!t.hasPartners && !t.hasAssistants)
+    }, FamilyTree.prototype.addChildNode = function (e, t, i) {
+        this.hideTreeMenu(!1);
+        var r = this;
+        if (!e || FamilyTree.isNEU(e.mid) && FamilyTree.isNEU(e.fid)) console.error("addSonNode invalid data");
+        else {
+            FamilyTree.isNEU(e.id) && (e.id = this.generateId());
+            var a = {
+                addNodesData: [e],
+                updateNodesData: [],
+                removeNodeId: null
+            };
+            if (!1 !== this._fireUpdate_addUpdateRemove(a, i)) {
+                var n = "";
+                FamilyTree.isNEU(a.addNodesData[0].pid) ? FamilyTree.isNEU(a.addNodesData[0].mid) ? FamilyTree.isNEU(a.addNodesData[0].fid) || (n = a.addNodesData[0].fid) : n = a.addNodesData[0].mid : n = a.addNodesData[0].pid, r._draw(!1, FamilyTree.action.insert, {
+                    id: n,
+                    insertedNodeId: a.addNodesData[0].id
+                }, (function () {
+                    r.ripple(a.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, a]), r.filterUI.update()
+                })), FamilyTree.events.publish("updating", [r, a])
+            }
         }
-    }
-}, FamilyTree.prototype.addChildAndPartnerNodes = function (e, t, i, r, a) {
-    this.hideTreeMenu(!1);
-    var n = this;
-    if (!t || FamilyTree.isNEU(t.mid) && FamilyTree.isNEU(t.fid)) console.error("addChildAndPartnerNodes invalid childData");
-    else if (i) {
-        FamilyTree.isNEU(t.id) && (t.id = this.generateId()), FamilyTree.isNEU(i.id) && (i.id = this.generateId()), "_ft_partner" == t.mid ? t.mid = i.id : "_ft_partner" == t.fid && (t.fid = i.id);
-        var l = [],
-            o = null;
-        Array.isArray(i.pids) && (1 != i.pids.length && console.error("addChildAndPartnerNodes partnerData.pids has to have one partner"), o = this.get(i.pids[0]), Array.isArray(o.pids) || (o.pids = []), o.pids.push(i.id), l.push(o));
-        var s = {
-            addNodesData: [t, i],
-            updateNodesData: l,
-            removeNodeId: null
-        };
-        if (!1 !== this._fireUpdate_addUpdateRemove(s, a)) {
-            var d = this.getRecentRootsByNodeId(e);
-            FamilyTree._changeRootOption(this.config.roots, d, this.manager.rootList);
-            var c = "";
-            o ? c = o.id : FamilyTree.isNEU(t.pid) ? FamilyTree.isNEU(t.mid) ? FamilyTree.isNEU(t.fid) || (c = t.fid) : c = t.mid : c = t.pid, n._draw(!1, FamilyTree.action.update, {
-                id: c
-            }, (function () {
-                n.ripple(t.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, s]), n.filterUI.update()
-            })), FamilyTree.events.publish("updating", [n, s])
-        }
-    } else console.error("addChildAndPartnerNodes invalid data")
-}, FamilyTree.prototype.addPartnerAndParentNodes = function (e, t, i, r, a) {
-    this.hideTreeMenu(!1);
-    var n = this;
-    if (FamilyTree.isNEU(t)) console.error("addPartnerAndParentNodes invalid data");
-    else if (i) {
-        FamilyTree.isNEU(i.id) && (i.id = this.generateId());
-        var l = [],
-            o = this.get(t);
-        if (FamilyTree.isNEU(o.mid) || FamilyTree.isNEU(o.fid)) {
-            FamilyTree.isNEU(o.mid) ? o.mid = i.id : FamilyTree.isNEU(o.mid) || (o.fid = i.id), l.push(o);
-            var s = null;
-            Array.isArray(i.pids) && (1 != i.pids.length && console.error("addChildAndPartnerNodes partnerData.pids has to have one partner"), s = this.get(i.pids[0]), Array.isArray(s.pids) || (s.pids = []), s.pids.push(i.id), l.push(s));
-            var d = {
-                addNodesData: [i],
+    }, FamilyTree.prototype.addChildAndPartnerNodes = function (e, t, i, r, a) {
+        this.hideTreeMenu(!1);
+        var n = this;
+        if (!t || FamilyTree.isNEU(t.mid) && FamilyTree.isNEU(t.fid)) console.error("addChildAndPartnerNodes invalid childData");
+        else if (i) {
+            FamilyTree.isNEU(t.id) && (t.id = this.generateId()), FamilyTree.isNEU(i.id) && (i.id = this.generateId()), "_ft_partner" == t.mid ? t.mid = i.id : "_ft_partner" == t.fid && (t.fid = i.id);
+            var l = [],
+                o = null;
+            Array.isArray(i.pids) && (1 != i.pids.length && console.error("addChildAndPartnerNodes partnerData.pids has to have one partner"), o = this.get(i.pids[0]), Array.isArray(o.pids) || (o.pids = []), o.pids.push(i.id), l.push(o));
+            var s = {
+                addNodesData: [t, i],
                 updateNodesData: l,
                 removeNodeId: null
             };
-            if (!1 !== this._fireUpdate_addUpdateRemove(d, a)) {
-                var c = this.getRecentRootsByNodeId(e);
-                FamilyTree._changeRootOption(this.config.roots, c, this.manager.rootList);
-                var m = "";
-                s ? m = s.id : FamilyTree.isNEU(o.pid) ? FamilyTree.isNEU(o.mid) ? FamilyTree.isNEU(o.fid) || (m = o.fid) : m = o.mid : m = o.pid, n._draw(!1, FamilyTree.action.update, {
-                    id: m
+            if (!1 !== this._fireUpdate_addUpdateRemove(s, a)) {
+                var d = this.getRecentRootsByNodeId(e);
+                FamilyTree._changeRootOption(this.config.roots, d, this.manager.rootList);
+                var c = "";
+                o ? c = o.id : FamilyTree.isNEU(t.pid) ? FamilyTree.isNEU(t.mid) ? FamilyTree.isNEU(t.fid) || (c = t.fid) : c = t.mid : c = t.pid, n._draw(!1, FamilyTree.action.update, {
+                    id: c
                 }, (function () {
-                    n.ripple(o.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
-                })), FamilyTree.events.publish("updating", [n, d])
+                    n.ripple(t.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, s]), n.filterUI.update()
+                })), FamilyTree.events.publish("updating", [n, s])
             }
-        } else console.error("father id (fid) or mather id (mid) has to be null or undefined")
-    } else console.error("addPartnerAndParentNodes invalid data")
-}, FamilyTree.prototype.addPartnerNode = function (e, t, i) {
-    this.hideTreeMenu(!1);
-    var r = this;
-    if (e && Array.isArray(e.pids) && 1 == e.pids.length) {
-        FamilyTree.isNEU(e.id) && (e.id = this.generateId());
-        var a = this.get(e.pids[0]);
-        Array.isArray(a.pids) || (a.pids = []), a.pids.push(e.id);
-        var n = {
-            removeNodeId: null,
-            updateNodesData: [a],
-            addNodesData: [e]
-        };
-        if (!1 !== this._fireUpdate_addUpdateRemove(n, i)) {
-            var l = this.getRecentRootsByNodeId(n.updateNodesData[0].id);
-            FamilyTree._changeRootOption(this.config.roots, l, this.manager.rootList);
-            var o = n.updateNodesData[0].id;
-            r._draw(!1, FamilyTree.action.insert, {
-                id: o,
-                insertedNodeId: n.addNodesData[0].id
-            }, (function () {
-                r.ripple(n.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, n]), r.filterUI.update()
-            })), FamilyTree.events.publish("updating", [r, n])
-        }
-    } else console.error("addPartnerNode invalid data")
-}, FamilyTree.prototype.addParentNode = function (e, t, i, r, a) {
-    this.hideTreeMenu(!1);
-    var n = this;
-    if (i) {
-        if (["mid", "fid"].has(t))
-            if (FamilyTree.isNEU(e)) console.error("addParentNode invalid childId");
-            else {
-                FamilyTree.isNEU(i.id) && (i.id = this.generateId());
-                var l = [],
-                    o = this.get(e);
-                o[t] = i.id, l.push(o);
+        } else console.error("addChildAndPartnerNodes invalid data")
+    }, FamilyTree.prototype.addPartnerAndParentNodes = function (e, t, i, r, a) {
+        this.hideTreeMenu(!1);
+        var n = this;
+        if (FamilyTree.isNEU(t)) console.error("addPartnerAndParentNodes invalid data");
+        else if (i) {
+            FamilyTree.isNEU(i.id) && (i.id = this.generateId());
+            var l = [],
+                o = this.get(t);
+            if (FamilyTree.isNEU(o.mid) || FamilyTree.isNEU(o.fid)) {
+                FamilyTree.isNEU(o.mid) ? o.mid = i.id : FamilyTree.isNEU(o.mid) || (o.fid = i.id), l.push(o);
                 var s = null;
-                Array.isArray(i.pids) && (1 != i.pids.length && console.error("addParentNode: data has to have one partner"), s = this.get(i.pids[0]), Array.isArray(s.pids) || (s.pids = []), s.pids.push(i.id), l.push(s));
+                Array.isArray(i.pids) && (1 != i.pids.length && console.error("addChildAndPartnerNodes partnerData.pids has to have one partner"), s = this.get(i.pids[0]), Array.isArray(s.pids) || (s.pids = []), s.pids.push(i.id), l.push(s));
                 var d = {
-                    removeNodeId: null,
+                    addNodesData: [i],
                     updateNodesData: l,
-                    addNodesData: [i]
+                    removeNodeId: null
                 };
                 if (!1 !== this._fireUpdate_addUpdateRemove(d, a)) {
-                    var c = e;
-                    this.config.roots = [d.addNodesData[0].id], this._draw(!1, FamilyTree.action.insert, {
-                        id: c,
-                        insertedNodeId: d.addNodesData[0].id
+                    var c = this.getRecentRootsByNodeId(e);
+                    FamilyTree._changeRootOption(this.config.roots, c, this.manager.rootList);
+                    var m = "";
+                    s ? m = s.id : FamilyTree.isNEU(o.pid) ? FamilyTree.isNEU(o.mid) ? FamilyTree.isNEU(o.fid) || (m = o.fid) : m = o.mid : m = o.pid, n._draw(!1, FamilyTree.action.update, {
+                        id: m
                     }, (function () {
-                        n.ripple(d.addNodesData[0].id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
+                        n.ripple(o.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
                     })), FamilyTree.events.publish("updating", [n, d])
                 }
+            } else console.error("father id (fid) or mather id (mid) has to be null or undefined")
+        } else console.error("addPartnerAndParentNodes invalid data")
+    }, FamilyTree.prototype.addPartnerNode = function (e, t, i) {
+        this.hideTreeMenu(!1);
+        var r = this;
+        if (e && Array.isArray(e.pids) && 1 == e.pids.length) {
+            FamilyTree.isNEU(e.id) && (e.id = this.generateId());
+            var a = this.get(e.pids[0]);
+            Array.isArray(a.pids) || (a.pids = []), a.pids.push(e.id);
+            var n = {
+                removeNodeId: null,
+                updateNodesData: [a],
+                addNodesData: [e]
+            };
+            if (!1 !== this._fireUpdate_addUpdateRemove(n, i)) {
+                var l = this.getRecentRootsByNodeId(n.updateNodesData[0].id);
+                FamilyTree._changeRootOption(this.config.roots, l, this.manager.rootList);
+                var o = n.updateNodesData[0].id;
+                r._draw(!1, FamilyTree.action.insert, {
+                    id: o,
+                    insertedNodeId: n.addNodesData[0].id
+                }, (function () {
+                    r.ripple(n.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, n]), r.filterUI.update()
+                })), FamilyTree.events.publish("updating", [r, n])
             }
-        else console.error("addParentNode invalid type")
-    } else console.error("addParentNode invalid data")
-}, FamilyTree.prototype.canRemove = function (e) {
-    var t = this.getNode(e);
-    return !!t && (!(t.pids.length > 1) && !(t.childrenIds.length > 0))
-}, FamilyTree.prototype.removeNode = function (e, t, i) {
-    var r = this;
-    if (this.canRemove(e)) {
-        var a = this.getNode(e),
-            n = [];
-        if (Array.isArray(a.pids))
-            for (var l = 0; l < a.pids.length; l++) {
-                var o = this.get(a.pids[l]);
-                if (o) - 1 != (d = o.pids.indexOf(a.id)) && (o.pids.splice(d, 1), n.push(o))
-            }
-        if (Array.isArray(a.ftChildrenIds))
-            for (l = 0; l < a.ftChildrenIds.length; l++) {
-                var s = this.get(a.ftChildrenIds[l]);
-                s && (s.mid == a.id ? (s.mid = void 0, n.push(s)) : s.fid == a.id && (s.fid = void 0, n.push(s)))
-            }
-        var d, c = {
-            removeNodeId: e,
+        } else console.error("addPartnerNode invalid data")
+    }, FamilyTree.prototype.addParentNode = function (e, t, i, r, a) {
+        this.hideTreeMenu(!1);
+        var n = this;
+        if (i) {
+            if (["mid", "fid"].has(t))
+                if (FamilyTree.isNEU(e)) console.error("addParentNode invalid childId");
+                else {
+                    FamilyTree.isNEU(i.id) && (i.id = this.generateId());
+                    var l = [],
+                        o = this.get(e);
+                    o[t] = i.id, l.push(o);
+                    var s = null;
+                    Array.isArray(i.pids) && (1 != i.pids.length && console.error("addParentNode: data has to have one partner"), s = this.get(i.pids[0]), Array.isArray(s.pids) || (s.pids = []), s.pids.push(i.id), l.push(s));
+                    var d = {
+                        removeNodeId: null,
+                        updateNodesData: l,
+                        addNodesData: [i]
+                    };
+                    if (!1 !== this._fireUpdate_addUpdateRemove(d, a)) {
+                        var c = e;
+                        this.config.roots = [d.addNodesData[0].id], this._draw(!1, FamilyTree.action.insert, {
+                            id: c,
+                            insertedNodeId: d.addNodesData[0].id
+                        }, (function () {
+                            n.ripple(d.addNodesData[0].id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
+                        })), FamilyTree.events.publish("updating", [n, d])
+                    }
+                }
+            else console.error("addParentNode invalid type")
+        } else console.error("addParentNode invalid data")
+    }, FamilyTree.prototype.canRemove = function (e) {
+        var t = this.getNode(e);
+        return !!t && (!(t.pids.length > 1) && !(t.childrenIds.length > 0))
+    }, FamilyTree.prototype.removeNode = function (e, t, i) {
+        var r = this;
+        if (this.canRemove(e)) {
+            var a = this.getNode(e),
+                n = [];
+            if (Array.isArray(a.pids))
+                for (var l = 0; l < a.pids.length; l++) {
+                    var o = this.get(a.pids[l]);
+                    if (o) - 1 != (d = o.pids.indexOf(a.id)) && (o.pids.splice(d, 1), n.push(o))
+                }
+            if (Array.isArray(a.ftChildrenIds))
+                for (l = 0; l < a.ftChildrenIds.length; l++) {
+                    var s = this.get(a.ftChildrenIds[l]);
+                    s && (s.mid == a.id ? (s.mid = void 0, n.push(s)) : s.fid == a.id && (s.fid = void 0, n.push(s)))
+                }
+            var d, c = {
+                removeNodeId: e,
+                updateNodesData: n,
+                addNodesData: []
+            };
+            if (!1 !== this._fireUpdate_addUpdateRemove(c, i)) - 1 != (d = this.config.roots.indexOf(e)) && this.config.roots.splice(d, 1), this._draw(!1, FamilyTree.action.update, null, (function () {
+                r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("updated", [r, c]), r.filterUI.update()
+            })), FamilyTree.events.publish("updating", [r, c])
+        }
+    }, FamilyTree.prototype.updateNode = function (e, t, i) {
+        var r = this,
+            a = this.getNode(e.id);
+        e.pids || (e.pids = []);
+        var n = [];
+        n.push(e);
+        for (var l = 0; l < a.pids.length; l++) {
+            if (!e.pids.has(a.pids[l]))
+                if ((s = this._get(a.pids[l])) && s.pids) {
+                    var o = s.pids.indexOf(e.id); - 1 != o && (s.pids.splice(o, 1), n.push(e)), a.pids.splice(l, 1), n.push(s)
+                }
+        }
+        for (l = 0; l < e.pids.length; l++) {
+            var s;
+            if (!a.pids || !a.pids.has(e.pids[l])) (s = this._get(e.pids[l])).pids || (s.pids = []), s.pids.push(e.pids[l]), n.push(s)
+        }
+        var d = {
+            removeNodeId: null,
             updateNodesData: n,
             addNodesData: []
         };
-        if (!1 !== this._fireUpdate_addUpdateRemove(c, i)) - 1 != (d = this.config.roots.indexOf(e)) && this.config.roots.splice(d, 1), this._draw(!1, FamilyTree.action.update, null, (function () {
-            r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("updated", [r, c]), r.filterUI.update()
-        })), FamilyTree.events.publish("updating", [r, c])
-    }
-}, FamilyTree.prototype.updateNode = function (e, t, i) {
-    var r = this,
-        a = this.getNode(e.id);
-    e.pids || (e.pids = []);
-    var n = [];
-    n.push(e);
-    for (var l = 0; l < a.pids.length; l++) {
-        if (!e.pids.has(a.pids[l]))
-            if ((s = this._get(a.pids[l])) && s.pids) {
-                var o = s.pids.indexOf(e.id); - 1 != o && (s.pids.splice(o, 1), n.push(e)), a.pids.splice(l, 1), n.push(s)
-            }
-    }
-    for (l = 0; l < e.pids.length; l++) {
-        var s;
-        if (!a.pids || !a.pids.has(e.pids[l])) (s = this._get(e.pids[l])).pids || (s.pids = []), s.pids.push(e.pids[l]), n.push(s)
-    }
-    var d = {
-        removeNodeId: null,
-        updateNodesData: n,
-        addNodesData: []
-    };
-    !1 !== this._fireUpdate_addUpdateRemove(d, i) && (this._draw(!1, FamilyTree.action.update, null, (function () {
-        r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("updated", [r, d]), r.filterUI.update()
-    })), FamilyTree.events.publish("updating", [r, d]))
-}, FamilyTree.prototype._fireUpdate_addUpdateRemove = function (e, t) {
-    if (!0 === t) return !1;
-    for (var i = 0; i < e.addNodesData.length; i++) this.add(e.addNodesData[i]);
-    for (i = 0; i < e.updateNodesData.length; i++) this.update(e.updateNodesData[i]);
-    return FamilyTree.isNEU(e.removeNodeId) || this.remove(e.removeNodeId), !0
-}, void 0 === FamilyTree && (FamilyTree = {}),
+        !1 !== this._fireUpdate_addUpdateRemove(d, i) && (this._draw(!1, FamilyTree.action.update, null, (function () {
+            r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("updated", [r, d]), r.filterUI.update()
+        })), FamilyTree.events.publish("updating", [r, d]))
+    }, FamilyTree.prototype._fireUpdate_addUpdateRemove = function (e, t) {
+        if (!0 === t) return !1;
+        for (var i = 0; i < e.addNodesData.length; i++) this.add(e.addNodesData[i]);
+        for (i = 0; i < e.updateNodesData.length; i++) this.update(e.updateNodesData[i]);
+        return FamilyTree.isNEU(e.removeNodeId) || this.remove(e.removeNodeId), !0
+    }, void 0 === FamilyTree && (FamilyTree = {}),
     void 0 === FamilyTree && (FamilyTree = {}),
     FamilyTree.animate = function (e, t, i, r, a, n, l) {
         var o, s = 10,
@@ -2212,7 +2216,8 @@ FamilyTree._defaultConfig = function (e) {
             if (FamilyTree.loading.hide(i), !1 === a) return !1;
         }
 
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.events = function () {
+    }, void 0 === FamilyTree && (FamilyTree = {}),
+    FamilyTree.events = function () {
         var e = {};
         return {
             on: function (t, i, r) {
@@ -2238,17 +2243,18 @@ FamilyTree._defaultConfig = function (e) {
                         for (var r = e[i].length - 1; r >= 0; r--) e[i][r].event_id == t && e[i].splice(r, 1)
             },
             publish: function (t, i) {
-                // if (e[t]) {
-                //     for (var r = [], a = 0; a < e[t].length; a++) {
-                //         var n = e[t][a];
-                //         null != n.event_id && n.event_id != i[0]._event_id || r.push(n.listener)
-                //     }
-                //     if (r.length > 0) {
-                //         var l = !0;
-                //         for (a = 0; a < r.length && (1 == i.length ? l = r[a](i[0]) && l : 2 == i.length ? l = r[a](i[0], i[1]) && l : 3 == i.length ? l = r[a](i[0], i[1], i[2]) && l : 4 == i.length ? l = r[a](i[0], i[1], i[2], i[3]) && l : 5 == i.length && (l = r[a](i[0], i[1], i[2], i[3], i[4]) && l), !1 !== l); a++);
-                //         return l
-                //     }
-                // }
+            	//circles lost if remove this code??
+                if (e[t]) {
+                    for (var r = [], a = 0; a < e[t].length; a++) {
+                        var n = e[t][a];
+                        null != n.event_id && n.event_id != i[0]._event_id || r.push(n.listener)
+                    }
+                    if (r.length > 0) {
+                        var l = !0;
+                        for (a = 0; a < r.length && (1 == i.length ? l = r[a](i[0]) && l : 2 == i.length ? l = r[a](i[0], i[1]) && l : 3 == i.length ? l = r[a](i[0], i[1], i[2]) && l : 4 == i.length ? l = r[a](i[0], i[1], i[2], i[3]) && l : 5 == i.length && (l = r[a](i[0], i[1], i[2], i[3], i[4]) && l), !1 !== l); a++);
+                        return l
+                    }
+                }
             }
         }
     }(), FamilyTree.prototype.importCSV = function () {
@@ -2317,15 +2323,16 @@ FamilyTree._defaultConfig = function (e) {
                 b.appendChild(u), T.appendChild(b)
             }
             var v = document.createElement("BUTTON");
-            v.innerHTML = "Import", v.style.fontSize = "16px", v.style.color = "rgb(122, 122, 122)", v.style.padding = "5px 20px", v.style.margin = "20px auto", v.style.display = "block", v.onclick = function () {
-                a.style.display = "none", a._overlay && a._overlay.parentNode.removeChild(a._overlay);
-                var i = p.options[p.selectedIndex].value,
-                    r = e.indexOf(i);
-                e[r] = "id";
-                var n = T.options[T.selectedIndex].value,
-                    l = e.indexOf(n);
-                e[l] = "pid", t(e)
-            };
+            v.innerHTML = "Import", v.style.fontSize = "16px", v.style.color = "rgb(122, 122, 122)", v.style.padding = "5px 20px",
+                v.style.margin = "20px auto", v.style.display = "block", v.onclick = function () {
+                    a.style.display = "none", a._overlay && a._overlay.parentNode.removeChild(a._overlay);
+                    var i = p.options[p.selectedIndex].value,
+                        r = e.indexOf(i);
+                    e[r] = "id";
+                    var n = T.options[T.selectedIndex].value,
+                        l = e.indexOf(n);
+                    e[l] = "pid", t(e)
+                };
             var F = document.createElement("DIV");
             return F.appendChild(v), i.appendChild(F), o.onclick = function (e) {
                 a._overlay && a._overlay.parentNode.removeChild(a._overlay), a.parentNode.removeChild(a), e.stopPropagation()
@@ -2415,9 +2422,10 @@ FamilyTree._defaultConfig = function (e) {
             r = {
                 id: e
             };
-        FamilyTree.isNEU(r.id) && (r.id = this.roots[0].id, r.all = !0), this._draw(!1, FamilyTree.action.minimize, r, (function () {
-            i.ripple(e), t && t()
-        }))
+        FamilyTree.isNEU(r.id) && (r.id = this.roots[0].id, r.all = !0),
+            this._draw(!1, FamilyTree.action.minimize, r, (function () {
+                i.ripple(e), t && t()
+            }))
     }, FamilyTree.prototype._expCollHandler = function (e) {
         this.nodeMenuUI.hide(), this.nodeContextMenuUI.hide(), this.menuUI.hide(), this.nodeCircleMenuUI.hide();
         var t = this.getNode(e),
@@ -4325,14 +4333,14 @@ FamilyTree._defaultConfig = function (e) {
     }, FamilyTree.ui._base_expandCollapseBtn = FamilyTree.ui.expandCollapseBtn, FamilyTree.ui.expandCollapseBtn = function (e, t, i, r, a) {
         return e._tree_menu_temp ? "" : FamilyTree.ui._base_expandCollapseBtn(e, t, i, r, a)
     }, FamilyTree.xScrollUI = function (e, t, i, r, a) {
-        this.element = e, this.requestParams = i, this.config = t, this.onSetViewBoxCallback = r, this.onDrawCallback = a, this.pos = 0
+        this.element = e, this.requestParams = i, this.config = t,
+            this.onSetViewBoxCallback = r, this.onDrawCallback = a, this.pos = 0
     }, FamilyTree.xScrollUI.prototype.addListener = function (e) {
         var t = this;
         if ((this.config.mouseScrool == FamilyTree.action.xScroll || this.config.mouseScrool == FamilyTree.action.scroll) && this.bar) {
             var i = FamilyTree._getScrollSensitivity();
             ! function (e, i, r) {
                 var a = !1;
-
                 function n() {
                     a = !0;
                     var e = (t.pos - t.bar.scrollLeft) / r;
@@ -4784,7 +4792,8 @@ FamilyTree._defaultConfig = function (e) {
         defs: '<marker id="arrowYellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path fill="#FFCA28" d="M 0 0 L 10 5 L 0 10 z" /></marker><marker id="dotYellow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5"> <circle cx="5" cy="5" r="5" fill="#FFCA28" /></marker>',
         link: '<path marker-start="url(#dotYellow)" marker-end="url(#arrowYellow)" stroke="#FFCA28" stroke-width="2" fill="none" d="{d}" />',
         label: '<text fill="#FFCA28"  text-anchor="middle" x="{x}" y="{y}">{val}</text>'
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.events.on("renderdefs", (function (e, t) {
+    }, void 0 === FamilyTree && (FamilyTree = {}),
+    FamilyTree.events.on("renderdefs", (function (e, t) {
         for (var i = 0; i < e.config.slinks.length; i++) {
             var r = e.config.slinks[i].template;
             r || (r = "orange");
@@ -5348,7 +5357,8 @@ FamilyTree._defaultConfig = function (e) {
                 FamilyTree._magnify[t] && FamilyTree._magnify[t].front && (e[0].parentNode.removeChild(e[0]), FamilyTree._magnify[t] = null), i && i(e[0])
             }))
         }
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.events.on("init", (function (e, t) {
+    }, void 0 === FamilyTree && (FamilyTree = {}),
+    FamilyTree.events.on("init", (function (e, t) {
         if (e.config.keyNavigation && (e._addEvent(window, "keydown", e._windowKeyDownHandler), FamilyTree.isNEU(e._keyNavigationActiveNodeId) && e.roots && e.roots.length)) {
             var i = e.roots[0].id;
             FamilyTree.isNEU(e.config.keyNavigation.focusId) || (i = e.config.keyNavigation.focusId), e._keyNavigationActiveNodeId = i, e.center(e._keyNavigationActiveNodeId)
@@ -5368,7 +5378,7 @@ FamilyTree._defaultConfig = function (e) {
                     data: r ? this.get(r) : null,
                     event: t
                 };
-            if (!1 !== FamilyTree.events.publish("key-down", [this, n]) && a)
+            if (a)
                 if ("KeyF" == t.code) this.searchUI.find("");
                 else if ("ArrowRight" == t.code || a.isAssistant && "ArrowDown" == t.code || a.isPartner && "ArrowDown" == t.code) {
                     if (s = this.getNode(a.pid)) {
@@ -5706,7 +5716,7 @@ FamilyTree._defaultConfig = function (e) {
                 nodes: m,
                 node: c
             };
-        FamilyTree.events.publish("node-tree-menu-show", [this, b]), b.nodes.push(b.node), this.config.nodes = b.nodes, c = this.get(e);
+        b.nodes.push(b.node), this.config.nodes = b.nodes, c = this.get(e);
         var v = this;
         FamilyTree.isNEU(c.mid) ? FamilyTree.isNEU(c.fid) || (this.config.roots = [c.fid]) : this.config.roots = [c.mid];
         var F = {
