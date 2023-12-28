@@ -55,7 +55,7 @@ var FamilyTree = function (e, t) {
     }), (function () {
         i._draw(!0, FamilyTree.action.xScroll)
     }))), this.element.classList.add("bft-" + this.config.mode), this._gragStartedId = null, this._timeout = null, this._touch = null, this._initialized = !1, this._loaded = !1, this._moveInterval = null, this._movePosition = null, this.response = null, this.nodes = null, this.isVisible = null, FamilyTree._intersectionObserver(this.element, (function (e) {
-        i.isVisible = e, !1 !== FamilyTree.events.publish("visibility-change", [i]) && FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
+        i.isVisible = e, FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
     })))
 };
 FamilyTree._defaultConfig = function (e) {
@@ -254,7 +254,7 @@ FamilyTree._defaultConfig = function (e) {
                     }
                 }
             }), (function (e) {
-                FamilyTree.events.publish("ready", [a, e])
+                //nothing
             }))
         } else console.error("Cannot load the family with size 0! If you are using the FamilyTree within tabs set FamilyTree.LAZY_LOADING to true! ")
 }, FamilyTree.prototype._setInitialSizeIfNotSet = function () {
@@ -386,12 +386,12 @@ FamilyTree._defaultConfig = function (e) {
         1 == r.collapsed && t.push(r.id)
     }
     return t
-}, FamilyTree.prototype.stateToUrl = function () {
-    if (this.manager.state) {
-        var e = {};
-        return e.exp = this.manager.state.exp.join("*"), e.min = this.manager.state.min.join("*"), e.adjustify = this.manager.state.adjustify.x + "*" + this.manager.state.adjustify.y, e.scale = this.manager.state.scale, e.y = this.manager.state.x, e.x = this.manager.state.y, new URLSearchParams(e).toString()
-    }
-    return ""
+    // }, FamilyTree.prototype.stateToUrl = function () {
+    //     if (this.manager.state) {
+    //         var e = {};
+    //         return e.exp = this.manager.state.exp.join("*"), e.min = this.manager.state.min.join("*"), e.adjustify = this.manager.state.adjustify.x + "*" + this.manager.state.adjustify.y, e.scale = this.manager.state.scale, e.y = this.manager.state.x, e.x = this.manager.state.y, new URLSearchParams(e).toString()
+    //     }
+    //     return ""
 }, FamilyTree.prototype.generateId = function () {
     for (; ;) {
         var e = "_" + ("0000" + (Math.random() * Math.pow(36, 4) | 0).toString(36)).slice(-4);
@@ -468,7 +468,7 @@ FamilyTree._defaultConfig = function (e) {
 }, FamilyTree.prototype._canUpdateLink = FamilyTree.prototype.canUpdateLink, FamilyTree.prototype.updateNode = function (e, t, i) {
     var r = this,
         a = this.get(e.id);
-    if (!0 === i && !1 === FamilyTree.events.publish("update", [this, a, e])) return !1;
+    if (!0 === i) return !1;
     this.update(e);
     var n = this.getNode(e.id),
         l = n.pid;
@@ -487,7 +487,7 @@ FamilyTree._defaultConfig = function (e) {
     var r = this;
     if (!this.canRemove(e)) return !1;
     var a = this._getNewPidsAndStpidsForIds(e);
-    if (!0 === i && !1 === FamilyTree.events.publish("remove", [this, e, a])) return !1;
+    if (!0 === i) return !1;
     return this.remove(e), this._draw(!1, FamilyTree.action.update, null, (function () {
         r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("removed", [r, e, a]), r.filterUI.update()
     })), !0
@@ -508,7 +508,7 @@ FamilyTree._defaultConfig = function (e) {
     }
 }, FamilyTree.prototype.addNode = function (e, t, i) {
     var r = this;
-    if (!0 === i && !1 === FamilyTree.events.publish("add", [this, e])) return !1;
+    if (!0 === i) return !1;
     this.add(e), r._draw(!1, FamilyTree.action.insert, {
         id: e.pid,
         insertedNodeId: e.id
@@ -709,7 +709,7 @@ FamilyTree._defaultConfig = function (e) {
         r.config.sticky && FamilyTree._moveToBoundaryArea(r.getSvg(), r.getViewBox(), r.response.boundary), t && t(), FamilyTree.events.publish("updated", [r, d]), r.filterUI.update()
     })), FamilyTree.events.publish("updating", [r, d]))
 }, FamilyTree.prototype._fireUpdate_addUpdateRemove = function (e, t) {
-    if (!0 === t && !1 === FamilyTree.events.publish("update", [this, e])) return !1;
+    if (!0 === t) return !1;
     for (var i = 0; i < e.addNodesData.length; i++) this.add(e.addNodesData[i]);
     for (i = 0; i < e.updateNodesData.length; i++) this.update(e.updateNodesData[i]);
     return FamilyTree.isNEU(e.removeNodeId) || this.remove(e.removeNodeId), !0
@@ -822,19 +822,8 @@ FamilyTree._defaultConfig = function (e) {
         return e < 0 ? 0 : e > 1 ? 1 : Math.sqrt(1 - (e - 1) * (e - 1))
     }, FamilyTree.anim.inOutCirc = function (e) {
         return e < 0 ? 0 : e > 1 ? 1 : e < 1 ? -.5 * (Math.sqrt(1 - e * e) - 1) : .5 * (Math.sqrt(1 - (2 * e - 2) * (2 * e - 2)) + 1)
-        // }, FamilyTree.anim.rebound = function (e) {
-        //     return e < 0 ? 0 : e > 1 ? 1 : e < 1 / 2.75 ? 1 - 7.5625 * e * e : e < 2 / 2.75 ? 1 - (7.5625 * (e - 1.5 / 2.75) * (e - 1.5 / 2.75) + .75) : e < 2.5 / 2.75 ? 1 - (7.5625 * (e - 2.25 / 2.75) * (e - 2.25 / 2.75) + .9375) : 1 - (7.5625 * (e - 2.625 / 2.75) * (e - 2.625 / 2.75) + .984375)
-        // }, FamilyTree.anim.inBack = function (e) {
-        //     return e < 0 ? 0 : e > 1 ? 1 : e * e * (2.70158 * e - 1.70158)
     }, FamilyTree.anim.outBack = function (e) {
         return e < 0 ? 0 : e > 1 ? 1 : (e - 1) * (e - 1) * (2.70158 * (e - 1) + 1.70158) + 1
-        // }, FamilyTree.anim.inOutBack = function (e) {
-        //     return e < 0 ? 0 : e > 1 ? 1 : e < .5 ? 4 * e * e * (7.1898 * e - 2.5949) * .5 : .5 * ((2 * e - 2) * (2 * e - 2) * (3.5949 * (2 * e - 2) + 2.5949) + 2)
-        // }, FamilyTree.anim.impulse = function (e) {
-        //     var t = 2 * e;
-        //     return t * Math.exp(1 - t)
-        // }, FamilyTree.anim.expPulse = function (e) {
-        //     return Math.exp(-2 * Math.pow(e, 2))
     }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.prototype._attachInitEventHandlers = function (e) {
         this._addEvent(window, "resize", this._resizeHandler)
     }, FamilyTree.prototype._attachEventHandlers = function (e) {
@@ -990,13 +979,9 @@ FamilyTree._defaultConfig = function (e) {
         }, 300, FamilyTree.anim.outSin, (function () {
             t || r._focusElement(a.focusId)
         })), this.obj.element.querySelector("[data-edit-from-close]").addEventListener("click", (function (t) {
-            t.preventDefault(), !1 !== FamilyTree.events.publish("cancel", [r, {
-                id: e
-            }]) && r.hide()
+            t.preventDefault(), r.hide()
         })), this.obj.element.querySelector("[data-edit-from-cancel]").addEventListener("click", (function (t) {
-            t.preventDefault(), !1 !== FamilyTree.events.publish("cancel", [r, {
-                id: e
-            }]) && r.hide()
+            t.preventDefault(), r.hide()
         })), this.obj.element.querySelector("[data-edit-from-save]").addEventListener("click", (function (t) {
             t.preventDefault();
             var i = FamilyTree.input.validateAndGetData(a.element);
@@ -1005,7 +990,6 @@ FamilyTree._defaultConfig = function (e) {
                     l = {
                         data: FamilyTree.mergeDeep(n, i)
                     };
-                if (!1 === FamilyTree.events.publish("save", [r, l])) return;
                 r.obj.updateNode(l.data, null, !0), r.hide()
             }
         }));
@@ -1151,7 +1135,6 @@ FamilyTree._defaultConfig = function (e) {
             shareText: N.join("\n")
         }
     }, FamilyTree.editUI.prototype.hide = function () {
-        if (!1 === FamilyTree.events.publish("hide", [this])) return !1;
         FamilyTree.isNEU(this.interval) && (clearInterval(this.interval), this.interval = null);
         var e = this.obj.element.querySelector("[data-bft-edit-form]");
         e && e.parentNode && e.parentNode.removeChild(e)
@@ -1180,7 +1163,7 @@ FamilyTree._defaultConfig = function (e) {
             secondNodeId: r,
             menu: a
         };
-        if (!1 === FamilyTree.events.publish("show", [this, o])) return !1;
+
         for (var s in a = o.menu) {
             var d = a[s].icon,
                 c = a[s].text;
@@ -2030,7 +2013,6 @@ FamilyTree._defaultConfig = function (e) {
             filename: e,
             nodes: JSON.parse(JSON.stringify(this.config.nodes))
         };
-        if (!1 === FamilyTree.events.publish("exportstart", [this, t])) return !1;
         var i = FamilyTree._json2csv(t.nodes),
             r = {
                 ext: t.ext,
@@ -2038,7 +2020,6 @@ FamilyTree._defaultConfig = function (e) {
                 nodes: t.nodes,
                 content: i
             };
-        if (!1 === FamilyTree.events.publish("exportend", [this, r])) return !1;
 
     }, FamilyTree.prototype.exportXML = function (e) {
         e || (e = "FamilyTree.xml");
@@ -2047,7 +2028,6 @@ FamilyTree._defaultConfig = function (e) {
             filename: e,
             nodes: JSON.parse(JSON.stringify(this.config.nodes))
         };
-        if (!1 === FamilyTree.events.publish("exportstart", [this, t])) return !1;
         var i = FamilyTree._json2xml(t.nodes),
             r = {
                 ext: t.ext,
@@ -2055,7 +2035,6 @@ FamilyTree._defaultConfig = function (e) {
                 nodes: t.nodes,
                 content: i
             };
-        if (!1 === FamilyTree.events.publish("exportend", [this, r])) return !1;
 
     }, FamilyTree.prototype.exportJSON = function (e) {
         e || (e = "FamilyTree.json");
@@ -2064,14 +2043,12 @@ FamilyTree._defaultConfig = function (e) {
             filename: e,
             nodes: JSON.parse(JSON.stringify(this.config.nodes))
         };
-        if (!1 === FamilyTree.events.publish("exportstart", [this, t])) return !1;
         var i = {
             ext: t.ext,
             filename: t.filename,
             nodes: t.nodes,
             content: JSON.stringify(t.nodes)
         };
-        if (!1 === FamilyTree.events.publish("exportend", [this, i])) return !1;
 
     }, FamilyTree.prototype._pages = function (e, t, i) {
         "A5" == e.format && "fit" != e.scale || "A4" == e.format && "fit" != e.scale || "A3" == e.format && "fit" != e.scale || "A2" == e.format && "fit" != e.scale || "A1" == e.format && "fit" != e.scale || "Letter" == e.format && "fit" != e.scale || "Legal" == e.format && "fit" != e.scale ? i(this._pagesA100(e, t, e.scale)) : "A5" == e.format && "fit" == e.scale || "A4" == e.format && "fit" == e.scale || "A3" == e.format && "fit" == e.scale || "A2" == e.format && "fit" == e.scale || "A1" == e.format && "fit" == e.scale || "Letter" == e.format && "fit" == e.scale || "Legal" == e.format && "fit" == e.scale ? i(this._pagesAfit(e, t)) : "fit" == e.format && i(this._pagesFit(e, t))
@@ -2220,7 +2197,6 @@ FamilyTree._defaultConfig = function (e) {
             styles: ""
         };
         if (!t) {
-            if (!1 === FamilyTree.events.publish("exportstart", [i, s])) return !1;
             FamilyTree.loading.show(i)
         }
         var d = this.element.querySelector("[data-bft-styles]");
@@ -2228,13 +2204,12 @@ FamilyTree._defaultConfig = function (e) {
         var c = this.getSvg().querySelector("defs");
         if (c)
             for (var m = 0; m < c.children.length; m++) "style" == c.children[m].nodeName.toLowerCase() && (s.styles += c.children[m].outerHTML);
-        s = JSON.stringify(s)
+        // s = JSON.stringify(s)
 
         if (t) t(i, r);
         else {
             var a = FamilyTree.events.publish("exportend", [i, r]);
             if (FamilyTree.loading.hide(i), !1 === a) return !1;
-
         }
 
     }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.events = function () {
@@ -2448,16 +2423,13 @@ FamilyTree._defaultConfig = function (e) {
         var t = this.getNode(e),
             i = this.getCollapsedIds(t);
         if (i.length) {
-            if (!1 === FamilyTree.events.publish("expcollclick", [this, !1, e, i])) return !1;
             this.expand(e, i, !1)
         } else {
-            if (!1 === FamilyTree.events.publish("expcollclick", [this, !0, e, t.childrenIds])) return !1;
             this.collapse(e, t.childrenIds, !1)
         }
     }, FamilyTree.prototype._upHandler = function (e) {
         this.nodeMenuUI.hide(), this.nodeContextMenuUI.hide(), this.menuUI.hide(), this.nodeCircleMenuUI.hide();
         var t = this._upHandlerCreateArgs(e);
-        if (!1 === FamilyTree.events.publish("up-click", [this, t])) return !1;
         this.changeRoots(t.id, t.roots, !1)
     }, FamilyTree.prototype._upHandlerCreateArgs = function (e) {
         var t, i = this.getNode(e),
@@ -2831,7 +2803,7 @@ FamilyTree._defaultConfig = function (e) {
                             }
                             var A = (i.x - c.x) / f,
                                 M = (i.y - c.y) / f;
-                            if (m[4] = p + A, m[5] = h + M, !e._dragEventFired && (Math.abs(i.x - c.x) > FamilyTree.FIRE_DRAG_NOT_CLICK_IF_MOVE || Math.abs(i.y - c.y) > FamilyTree.FIRE_DRAG_NOT_CLICK_IF_MOVE)) !1 === FamilyTree.events.publish("drag", [s, k, t]) && T(), e._dragEventFired = !0;
+                            if (m[4] = p + A, m[5] = h + M, !e._dragEventFired && (Math.abs(i.x - c.x) > FamilyTree.FIRE_DRAG_NOT_CLICK_IF_MOVE || Math.abs(i.y - c.y) > FamilyTree.FIRE_DRAG_NOT_CLICK_IF_MOVE)) T(), e._dragEventFired = !0;
                             u.setAttribute("transform", "matrix(" + m.toString() + ")")
                         }
                     }
@@ -2839,7 +2811,7 @@ FamilyTree._defaultConfig = function (e) {
                 T = function (t) {
                     if (s.stopMove(), d.classList && (d.classList.remove("bft-cursor-grab"), d.classList.remove("bft-cursor-move"), d.classList.remove("bft-cursor-nodrop"), d.classList.remove("bft-cursor-copy")), d.removeEventListener(i.move, g), d.removeEventListener(i.up, T), i.leave && d.removeEventListener(i.leave, T), n.id == l || null == l) return d.removeChild(u), s._gragStartedId = null, void (e._dragEventFired && FamilyTree.events.publish("drop", [s, n.id]));
                     var r = s.getNode(l);
-                    if (!1 === FamilyTree.events.publish("drop", [s, n.id, r.id])) return y(l, o), d.removeChild(u), void (s._gragStartedId = null);
+                    d.removeChild(u), void (s._gragStartedId = null);
                     if (s.canUpdateLink(n.id, l)) {
                         var a = s.get(n.id);
                         a.pid = l, a.stpid = null, s.updateNode(a, null, !0)
@@ -2860,16 +2832,11 @@ FamilyTree._defaultConfig = function (e) {
             r.setAttribute("width", this.width()), r.setAttribute("height", this.height()), i[2] = this.width() / s, i[3] = this.height() / s, this.setViewBox(i), this.xScrollUI.create(this.width()), this.yScrollUI.create(this.height()), this._draw(!1, FamilyTree.action.resize)
         }
     }, FamilyTree.prototype._nodeDbClickHandler = function (e, t) {
-        if (!1 === FamilyTree.events.publish("dbclick", [this, this.get(e)])) return !1;
         this._commonClickHandler(e, t, this.config.nodeMouseDbClick)
     }, FamilyTree.prototype._nodeClickHandler = function (e, t) {
         var i = this.getNodeElement(e);
         if (i && i._dragEventFired) i._dragEventFired = !1;
         else {
-            if (!1 === FamilyTree.events.publish("click", [this, {
-                node: this.getNode(e),
-                event: t
-            }])) return !1;
             this._commonClickHandler(e, t, this.config.nodeMouseClick)
         }
     }, FamilyTree.prototype._nodeCircleMenuItemClickHandler = function (e, t) {
@@ -2919,10 +2886,8 @@ FamilyTree._defaultConfig = function (e) {
         var i = this.getNode(e),
             r = this.getCollapsedIds(i);
         if (r.length) {
-            if (!1 === FamilyTree.events.publish("expcollclick", [this, !1, e, r])) return !1;
             this.expand(e, r, !1)
         } else {
-            if (!1 === FamilyTree.events.publish("expcollclick", [this, !0, e, i.childrenIds])) return !1;
             this.collapse(e, i.childrenIds, !1)
         }
         t && this.ripple(i.id, t.clientX, t.clientY)
@@ -3949,7 +3914,7 @@ FamilyTree._defaultConfig = function (e) {
                 var f, u = l[h];
                 t && (f = t[u]);
                 var y = FamilyTree._lblIsImg(r, h);
-                if (p.value = f, p.element = c[h], p.name = u, !1 !== FamilyTree.events.publish("field", [d, p]) && null != p.value && null != p.value && null != p.element) {
+                if (p.value = f, p.element = c[h], p.name = u, null != p.value && null != p.value && null != p.element) {
                     y || "string" != typeof p.value || (p.value = FamilyTree.wrapText(p.value, p.element));
                     var g = p.element.replace("{val}", p.value);
                     m += g = g.replaceAll("{ew}", e.w - (e.padding ? e.padding[1] : 0)).replaceAll("{cw}", e.w / 2).replaceAll("{randId}", FamilyTree.randomId()).replaceAll("{randId2}", FamilyTree.randomId())
@@ -4184,7 +4149,7 @@ FamilyTree._defaultConfig = function (e) {
                         N = t._get(y.id);
                     if (N) {
                         var A = N[I];
-                        k.value = A, k.element = s[C], k.name = I, !1 !== FamilyTree.events.publish("label", [t, k]) && (FamilyTree.isNEU(k.value) || FamilyTree.isNEU(k.element) || (S += k.element.replace("{val}", k.value)))
+                        k.value = A, k.element = s[C], k.name = I, (FamilyTree.isNEU(k.value) || FamilyTree.isNEU(k.element) || (S += k.element.replace("{val}", k.value)))
                     }
                 }
                 "" != S && (S = FamilyTree.linkFieldsOpenTag.replace("{x}", T.x).replace("{y}", T.y).replace("{rotate}", 0) + S + FamilyTree.grCloseTag, d.push(S)), d.push(FamilyTree.grCloseTag)
@@ -6165,6 +6130,8 @@ FamilyTree._defaultConfig = function (e) {
         bigbrother, t,
         widebox, heightbox
     ) {
+
+
         const nodePointer = FamilyTree.remote.findnodePointer(node, d);
         const siblingSeparation = t.base.siblingSeparation;// 15;
         const extraspacemarriedwithchildren = 10;
