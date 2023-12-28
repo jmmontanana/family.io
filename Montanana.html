@@ -8,105 +8,12 @@
     <meta charset="utf-8" />
     <title>Arbol Genealógico Familiar</title>
     <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <style type="text/css">
-      .second-menu-icon {
-        transition: opacity 0.5s;
-        opacity: 0;
-        right: -5px;
-        top: -5px;
-        z-index: 2;
-        position: absolute;
-      }
-
-      .second-menu-icon::before {
-        background-color: rgba(68, 157, 68, 0.5);
-      }
-
-      .second-menu-icon:hover::before {
-        background-color: #449d44;
-      }
-
-      .node:hover .second-menu-icon {
-        opacity: 1;
-      }
-
-      .node .second-menu {
-        display: none;
-        position: absolute;
-        top: 0;
-        right: -70px;
-        border-radius: 35px;
-        box-shadow: 0 0 10px 1px #999;
-        background-color: #fff;
-        z-index: 1;
-      }
-
-      .node .second-menu .avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-        float: left;
-        margin: 5px;
-      }
-
-      td.left,
-      td.right,
-      td.top {
-        border-color: #aaa;
-      }
-
-      td > .down {
-        background-color: #aaa;
-      }
-
-      .middle-level .title {
-        background-color: #006699;
-      }
-
-      .middle-level .content {
-        border-color: #006699;
-      }
-
-      .product-dept .title {
-        background-color: #009933;
-      }
-
-      .product-dept .content {
-        border-color: #009933;
-      }
-
-      .rd-dept .title {
-        background-color: #993366;
-      }
-
-      .rd-dept .content {
-        border-color: #993366;
-      }
-
-      .pipeline1 .title {
-        background-color: #996633;
-      }
-
-      .pipeline1 .content {
-        border-color: #996633;
-      }
-
-      .frontend1 .title {
-        background-color: #cc0066;
-      }
-
-      .frontend1 .content {
-        border-color: #cc0066;
-      }
-    </style>
-
     <script type="text/javascript" src="js/familytree.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
   </head>
 
   <body>
     <div style="width: 100%; height: 700px" id="tree" />
-
     <script>
       window.onload = function () {
         var expandAllIcon =
@@ -944,6 +851,7 @@
               apellidos: "1 Martínez Martínez",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoMtnezMartínez.jpg",
             },
             {
               id: 5105,
@@ -1049,7 +957,7 @@
               pids: [9805],
               mid: null,
               fid: null,
-              apellidos: " Marí",
+              apellidos: "Marí",
               name: "Luis",
               gender: "male",
             },
@@ -1094,7 +1002,7 @@
               pids: [10705],
               mid: null,
               fid: null,
-              apellidos: " Mallor",
+              apellidos: "Mallor",
               name: "Carmen",
               gender: "female",
             },
@@ -1485,7 +1393,7 @@
               apellidos: "3 Calvo Urios",
               name: "Purín",
               gender: "female",
-              photo: "img/purin.jpg",
+              photo: "img/PurínCalvoUrios.jpg",
             },
             {
               id: 8208,
@@ -1523,6 +1431,7 @@
               apellidos: "1 Urios Duart",
               name: "Fina",
               gender: "female",
+              photo: "img/UriosDuartFina2016.jpg",
             },
             {
               id: 9508,
@@ -1532,6 +1441,7 @@
               apellidos: "Soria",
               name: "Modesto",
               gender: "male",
+              photo: "img/Soria-Modesto.jpg",
             },
             {
               id: 10408,
@@ -1723,6 +1633,7 @@
               apellidos: "1 Soria Urios",
               name: "José Miguel",
               gender: "male",
+              photo: "img/SoriaUrios-JoséMIguel.jpg",
             },
             {
               id: 9709,
@@ -1731,6 +1642,7 @@
               fid: null,
               apellidos: "Gracia",
               gender: "female",
+              photo: "img/Gracia.jpg",
             },
             {
               id: 9809,
@@ -1740,15 +1652,17 @@
               apellidos: "2 Soria Urios",
               name: "Víctor",
               gender: "male",
+              photo: "img/Soria-UriosVíctor.jpg",
             },
             {
               id: 9909,
               pids: [9809],
               mid: null,
               fid: null,
-              apellidos: " Ferrer Andrés",
+              apellidos: "Ferrer Andrés",
               name: "Susana",
               gender: "female",
+              photo: "img/FerrerAndrésSusana.jpg",
             },
             {
               id: 10209,
@@ -1758,6 +1672,7 @@
               apellidos: "3 Soria Urios",
               name: "Gema",
               gender: "female",
+              photo: "img/SoriaUriosGema.jpg",
             },
             {
               id: 10609,
@@ -1768,6 +1683,7 @@
               name: "Miguel",
               gender: "male",
               birthDate: "1944",
+              photo: "img/Terres-Miguel.jpg",
             },
             {
               id: 10709,
@@ -1967,6 +1883,7 @@
               apellidos: "Soria Ferrer",
               name: "Víctor",
               gender: "male",
+              photo: "img/Soria-FerrerVíctor.jpg",
             },
             {
               id: 10110,
@@ -1976,6 +1893,7 @@
               apellidos: "Soria Ferrer",
               name: "Mario",
               gender: "male",
+              photo: "img/SoriaFerrerMario.jpg",
             },
             {
               id: 4711,
@@ -2031,6 +1949,7 @@
               apellidos: "4 Martínez Marco",
               name: "Ángela",
               gender: "female",
+              photo: "img/AngelitaMtnezMarco.jpg",
             },
             {
               id: 8912,
@@ -2656,6 +2575,7 @@
               apellidos: "1 Ferreras Sancho",
               name: "Arturo",
               gender: "male",
+              photo: "img/ArturoFerrerasSancho.jpg",
             },
             {
               id: 9216,
@@ -2665,6 +2585,7 @@
               apellidos: "2 Ferreras Sancho",
               name: "Nuria",
               gender: "female",
+              photo: "img/NuriaFerreras.jpg",
             },
             {
               id: 9816,
@@ -3040,6 +2961,7 @@
               apellidos: "5 Sancho Martínez",
               name: "Encarnita",
               gender: "female",
+              photo: "img/Encarnita.jpg",
             },
             {
               id: 9017,
@@ -3204,6 +3126,7 @@
               apellidos: "3 Martínez Martínez",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoMtnezMtnez.jpg",
             },
             {
               id: 7518,
@@ -3647,7 +3570,7 @@
               apellidos: "4 Urios Martínez",
               name: "Enrique",
               gender: "male",
-              photo: "img/Enrique.jpg",
+              photo: "img/EnriqueUriosMartínez.jpg",
             },
             {
               id: 7623,
@@ -3760,6 +3683,7 @@
               apellidos: "3 Urios Martín",
               name: "Inma",
               gender: "female",
+              photo: "img/InmaUriosMartí2023.jpg",
             },
             {
               id: 8028,
@@ -3785,6 +3709,7 @@
               apellidos: "4 Urios Martín",
               name: "Alejandro",
               gender: "male",
+              photo: "img/AlejandroUrios.jpg",
             },
             {
               id: 8824,
@@ -3846,7 +3771,7 @@
               apellidos: "2 Urios Tárraga",
               name: "Rosa",
               gender: "female",
-              photo: "img/RosaUriosTárraga.jpg",
+              photo: "img/RosaUriosTárraga2023.jpg",
             },
             {
               id: 10424,
@@ -3865,16 +3790,17 @@
               apellidos: "3 Urios Tárraga",
               name: "Quique",
               gender: "male",
-              photo: "img/QuiqueUriosT.jpg",
+              photo: "img/QuiqueUriosTárraga2023.jpg",
             },
             {
               id: 10924,
               pids: [10824],
               mid: null,
               fid: null,
-              apellidos: "",
+              apellidos: "Salinas Boix",
               name: "Silvia",
               gender: "female",
+              photo: "img/SilviaSalinasBoix2019.jpg",
             },
             {
               id: 11424,
@@ -3891,7 +3817,7 @@
               pids: [11424],
               mid: null,
               fid: null,
-              apellidos: "Cristina",
+              name: "Cristina",
               gender: "female",
             },
             {
@@ -3958,6 +3884,7 @@
               name: "Kike",
               gender: "male",
               birthDate: "2016",
+              photo: "img/KikeUrios.jpg",
             },
             {
               id: 11125,
@@ -3967,6 +3894,7 @@
               apellidos: "2 Urios",
               name: "Lorena",
               gender: "female",
+              photo: "img/LorenaUrios2016.jpg",
             },
 
             {
@@ -4495,6 +4423,7 @@
               apellidos: "Aliaga Ballestar",
               name: "José",
               gender: "male",
+              photo: "img/José-Aliaga-Ballester-en1941.jpg",
             },
             {
               id: 1330,
@@ -4504,6 +4433,7 @@
               apellidos: "Quiles Gimeno",
               name: "Carmen",
               gender: "female",
+              photo: "img/CarmenQuilesGimeno.jpg",
             },
             {
               id: 1830,
@@ -4549,6 +4479,7 @@
               apellidos: "1 Ballester Albelda",
               name: "Carmen",
               gender: "female",
+              photo: "img/BallesterAlbeldaCarmen2009.jpg",
             },
             {
               id: 8230,
@@ -4558,6 +4489,7 @@
               apellidos: "Illueca Hidalgo",
               name: "José",
               gender: "male",
+              photo: "img/IlluecaHidalgoJosé2009.jpg",
             },
             {
               id: 9230,
@@ -4732,6 +4664,7 @@
               apellidos: "Esquembre Marín",
               name: "Lina",
               gender: "female",
+              photo: "img/LinaEsquembre.jpg",
             },
             {
               id: 532,
@@ -4987,7 +4920,7 @@
               pids: [42637],
               mid: null,
               fid: null,
-              apellidos: "  ..",
+              apellidos: "..",
               name: "Nati",
               gender: "female",
             },
@@ -4997,7 +4930,7 @@
               pids: [null],
               mid: 42680,
               fid: 42637,
-              apellidos: " Vicedo",
+              apellidos: "Vicedo",
               name: "1 Aurora",
               gender: "female",
             },
@@ -5006,7 +4939,7 @@
               pids: [null],
               mid: 42680,
               fid: 42637,
-              apellidos: " Vicedo",
+              apellidos: "Vicedo",
               name: "2 Maria Dolores",
               gender: "female",
             },
@@ -5016,7 +4949,7 @@
               pids: [null],
               mid: 42644,
               fid: null,
-              apellidos: "  ",
+              apellidos: "",
               name: "varon",
               gender: "male",
             },
@@ -5025,7 +4958,7 @@
               pids: [null],
               mid: 42644,
               fid: null,
-              apellidos: "  ",
+              apellidos: "",
               name: "varon",
               gender: "male",
             },
@@ -5034,7 +4967,7 @@
               pids: [null],
               mid: 42645,
               fid: null,
-              apellidos: "  ",
+              apellidos: "",
               name: "varon",
               gender: "male",
             },
@@ -5044,7 +4977,7 @@
               pids: [null],
               mid: 42644,
               fid: 42637,
-              apellidos: "  ..",
+              apellidos: "..",
               name: "..",
             },
             {
@@ -5052,7 +4985,7 @@
               pids: [null],
               mid: 42644,
               fid: 42637,
-              apellidos: "  ..",
+              apellidos: "..",
               name: "..",
             },
             {
@@ -5060,7 +4993,7 @@
               pids: [null],
               mid: 42645,
               fid: 42637,
-              apellidos: "  ..",
+              apellidos: "..",
               name: "Mujer",
               gender: "female",
             },
@@ -5070,7 +5003,7 @@
               pids: [null],
               mid: null,
               fid: 42638,
-              apellidos: " 1 Vicedo Linares",
+              apellidos: "1 Vicedo Linares",
               name: "..",
             },
             {
@@ -5078,7 +5011,7 @@
               pids: [null],
               mid: null,
               fid: 42638,
-              apellidos: " 2 Vicedo Linares",
+              apellidos: "2 Vicedo Linares",
               name: "Diego",
               gender: "male",
               job: "Corte Inglés",
@@ -5089,7 +5022,7 @@
               pids: [null],
               mid: null,
               fid: 42638,
-              apellidos: " 3 Vicedo Linares",
+              apellidos: "3 Vicedo Linares",
               name: "..",
             },
             {
@@ -5097,7 +5030,7 @@
               pids: [null],
               mid: null,
               fid: 42638,
-              apellidos: " 4 Vicedo Linares",
+              apellidos: "4 Vicedo Linares",
               name: "no es seguro",
             },
 
@@ -5137,6 +5070,7 @@
               apellidos: "1 Brotóns Ibáñez",
               name: "Juanjo",
               gender: "male",
+              photo: "img/BrotonsIbáñezQuanko.jpg",
             },
             {
               id: 15032,
@@ -5174,7 +5108,7 @@
               name: "Ángel",
               gender: "male",
               birthDate: "1995",
-              photo: "img/AngelAliaga.jpg",
+              photo: "img/ÁngelAliagaSabater2020.jpg",
             },
             {
               id: 19432,
@@ -5331,6 +5265,7 @@
               apellidos: "Tomás Blasco",
               name: "Asunción",
               gender: "female",
+              photo: "img/AsunciónTomásBlasco.jpg",
             },
             {
               id: 3033,
@@ -5350,6 +5285,7 @@
               name: "Vicente",
               gender: "male",
               birthDate: "1927",
+              photo: "img/Vicente-Aliaga-Zanón.jpg",
             },
             {
               id: 4033,
@@ -5388,6 +5324,7 @@
               apellidos: "6 Aliaga Zanón",
               name: "Rafael 1º",
               gender: "male",
+              photo: "img/RafaelAliagaZanón.jpg",
             },
             {
               id: 7033,
@@ -5595,7 +5532,7 @@
               pids: [13033],
               mid: null,
               fid: null,
-              apellidos: " ",
+              apellidos: "",
               name: "Luis",
               gender: "male",
             },
@@ -5617,7 +5554,7 @@
               pids: [13733],
               mid: null,
               fid: null,
-              apellidos: "Ibañez",
+              apellidos: "Ibáñez",
               name: "Primitivo",
               gender: "male",
             },
@@ -5658,6 +5595,7 @@
               apellidos: "2 Ibáñez Esquembre",
               name: "Vicente",
               gender: "male",
+              photo: "img/VicenteIbáñezEsquembre.jpg",
             },
             {
               id: 14333,
@@ -5676,6 +5614,7 @@
               apellidos: "1 Ibáñez García",
               name: "Ainsa",
               gender: "female",
+              photo: "img/Ainsa.jpg",
             },
             {
               id: 14532,
@@ -5685,6 +5624,7 @@
               apellidos: "2 Ibáñez García",
               name: "Ana",
               gender: "female",
+              photo: "img/AnaIbáñezGarcía.jpg",
             },
             {
               id: 14733,
@@ -5694,6 +5634,7 @@
               apellidos: "3 Ibáñez Esquembre",
               name: "MªCarmen",
               gender: "female",
+              photo: "img/IbáñezEsquembreCarmen.jpg",
             },
             {
               id: 14833,
@@ -5740,6 +5681,7 @@
               apellidos: "2 Hortas",
               name: "Paz",
               gender: "female",
+              photo: "img/PazHortas.jpg",
             },
             {
               id: 17753,
@@ -5778,6 +5720,7 @@
               apellidos: "2 Limiñana Sanjuán",
               name: "Marietta",
               gender: "female",
+              photo: "img/LimiñanaMarietta.jpg",
             },
             {
               id: 19933,
@@ -5923,6 +5866,7 @@
               apellidos: "Planchat",
               name: "Julio",
               gender: "male",
+              photo: "img/JulioPlanchat.jpg",
             },
             {
               id: 2434,
@@ -5932,6 +5876,7 @@
               apellidos: "4 Aliaga Tomás",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoAliagaTomas.jpg",
             },
             {
               id: 2534,
@@ -5950,6 +5895,7 @@
               apellidos: "5 Aliaga Tomás",
               name: "Rafael",
               gender: "male",
+              photo: "img/RafaAliagaTomás.jpg",
             },
             {
               id: 3034,
@@ -5967,6 +5913,7 @@
               apellidos: "6 Aliaga Tomás",
               name: "Vicente Atanasio",
               gender: "male",
+              photo: "img/AtanasioVicenteAliagaTomás.jpg",
             },
             {
               id: 3434,
@@ -5976,6 +5923,7 @@
               apellidos: "Gómez Roca",
               name: "Laudeta",
               gender: "female",
+              photo: "img/LaudetaGómezRoca.jpg",
             },
             {
               id: 4134,
@@ -6005,6 +5953,7 @@
               name: "Paco",
               gender: "male",
               birthDate: "1957",
+              photo: "img/PacoAliagaEstellés.jpg",
             },
             {
               id: 5634,
@@ -6015,6 +5964,7 @@
               name: "Loli",
               gender: "female",
               birthDate: "1959",
+              photo: "img/LoliAliagaEstellés.jpg",
             },
             {
               id: 6134,
@@ -6046,6 +5996,7 @@
               name: "José Ignacio",
               gender: "male",
               birthDate: "1966",
+              photo: "img/IgnacioAliagaEstellés2023.jpg",
             },
             {
               id: 6734,
@@ -6055,6 +6006,7 @@
               apellidos: "Sirvent",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoSirvent.jpg",
             },
             {
               id: 7434,
@@ -6067,8 +6019,25 @@
               birthDate: "1943",
               photo: "img/Alberto.jpg",
             },
-            // {id:7533,pids:[7434],mid:null,fid:null,apellidos:"Beltrán García",name:"Elena",gender:"female"},
-            // {id:7632,pids:[null],mid:7533,pids:7434,apellidos:"Girbes Beltrán",name:"Helena",gender:"female"},
+            {
+              id: 7533,
+              pids: [7434],
+              mid: null,
+              fid: null,
+              apellidos: "Beltrán García",
+              name: "Elena",
+              gender: "female",
+              photo: "img/ElenaBeltrán.jpg",
+            },
+            {
+              id: 7632,
+              pids: [null],
+              mid: 7533,
+              fid: 7434,
+              apellidos: "Girbes Beltrán",
+              name: "Helena",
+              gender: "female",
+            },
             {
               id: 8634,
               pids: [null],
@@ -6260,6 +6229,7 @@
               apellidos: "Planchat Aliaga",
               name: "Asun",
               gender: "female",
+              photo: "img/AsunPlanchatAliaga.jpg",
             },
             {
               id: 2635,
@@ -6269,6 +6239,7 @@
               apellidos: "Jiménez Aliaga",
               name: "Eva",
               gender: "female",
+              photo: "img/JiménezAliagaEva2023.jpg",
             },
             {
               id: 2735,
@@ -6287,7 +6258,18 @@
               apellidos: "Aliaga Sanches",
               name: "Javier",
               gender: "male",
+              photo: "img/AliagaSanchesJavier.jpg",
             },
+            {
+              id: 3137,
+              pids: [null],
+              mid: null,
+              fid: 3135,
+              apellidos: "...",
+              gender: "male",
+              photo: "img/nietodeRafaAliaga.jpg",
+            },
+
             {
               id: 3235,
               pids: [null],
@@ -6295,6 +6277,7 @@
               fid: 2934,
               apellidos: "Aliaga Sanches",
               name: "Emi",
+              photo: "img/EmiAliagaSanches.jpg",
             },
             {
               id: 3535,
@@ -6304,6 +6287,7 @@
               apellidos: "1 Aliaga Gómez",
               name: "Silvia",
               gender: "female",
+              photo: "img/AliagaGomezSilvia.jpg",
             },
             {
               id: 3635,
@@ -6313,6 +6297,7 @@
               apellidos: "Cid Pérez",
               name: "Antonio",
               gender: "female",
+              photo: "img/CidPérezAntonio.jpg",
             },
             {
               id: 3935,
@@ -6331,6 +6316,7 @@
               apellidos: "1 Aliaga Ferrer",
               name: "Vicente",
               gender: "male",
+              photo: "img/VicenteAliagaFerrer.jpg",
             },
             {
               id: 4435,
@@ -6340,6 +6326,7 @@
               apellidos: "2 Aliaga Ferrer",
               name: "Fernando",
               gender: "male",
+              photo: "img/AliagaFerrerFernando.jpg",
             },
             {
               id: 4535,
@@ -6349,6 +6336,7 @@
               apellidos: "3 Aliaga Ferrer",
               name: "Pepa",
               gender: "female",
+              photo: "img/PepaAliagaFerrer.jpg",
             },
             {
               id: 4935,
@@ -6379,6 +6367,7 @@
               name: "Trini",
               gender: "female",
               birthDate: "1962",
+              photo: "img/TriniAndrésHdez.jpg",
             },
             {
               id: 5835,
@@ -6408,6 +6397,7 @@
               apellidos: "1 Aliaga Queralt",
               name: "Elena",
               gender: "female",
+              photo: "img/ElenaAliagaQueralt.jpg",
             },
             {
               id: 6435,
@@ -6417,6 +6407,7 @@
               apellidos: "2 Aliaga Queralt",
               name: "Inés",
               gender: "female",
+              photo: "img/InésAliagaQueralt.jpg",
             },
             {
               id: 6835,
@@ -6426,6 +6417,7 @@
               apellidos: "1 Aliaga Sirvent",
               name: "Nacho",
               gender: "male",
+              photo: "img/NachoAliaga Sirvent.jpg",
             },
             {
               id: 6935,
@@ -6435,6 +6427,7 @@
               apellidos: "2 Aliaga Sirvent",
               name: "Begoña",
               gender: "female",
+              photo: "img/AliagaSirventBegoña.jpg",
             },
             {
               id: 7535,
@@ -6494,6 +6487,7 @@
               apellidos: "Sanjaime Marqués",
               name: "Alicia",
               gender: "female",
+              photo: "img/AliciaSanjaimeMarqués.jpg",
             },
 
             {
@@ -6512,15 +6506,21 @@
               pids: [10235],
               mid: null,
               fid: null,
-              apellidos: "no lo se",
+              apellidos: "Ballester Lees",
+              name: "Joanna",
               gender: "female",
+              photo: "img/JoannaBallesterLees.jpg",
             },
             {
               id: 10239,
               pids: [null],
               mid: 10135,
               fid: 10235,
-              apellidos: "1 Ballester ...",
+              apellidos: "1 Ballester Lees ",
+              name: "Anaís",
+              gender: "female",
+              birthDate: "2020",
+              photo: "img/AnaísBallesterLees2019.jpg",
             },
             {
               id: 10241,
@@ -6549,10 +6549,11 @@
               name: "Belen",
               gender: "female",
               birthDate: "1976",
+              photo: "img/BelenPruñonosa.jpg",
             },
             {
               id: 11535,
-              pids: [null],
+              pids: [11536],
               mid: 11033,
               fid: 10934,
               apellidos: "2 Aliaga Gutiérrez",
@@ -6561,6 +6562,39 @@
               birthDate: "1978",
               photo: "img/Marcos.jpg",
             },
+            {
+              id: 11536,
+              pids: [11535],
+              mid: null,
+              fid: null,
+              apellidos: "Alemany Prieto",
+              name: "Odille",
+              gender: "female",
+              photo: "img/OdilleAlemanyPrieto2023.jpg",
+            },
+            {
+              id: 11537,
+              pids: [null],
+              mid: 11536,
+              fid: 11535,
+              apellidos: "1  Aliaga Alemany",
+              name: "Cynthia",
+              gender: "female",
+              birthDate: "2021",
+              photo: "img/CynthiaAliagaAlemany2022.jpg",
+            },
+            {
+              id: 11538,
+              pids: [null],
+              mid: 11536,
+              fid: 11535,
+              apellidos: "2 Aliaga Alemany",
+              name: "Alberto V",
+              gender: "male",
+              birthDate: "2023",
+              photo: "img/AlbertoV2023.jpg",
+            },
+
             {
               id: 11635,
               pids: [11735],
@@ -6580,6 +6614,7 @@
               apellidos: "Rubio",
               name: "Rubén",
               gender: "male",
+              photo: "img/Rubén.jpg",
             },
             {
               id: 12935,
@@ -6590,17 +6625,18 @@
               name: "José Miguel",
               gender: "male",
               birthDate: "14-3-1974",
-              photo: "img/jose.png",
+              photo: "img/JoseMontananaAliaga.jpg",
             },
             {
               id: 13035,
               pids: [12935],
               mid: null,
               fid: null,
-              apellidos: " Wu",
+              apellidos: "Wu",
               name: "Xiao-Li",
               gender: "female",
               birthDate: "7-9-1984",
+              photo: "img/xiaoli.jpg",
             },
             {
               id: 13235,
@@ -6611,7 +6647,7 @@
               name: "Raul",
               gender: "male",
               birthDate: "1976-09-17",
-              photo: "img/raul.png",
+              photo: "img/Raul2020.jpg",
             },
             // {id:13335,pids:[13235],mid:null,fid:null,apellidos:"Castillo",name:"Lourdes",gender:"female"},
             {
@@ -6623,7 +6659,7 @@
               name: "Carolina",
               gender: "female",
               birthDate: "1979-02-10",
-              photo: "img/carol.png",
+              photo: "img/Carol2023.jpg",
             },
             {
               id: 13835,
@@ -6634,7 +6670,7 @@
               name: "Mery",
               gender: "female",
               birthDate: "1979-02-10",
-              photo: "img/mery.png",
+              photo: "img/Mery2023.jpg",
             },
             {
               id: 14235,
@@ -6667,7 +6703,7 @@
               name: "Jerónimo",
               gender: "male",
               birthDate: "1983",
-              photo: "img/Jerónimo.jpg",
+              photo: "img/JerónimoAliagaRios2018.jpg",
             },
             {
               id: 16435,
@@ -6678,7 +6714,7 @@
               name: "Ana",
               gender: "female",
               birthDate: "1978",
-              photo: "img/AnaVivó.jpg",
+              photo: "img/AnaVivóAliaga2.jpg",
             },
             {
               id: 16535,
@@ -6688,10 +6724,11 @@
               apellidos: "Carballeira Morado",
               name: "Javier",
               gender: "male",
+              photo: "img/JavierCarballeira.jpg",
             },
             {
               id: 16935,
-              pids: [17035],
+              pids: [17035, 17039],
               mid: 16234,
               fid: 16334,
               apellidos: "2 Aliaga Vivó",
@@ -6708,18 +6745,99 @@
               apellidos: "Acebes Rodríguez",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoAcebesRodríguez.jpg",
             },
             {
-              id: 17435,
+              id: 17039,
+              pids: [16935],
+              mid: null,
+              fid: null,
+              apellidos: "Jiménez Argudo",
+              name: "Beatriz",
+              gender: "female",
+              photo: "img/BeatrizJiménez2020.jpg",
+            },
+            {
+              id: 17037,
               pids: [null],
+              mid: 17039,
+              fid: 16935,
+              apellidos: "1 Aliaga Jiménez",
+              name: "Lucas",
+              birthDate: "2020",
+              gender: "male",
+              photo: "img/LucasAliagaJiménez2021.jpg",
+            },
+
+            {
+              id: 17038,
+              pids: [null],
+              mid: 17039,
+              fid: 16935,
+              apellidos: "2 Aliaga Jiménez",
+              name: "Marco",
+              birthDate: "2021",
+              gender: "male",
+            },
+
+            {
+              id: 17435,
+              pids: [17436],
               mid: 17234,
               fid: 17334,
               apellidos: "Villanueva Aliaga",
               name: "Lucía",
               gender: "female",
-              birthDate: "1984",
-              photo: "img/LucíaVillanuevaAliaga.jpg",
+              birthDate: "1983",
+              photo: "img/LuciaVillanuevaAliaga2023.jpg",
             },
+
+            {
+              id: 17438,
+              pids: [17439],
+              mid: null,
+              fid: null,
+              apellidos: "Pedro Ibáñez",
+              name: "Albert",
+              gender: "male",
+              birthDate: "1956",
+              photo: "img/PedroIbáñezAlbert2021.jpg",
+            },
+            {
+              id: 17439,
+              pids: [17438],
+              mid: null,
+              fid: null,
+              apellidos: "Pérez Lillo",
+              name: "María de las Nieves",
+              gender: "female",
+              birthDate: "1959",
+              photo: "img/MaríadelasNievesPérezLillo2021.jpg",
+            },
+
+            {
+              id: 17436,
+              pids: [17435],
+              mid: 17439,
+              fid: 17438,
+              apellidos: "1. Ibáñez Pérez",
+              name: "Oskar",
+              gender: "male",
+              birthDate: "1984",
+              photo: "img/OscarIbáñezPérez2021.jpg",
+            },
+            {
+              id: 17437,
+              pids: [null],
+              mid: 17435,
+              fid: 17436,
+              apellidos: "Ibáñez Villanueva",
+              name: "Aritz",
+              gender: "female",
+              birthDate: "2020",
+              photo: "img/IbáñezVillanuevaAritz.jpg",
+            },
+
             {
               id: 17835,
               pids: [null],
@@ -6729,7 +6847,7 @@
               name: "Violeta",
               gender: "female",
               birthDate: "1986",
-              photo: "img/Violeta2.jpg",
+              photo: "img/Violeta2017.jpg",
             },
             {
               id: 17935,
@@ -6740,7 +6858,7 @@
               name: "Olga",
               gender: "female",
               birthDate: "1994",
-              photo: "img/Olga.jpg",
+              photo: "img/HortasAliagaOlga1994.jpg",
             },
             {
               id: 18335,
@@ -6751,7 +6869,7 @@
               name: "Mario",
               gender: "male",
               birthDate: "1998",
-              photo: "img/Marito.jpg",
+              photo: "img/MarioMarcoAliaga2020.jpg",
             },
             {
               id: 18435,
@@ -6761,6 +6879,7 @@
               apellidos: ".",
               name: "Cristina",
               gender: "female",
+              photo: "img/CRISTINA2016.jpg",
             },
 
             {
@@ -6771,6 +6890,7 @@
               apellidos: "Iglesias Arrue",
               name: "José",
               gender: "male",
+              photo: "img/JoséIglesiasArrue.jpg",
             },
             {
               id: 18736,
@@ -6780,6 +6900,7 @@
               apellidos: "Zahonero Lechago",
               name: "Fina",
               gender: "female",
+              photo: "img/Madre-de-Bienve.jpg",
             },
             {
               id: 18835,
@@ -6836,7 +6957,7 @@
               apellidos: "1 Limiñana Aliaga",
               name: "Sara",
               gender: "female",
-              photo: "img/Sara.jpg",
+              photo: "img/Sara2023.jpg",
             },
             {
               id: 19935,
@@ -6847,7 +6968,8 @@
               name: "Arturo",
               gender: "male",
               birthDate: "1991",
-              photo: "img/Arturo.jpg",
+              photo1: "img/Arturo.jpg",
+              photo: "img/Arturo-Limiñana.jpg",
             },
             {
               id: 20035,
@@ -6858,7 +6980,7 @@
               name: "Paula",
               gender: "female",
               birthDate: "1996",
-              photo: "img/PaulaLimiñana.jpg",
+              photo: "img/PaulaLimiñana2022.jpg",
             },
             {
               id: 3736,
@@ -6877,6 +6999,7 @@
               apellidos: "Cid Aliaga",
               name: "Pablo",
               gender: "male",
+              photo: "img/PabloCidAliaga.jpg",
             },
             {
               id: 4736,
@@ -6928,6 +7051,7 @@
               name: "Esther",
               gender: "female",
               birthDate: "1991",
+              photo: "img/EstherAliagaAndrés.jpg",
             },
             {
               id: 6036,
@@ -6992,7 +7116,7 @@
             },
             {
               id: 8136,
-              pids: [null],
+              pids: [8137],
               mid: 7535,
               fid: 7434,
               apellidos: "3 Aliaga Ara",
@@ -7002,19 +7126,29 @@
               photo: "img/JorgeAliagaAra.jpg",
             },
             {
+              id: 8137,
+              pids: [8136],
+              mid: null,
+              fid: null,
+              apellidos: "Ruiz...",
+              gender: "female",
+            },
+            {
               id: 8140,
               pids: [null],
-              mid: null,
+              mid: 8137,
               fid: 8136,
-              apellidos: "1 Aliaga ...",
+              apellidos: "1 Aliaga Ruiz",
+              name: "Jorge",
               gender: "male",
+              photo: "img/JorgeAliagaRuiz2022.jpg",
             },
             {
               id: 8142,
               pids: [null],
-              mid: null,
+              mid: 8137,
               fid: 8136,
-              apellidos: "2 Aliaga ...",
+              apellidos: "2 Aliaga Ruiz",
               gender: "male",
             },
 
@@ -7026,6 +7160,7 @@
               apellidos: "1 Corbí Ramón",
               name: "Patricia",
               gender: "female",
+              photo: "img/PatriciaCorbíRamón.jpg",
             },
             {
               id: 8636,
@@ -7044,15 +7179,17 @@
               apellidos: "2 Corbí Ramón",
               name: "Fran",
               gender: "male",
+              photo: "img/CorbíRamónFranc.jpg",
             },
             {
               id: 9036,
               pids: [8936],
               mid: null,
               fid: null,
-              apellidos: " Blanquez Martínez",
+              apellidos: "Blanquez Martínez",
               name: "Susana",
               gender: "female",
+              photo: "img/SusanaBlanquez Martínez.jpg",
             },
             {
               id: 9436,
@@ -7062,7 +7199,7 @@
               apellidos: "3 Corbí Ramón",
               name: "Guillermo",
               gender: "male",
-              photo: "img/GuillermoCorbí.jpg",
+              photo: "img/GuillermoCorbí2016.jpg",
             },
             {
               id: 9836,
@@ -7073,6 +7210,7 @@
               name: "Candela",
               gender: "female",
               birthDate: "2012",
+              photo: "img/Candela2016.jpg",
             },
             {
               id: 9936,
@@ -7083,6 +7221,7 @@
               name: "Eduardo",
               gender: "male",
               birthDate: "2014",
+              photo: "img/EduardoBallesterSanjaime2016.jpg",
             },
             {
               id: 11336,
@@ -7093,7 +7232,7 @@
               name: "Natalia",
               gender: "female",
               birthDate: "2010",
-              photo: "img/NataliaAliagaP.jpg",
+              photo: "img/NataliaAliagaPruñonosa2015.jpg",
             },
             {
               id: 11436,
@@ -7104,6 +7243,7 @@
               name: "Alejandro",
               gender: "male",
               birthDate: "2010",
+              photo: "img/AliagaPruñonosaAlejandro2022.jpg",
             },
             {
               id: 11836,
@@ -7111,8 +7251,10 @@
               mid: 11635,
               fid: 11735,
               apellidos: "Rubio Aliaga",
-              name: ".",
-              birthDate: "Mar-2015",
+              name: "Mar",
+              gender: "female",
+              birthDate: "2012",
+              photo: "img/MarRubioAliaga2023.jpg",
             },
             {
               id: 11936,
@@ -7123,6 +7265,7 @@
               name: "Alexia",
               gender: "female",
               birthDate: "2015",
+              photo: "img/RubioAliagaAlexia2020.jpg",
             },
             {
               id: 13136,
@@ -7133,6 +7276,7 @@
               name: "Selina Yitian",
               gender: "female",
               birthDate: "6-2-2018",
+              photo: "img/MontañanaWuSelina2020.jpg",
             },
             {
               id: 13936,
@@ -7142,6 +7286,7 @@
               apellidos: "Nieto",
               name: "David",
               gender: "male",
+              photo: "img/DavidNieto.jpg",
             },
             {
               id: 16636,
@@ -7151,7 +7296,7 @@
               apellidos: "Carballeira Vivó",
               name: "Irene",
               gender: "female",
-              photo: "img/IreneCarballeiraVivó.jpg",
+              photo: "img/CarballeiraVivóIrene2018.jpg",
             },
             {
               id: 16736,
@@ -7162,6 +7307,7 @@
               name: "Noa",
               gender: "female",
               birthDate: "2009",
+              photo: "img/CarballeiraVivóNoa2018.jpg",
             },
             {
               id: 16836,
@@ -7171,6 +7317,7 @@
               apellidos: "Carballeira Vivó",
               name: "Diego",
               gender: "male",
+              photo: "img/CarballeiraVivóDiego2.jpg",
             },
 
             {
@@ -7182,6 +7329,7 @@
               name: "Ana Belén",
               gender: "female",
               birthDate: "1985",
+              photo: "img/AnaBelénSelmaIglesias.jpg",
             },
             {
               id: 19336,
@@ -7192,6 +7340,7 @@
               name: "Raquel",
               gender: "female",
               birthDate: "1991",
+              photo: "img/RaquelSelmaIglesias.jpg",
             },
             {
               id: 19436,
@@ -7212,6 +7361,7 @@
               name: "Javi",
               gender: "male",
               birthDate: "2005",
+              photo: "img/JaviAliagaIglesias2022.jpg",
             },
             {
               id: 7737,
@@ -7221,6 +7371,7 @@
               apellidos: ".",
               name: "Isabel",
               gender: "female",
+              photo: "img/IsabeldeAlberito.jpg",
             },
             {
               id: 8337,
@@ -7230,6 +7381,7 @@
               apellidos: "Corbí Aguado",
               name: "Guillermo",
               gender: "male",
+              photo: "img/CorbíAguadoGuillermo.jpg",
             },
             {
               id: 8437,
@@ -7277,6 +7429,7 @@
               name: "Guillermo",
               gender: "male",
               birthDate: "2007",
+              photo: "img/GuileCorbíBallester2020.jpg",
             },
             {
               id: 9637,
@@ -7287,16 +7440,18 @@
               name: "Jana",
               gender: "female",
               birthDate: "2012",
+              photo: "img/Jana2020.jpg",
             },
             {
               id: 14037,
               pids: [null],
               mid: 13835,
               fid: 13936,
-              apellidos: " Nieto Montañana",
+              apellidos: "Nieto Montañana",
               name: "Verónica",
               gender: "female",
               birthDate: "11-06-2013",
+              photo: "img/Vero2023.jpg",
             },
             {
               id: 7838,
@@ -7344,6 +7499,7 @@
               apellidos: "López Cañada",
               name: "Gema",
               gender: "female",
+              photo: "img/GemaLópezCañada2017.jpg",
             },
             {
               id: 15739,
@@ -7354,7 +7510,7 @@
               name: "Carlos III",
               gender: "male",
               birthDate: "2004",
-              photo: "img/carlosIII.jpg",
+              photo: "img/CarlosIII-IbáñezLópez2022.jpg",
             },
             {
               id: 15839,
@@ -7365,6 +7521,7 @@
               name: "Esther",
               gender: "female",
               birthDate: "2008",
+              photo: "img/EstherIbáñezLópez2023.jpg",
             },
 
             {
@@ -7393,6 +7550,7 @@
               apellidos: "2 Tamarit Cortina",
               name: "Vicente",
               gender: "male",
+              photo: "img/VicenteTamarit2007.jpg",
             },
             {
               id: 14739,
@@ -7429,6 +7587,7 @@
               apellidos: "Cañadas",
               name: "Carmen",
               gender: "female",
+              photo: "img/Carmen-Cañadas.jpg",
             },
 
             {
@@ -7436,7 +7595,7 @@
               pids: [13540],
               mid: null,
               fid: null,
-              apellidos: " Tamarit",
+              apellidos: "Tamarit",
               name: "Vicente",
               gender: "male",
             },
@@ -7445,9 +7604,10 @@
               pids: [13440],
               mid: null,
               fid: null,
-              apellidos: " Cortina",
+              apellidos: "Cortina",
               name: "Amparo",
               gender: "female",
+              photo: "img/AmparoCortina.jpg",
             },
             {
               id: 13840,
@@ -7457,6 +7617,7 @@
               apellidos: "1",
               name: "Raquel",
               gender: "female",
+              photo: "img/RaqueldelosTamarit.jpg",
             },
             {
               id: 13940,
@@ -7466,6 +7627,7 @@
               apellidos: "2",
               name: "Quique",
               gender: "male",
+              photo: "img/QuiquedelosTamarit.jpg",
             },
             {
               id: 14040,
@@ -7475,6 +7637,7 @@
               apellidos: "3",
               name: "Juan",
               gender: "male",
+              photo: "img/JuandelosTamarit.jpg",
             },
             {
               id: 14440,
@@ -7485,7 +7648,7 @@
               name: "Chente",
               gender: "male",
               birthDate: "2002",
-              photo: "img/Chente85.jpg",
+              photo: "img/TamaritIbáñezChente2023.jpg",
             },
             {
               id: 14540,
@@ -7496,6 +7659,7 @@
               name: "Sergio",
               gender: "male",
               birthDate: "2006",
+              photo: "img/TamaritIbáñezSergio2006.jpg",
             },
             {
               id: 14940,
@@ -7505,6 +7669,7 @@
               apellidos: "1 Tamarit",
               name: "Nacho",
               gender: "male",
+              photo: "img/NachoTamarit.jpg",
             },
             {
               id: 15040,
@@ -7514,6 +7679,7 @@
               apellidos: "2 Tamarit",
               name: "Blanca",
               gender: "female",
+              photo: "img/BlancaTamarit.jpg",
             },
           ],
         });
