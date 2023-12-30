@@ -1,5 +1,10 @@
+
+import { checkConsistency } from './check-consistency.js';
+import { calculapositions } from './calculapositions.js';
 var result_copy = {}
+var d = {};
 var FamilyTree = function (e, t) {
+
     var i = this;
     if (("string" == typeof e || e instanceof String) && (e = document.querySelector(e)), this.element = e, this.config = FamilyTree.mergeDeep(FamilyTree._defaultConfig(t), t), this._layoutConfigs = {
         base: {
@@ -55,7 +60,7 @@ var FamilyTree = function (e, t) {
     }), (function () {
         i._draw(!0, FamilyTree.action.xScroll)
     }))), this.element.classList.add("bft-" + this.config.mode), this._gragStartedId = null, this._timeout = null, this._touch = null, this._initialized = !1, this._loaded = !1, this._moveInterval = null, this._movePosition = null, this.response = null, this.nodes = null, this.isVisible = null, FamilyTree._intersectionObserver(this.element, (function (e) {
-        i.isVisible = e, FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
+        i.isVisible = e, !1 !== FamilyTree.events.publish("visibility-change", [i]) && FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
     })))
 };
 FamilyTree._defaultConfig = function (e) {
@@ -166,271 +171,275 @@ FamilyTree._defaultConfig = function (e) {
             elements: []
         }
     }
-}, FamilyTree.prototype.load = function (e) {
-    return this.config.nodes = e, this._draw(!1, FamilyTree.action.init), this
-}, FamilyTree.prototype.loadXML = function (e) {
-    var t = FamilyTree._xml2json(e);
-    return this.load(t)
-}, FamilyTree.prototype.getXML = function () {
-    return FamilyTree._json2xml(this.config.nodes)
-}, FamilyTree.prototype.on = function (e, t) {
-    return FamilyTree.events.on(e, t, this._event_id), this
-}, FamilyTree.prototype.draw = function (e, t, i) {
-    null == e && (e = FamilyTree.action.update), this._draw(!1, e, t, i)
-}, FamilyTree.prototype._draw = function (e, t, i, r) {
-    var a = this;
-    if (!FamilyTree.LAZY_LOADING || this.isVisible)
-        if (FamilyTree.LAZY_LOADING || this._initialized || (this._setInitialSizeIfNotSet(), 0 != this.width() && 0 != this.height())) {
-            this._hideBeforeAnimationCompleted = !1;
-            var n = t == FamilyTree.action.init ? null : this.getViewBox();
-            this.manager.read(e, this.width(), this.height(), n, t, i, (function (e) {
-                if (!a.notifierUI.show(e.notif)) {
-                    t != FamilyTree.action.exporting && (a.nodes = e.nodes, a.visibleNodeIds = e.visibleNodeIds, a.roots = e.roots), a.editUI.fields = e.allFields;
-                    var n = {
-                        defs: ""
-                    };
-                    FamilyTree.events.publish("renderdefs", [a, n]);
-                    var l = a.ui.defs(n.defs),
-                        o = a.getScale(e.viewBox);
-                    l += a.ui.pointer(a.config, t, o);
-                    var s = a.getViewBox(),
-                        d = e.viewBox;
-                    n = {
-                        content: l,
-                        res: e
-                    };
-                    FamilyTree.events.publish("prerender", [a, n]), l = n.content;
-                    for (var c = 0; c < e.visibleNodeIds.length; c++) {
-                        var m = e.nodes[e.visibleNodeIds[c]],
-                            p = a._get(m.id);
-                        FamilyTree.RENDER_LINKS_BEFORE_NODES && (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.node(m, p, e.animations, a.config, void 0, void 0, void 0, t, o, a)
-                    }
-                    for (c = 0; c < e.visibleNodeIds.length; c++) {
-                        m = e.nodes[e.visibleNodeIds[c]];
-                        FamilyTree.RENDER_LINKS_BEFORE_NODES || (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.expandCollapseBtn(a, m, a._layoutConfigs, t, o)
-                    }
-                    n = {
-                        content: l,
-                        res: e
-                    };
-                    if (FamilyTree.events.publish("render", [a, n]), l = n.content, e = n.res, l += a.ui.lonely(a.config), t !== FamilyTree.action.exporting) {
-                        t !== FamilyTree.action.centerNode && t !== FamilyTree.action.insert && t !== FamilyTree.action.expand && t !== FamilyTree.action.collapse && t !== FamilyTree.action.update || (d = s), t === FamilyTree.action.init && null != s && (d = s), a.response = e;
-                        v = a.ui.svg(a.width(), a.height(), d, a.config, l);
-                        if (a._initialized) {
-                            var h = a.getSvg(),
-                                f = h.parentNode;
-                            f.removeChild(h), f.insertAdjacentHTML("afterbegin", v), a._attachEventHandlers(), a.xScrollUI.addListener(a.getSvg()), a.yScrollUI.addListener(a.getSvg()), a.xScrollUI.setPosition(), a.yScrollUI.setPosition()
-                        } else a.element.innerHTML = a.ui.css() + v + a.ui.menuButton(a.config), a._attachInitEventHandlers(), a._attachEventHandlers(), a.xScrollUI.create(a.width(), a.config.padding), a.xScrollUI.setPosition(), a.xScrollUI.addListener(a.getSvg()), a.yScrollUI.create(a.height(), a.config.padding), a.yScrollUI.setPosition(), a.yScrollUI.addListener(a.getSvg()), a.config.enableSearch && a.searchUI.init(a), a.toolbarUI.init(a, a.config.toolbar);
-                        var u = !1,
-                            y = a.response.animations;
-                        if (y[0].length > 0) {
-                            a._hideBeforeAnimation(y[0].length);
-                            for (c = 0; c < y[0].length; c++) y[0][c] = a.getNodeElement(y[0][c]);
-                            FamilyTree.animate(y[0], y[1], y[2], a.config.anim.duration, a.config.anim.func, (function () {
-                                u || (r && r(), FamilyTree.events.publish("redraw", [a]), a._showAfterAnimation(), u = !0)
-                            }))
+}, void 0 === FamilyTree && (FamilyTree = {}),
+    void 0 === FamilyTree.remote && (FamilyTree.remote = {}),
+
+
+    FamilyTree.prototype.load = function (e) {
+        return this.config.nodes = e, this._draw(!1, FamilyTree.action.init), this
+    }, FamilyTree.prototype.loadXML = function (e) {
+        var t = FamilyTree._xml2json(e);
+        return this.load(t)
+    }, FamilyTree.prototype.getXML = function () {
+        return FamilyTree._json2xml(this.config.nodes)
+    }, FamilyTree.prototype.on = function (e, t) {
+        return FamilyTree.events.on(e, t, this._event_id), this
+    }, FamilyTree.prototype.draw = function (e, t, i) {
+        null == e && (e = FamilyTree.action.update), this._draw(!1, e, t, i)
+    }, FamilyTree.prototype._draw = function (e, t, i, r) {
+        var a = this;
+        if (!FamilyTree.LAZY_LOADING || this.isVisible)
+            if (FamilyTree.LAZY_LOADING || this._initialized || (this._setInitialSizeIfNotSet(), 0 != this.width() && 0 != this.height())) {
+                this._hideBeforeAnimationCompleted = !1;
+                var n = t == FamilyTree.action.init ? null : this.getViewBox();
+                this.manager.read(e, this.width(), this.height(), n, t, i, (function (e) {
+                    if (!a.notifierUI.show(e.notif)) {
+                        t != FamilyTree.action.exporting && (a.nodes = e.nodes, a.visibleNodeIds = e.visibleNodeIds, a.roots = e.roots), a.editUI.fields = e.allFields;
+                        var n = {
+                            defs: ""
+                        };
+                        FamilyTree.events.publish("renderdefs", [a, n]);
+                        var l = a.ui.defs(n.defs),
+                            o = a.getScale(e.viewBox);
+                        l += a.ui.pointer(a.config, t, o);
+                        var s = a.getViewBox(),
+                            d = e.viewBox;
+                        n = {
+                            content: l,
+                            res: e
+                        };
+                        FamilyTree.events.publish("prerender", [a, n]), l = n.content;
+                        for (var c = 0; c < e.visibleNodeIds.length; c++) {
+                            var m = e.nodes[e.visibleNodeIds[c]],
+                                p = a._get(m.id);
+                            FamilyTree.RENDER_LINKS_BEFORE_NODES && (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.node(m, p, e.animations, a.config, void 0, void 0, void 0, t, o, a)
                         }
-                        t === FamilyTree.action.centerNode ? FamilyTree.animate(a.getSvg(), {
-                            viewbox: s
-                        }, {
-                            viewbox: a.response.viewBox
-                        }, a.config.anim.duration, a.config.anim.func, (function () {
-                            a.ripple(i.options.rippleId), u || (r && r(), FamilyTree.events.publish("redraw", [a]), a._showAfterAnimation(), u = !0)
-                        }), (function () {
-                            a.xScrollUI.setPosition(), a.yScrollUI.setPosition()
-                        })) : !s || !a.response || s[0] == a.response.viewBox[0] && s[1] == a.response.viewBox[1] && s[2] == a.response.viewBox[2] && s[3] == a.response.viewBox[3] || t !== FamilyTree.action.insert && t !== FamilyTree.action.expand && t !== FamilyTree.action.collapse && t !== FamilyTree.action.update && t !== FamilyTree.action.init ? 0 == y[0].length && (u || (r && r(), FamilyTree.events.publish("redraw", [a]), u = !0)) : FamilyTree.animate(a.getSvg(), {
-                            viewbox: s
-                        }, {
-                            viewbox: a.response.viewBox
-                        }, 2 * a.config.anim.duration, a.config.anim.func, (function () {
-                            a.xScrollUI.setPosition(), a.yScrollUI.setPosition(), u || (r && r(), FamilyTree.events.publish("redraw", [a]), u = !0)
-                        })), a._initialized || (a._initialized = !0, a.filterUI.update(), FamilyTree.events.publish("init", [a])), !a._loaded && e && e.nodes && Object.keys(e.nodes).length && (a._loaded = !0)
-                    } else {
-                        var g = e.boundary,
-                            T = g.maxX - g.minX,
-                            b = g.maxY - g.minY,
-                            v = a.ui.svg(T, b, [g.minX, g.minY, T, b], a.config, l, o);
-                        r(v)
+                        for (c = 0; c < e.visibleNodeIds.length; c++) {
+                            m = e.nodes[e.visibleNodeIds[c]];
+                            FamilyTree.RENDER_LINKS_BEFORE_NODES || (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.expandCollapseBtn(a, m, a._layoutConfigs, t, o)
+                        }
+                        n = {
+                            content: l,
+                            res: e
+                        };
+                        if (FamilyTree.events.publish("render", [a, n]), l = n.content, e = n.res, l += a.ui.lonely(a.config), t !== FamilyTree.action.exporting) {
+                            t !== FamilyTree.action.centerNode && t !== FamilyTree.action.insert && t !== FamilyTree.action.expand && t !== FamilyTree.action.collapse && t !== FamilyTree.action.update || (d = s), t === FamilyTree.action.init && null != s && (d = s), a.response = e;
+                            v = a.ui.svg(a.width(), a.height(), d, a.config, l);
+                            if (a._initialized) {
+                                var h = a.getSvg(),
+                                    f = h.parentNode;
+                                f.removeChild(h), f.insertAdjacentHTML("afterbegin", v), a._attachEventHandlers(), a.xScrollUI.addListener(a.getSvg()), a.yScrollUI.addListener(a.getSvg()), a.xScrollUI.setPosition(), a.yScrollUI.setPosition()
+                            } else a.element.innerHTML = a.ui.css() + v + a.ui.menuButton(a.config), a._attachInitEventHandlers(), a._attachEventHandlers(), a.xScrollUI.create(a.width(), a.config.padding), a.xScrollUI.setPosition(), a.xScrollUI.addListener(a.getSvg()), a.yScrollUI.create(a.height(), a.config.padding), a.yScrollUI.setPosition(), a.yScrollUI.addListener(a.getSvg()), a.config.enableSearch && a.searchUI.init(a), a.toolbarUI.init(a, a.config.toolbar);
+                            var u = !1,
+                                y = a.response.animations;
+                            if (y[0].length > 0) {
+                                a._hideBeforeAnimation(y[0].length);
+                                for (c = 0; c < y[0].length; c++) y[0][c] = a.getNodeElement(y[0][c]);
+                                FamilyTree.animate(y[0], y[1], y[2], a.config.anim.duration, a.config.anim.func, (function () {
+                                    u || (r && r(), FamilyTree.events.publish("redraw", [a]), a._showAfterAnimation(), u = !0)
+                                }))
+                            }
+                            t === FamilyTree.action.centerNode ? FamilyTree.animate(a.getSvg(), {
+                                viewbox: s
+                            }, {
+                                viewbox: a.response.viewBox
+                            }, a.config.anim.duration, a.config.anim.func, (function () {
+                                a.ripple(i.options.rippleId), u || (r && r(), FamilyTree.events.publish("redraw", [a]), a._showAfterAnimation(), u = !0)
+                            }), (function () {
+                                a.xScrollUI.setPosition(), a.yScrollUI.setPosition()
+                            })) : !s || !a.response || s[0] == a.response.viewBox[0] && s[1] == a.response.viewBox[1] && s[2] == a.response.viewBox[2] && s[3] == a.response.viewBox[3] || t !== FamilyTree.action.insert && t !== FamilyTree.action.expand && t !== FamilyTree.action.collapse && t !== FamilyTree.action.update && t !== FamilyTree.action.init ? 0 == y[0].length && (u || (r && r(), FamilyTree.events.publish("redraw", [a]), u = !0)) : FamilyTree.animate(a.getSvg(), {
+                                viewbox: s
+                            }, {
+                                viewbox: a.response.viewBox
+                            }, 2 * a.config.anim.duration, a.config.anim.func, (function () {
+                                a.xScrollUI.setPosition(), a.yScrollUI.setPosition(), u || (r && r(), FamilyTree.events.publish("redraw", [a]), u = !0)
+                            })), a._initialized || (a._initialized = !0, a.filterUI.update(), FamilyTree.events.publish("init", [a])), !a._loaded && e && e.nodes && Object.keys(e.nodes).length && (a._loaded = !0)
+                        } else {
+                            var g = e.boundary,
+                                T = g.maxX - g.minX,
+                                b = g.maxY - g.minY,
+                                v = a.ui.svg(T, b, [g.minX, g.minY, T, b], a.config, l, o);
+                            r(v)
+                        }
                     }
+                }), (function (e) {
+                    FamilyTree.events.publish("ready", [a, e])
+                }))
+            } else console.error("Cannot load the family with size 0! If you are using the FamilyTree within tabs set FamilyTree.LAZY_LOADING to true! ")
+    }, FamilyTree.prototype._setInitialSizeIfNotSet = function () {
+        this.element.style.overflow = "hidden",
+            this.element.style.position = "relative",
+            0 == this.element.offsetHeight && (this.element.style.height = "100%",
+                0 == this.element.offsetHeight && (this.element.style.height = "700px")),
+            0 == this.element.offsetWidth && (this.element.style.width = "100%",
+                0 == this.element.offsetWidth && (this.element.style.width = "700px"))
+    }, FamilyTree.prototype.width = function () {
+        return this.element.offsetWidth
+    }, FamilyTree.prototype.height = function () {
+        return this.element.offsetHeight
+    }, FamilyTree.prototype.getViewBox = function () {
+        var e = this.getSvg();
+        return FamilyTree._getViewBox(e)
+    }, FamilyTree.prototype.setViewBox = function (e) {
+        this.getSvg().setAttribute("viewBox", e.toString())
+    }, FamilyTree.prototype.getScale = function (e) {
+        return e || (e = this.getViewBox()), FamilyTree.getScale(e, this.width(), this.height(), this.config.scaleInitial, this.config.scaleMax, this.config.scaleMin)
+    }, FamilyTree.prototype.ripple = function (e, t, i) {
+        var r = this.getNode(e);
+        if (null != r) {
+            var a = this.getNodeElement(e);
+            if (null != a) {
+                var n = this.getScale(),
+                    l = r.w / 2,
+                    o = r.h / 2;
+                if (void 0 !== t && void 0 !== i) {
+                    var s = a.getBoundingClientRect();
+                    l = t / n - s.left / n, o = i / n - s.top / n
                 }
-            }), (function (e) {
-                //nothing
-            }))
-        } else console.error("Cannot load the family with size 0! If you are using the FamilyTree within tabs set FamilyTree.LAZY_LOADING to true! ")
-}, FamilyTree.prototype._setInitialSizeIfNotSet = function () {
-    this.element.style.overflow = "hidden",
-        this.element.style.position = "relative",
-        0 == this.element.offsetHeight && (this.element.style.height = "100%",
-            0 == this.element.offsetHeight && (this.element.style.height = "700px")),
-        0 == this.element.offsetWidth && (this.element.style.width = "100%",
-            0 == this.element.offsetWidth && (this.element.style.width = "700px"))
-}, FamilyTree.prototype.width = function () {
-    return this.element.offsetWidth
-}, FamilyTree.prototype.height = function () {
-    return this.element.offsetHeight
-}, FamilyTree.prototype.getViewBox = function () {
-    var e = this.getSvg();
-    return FamilyTree._getViewBox(e)
-}, FamilyTree.prototype.setViewBox = function (e) {
-    this.getSvg().setAttribute("viewBox", e.toString())
-}, FamilyTree.prototype.getScale = function (e) {
-    return e || (e = this.getViewBox()), FamilyTree.getScale(e, this.width(), this.height(), this.config.scaleInitial, this.config.scaleMax, this.config.scaleMin)
-}, FamilyTree.prototype.ripple = function (e, t, i) {
-    var r = this.getNode(e);
-    if (null != r) {
-        var a = this.getNodeElement(e);
-        if (null != a) {
-            var n = this.getScale(),
-                l = r.w / 2,
-                o = r.h / 2;
-            if (void 0 !== t && void 0 !== i) {
-                var s = a.getBoundingClientRect();
-                l = t / n - s.left / n, o = i / n - s.top / n
+                var d = r.w,
+                    c = r.h,
+                    m = d - l > l ? d - l : l,
+                    p = c - o > o ? c - o : o,
+                    h = (m = m) > (p = p) ? m : p,
+                    f = document.createElementNS("http://www.w3.org/2000/svg", "g"),
+                    u = document.createElementNS("http://www.w3.org/2000/svg", "clipPath"),
+                    y = document.createElementNS("http://www.w3.org/2000/svg", "rect"),
+                    g = document.createElementNS("http://www.w3.org/2000/svg", "circle"),
+                    T = FamilyTree.randomId();
+                u.setAttribute("id", T);
+                var b = {
+                    ripple: FamilyTree.t(r.templateName, r.min, this.getScale()).ripple,
+                    node: r
+                };
+                FamilyTree.events.publish("ripple", [this, b]), y.setAttribute("x", b.ripple.rect ? b.ripple.rect.x : 0), y.setAttribute("y", b.ripple.rect ? b.ripple.rect.y : 0), y.setAttribute("width", b.ripple.rect ? b.ripple.rect.width : r.w), y.setAttribute("height", b.ripple.rect ? b.ripple.rect.height : r.h), y.setAttribute("rx", b.ripple.radius), y.setAttribute("ry", b.ripple.radius), g.setAttribute("clip-path", "url(#" + T + ")"), g.setAttribute("cx", l), g.setAttribute("cy", o), g.setAttribute("r", 0), g.setAttribute("fill", b.ripple.color), g.setAttribute("class", "bft-ripple"), u.appendChild(y), f.appendChild(u), f.appendChild(g), a.appendChild(f), FamilyTree.animate(g, {
+                    r: 0,
+                    opacity: 1
+                }, {
+                    r: h,
+                    opacity: 0
+                }, 500, FamilyTree.anim.outPow, (function () {
+                    a.removeChild(f)
+                }))
             }
-            var d = r.w,
-                c = r.h,
-                m = d - l > l ? d - l : l,
-                p = c - o > o ? c - o : o,
-                h = (m = m) > (p = p) ? m : p,
-                f = document.createElementNS("http://www.w3.org/2000/svg", "g"),
-                u = document.createElementNS("http://www.w3.org/2000/svg", "clipPath"),
-                y = document.createElementNS("http://www.w3.org/2000/svg", "rect"),
-                g = document.createElementNS("http://www.w3.org/2000/svg", "circle"),
-                T = FamilyTree.randomId();
-            u.setAttribute("id", T);
-            var b = {
-                ripple: FamilyTree.t(r.templateName, r.min, this.getScale()).ripple,
-                node: r
-            };
-            FamilyTree.events.publish("ripple", [this, b]), y.setAttribute("x", b.ripple.rect ? b.ripple.rect.x : 0), y.setAttribute("y", b.ripple.rect ? b.ripple.rect.y : 0), y.setAttribute("width", b.ripple.rect ? b.ripple.rect.width : r.w), y.setAttribute("height", b.ripple.rect ? b.ripple.rect.height : r.h), y.setAttribute("rx", b.ripple.radius), y.setAttribute("ry", b.ripple.radius), g.setAttribute("clip-path", "url(#" + T + ")"), g.setAttribute("cx", l), g.setAttribute("cy", o), g.setAttribute("r", 0), g.setAttribute("fill", b.ripple.color), g.setAttribute("class", "bft-ripple"), u.appendChild(y), f.appendChild(u), f.appendChild(g), a.appendChild(f), FamilyTree.animate(g, {
-                r: 0,
-                opacity: 1
-            }, {
-                r: h,
-                opacity: 0
-            }, 500, FamilyTree.anim.outPow, (function () {
-                a.removeChild(f)
-            }))
         }
-    }
-}, FamilyTree.prototype.center = function (e, t, i) {
-    var r, a, n = e,
-        l = !0,
-        o = !0;
-    t && null != t.parentState && (r = t.parentState), t && null != t.childrenState && (a = t.childrenState), t && null != t.rippleId && (n = t.rippleId), t && null != t.vertical && (l = t.vertical), t && null != t.horizontal && (o = t.horizontal);
-    var s = {
-        parentState: r,
-        childrenState: a,
-        rippleId: n,
-        vertical: l,
-        horizontal: o
-    };
-    this._draw(!1, FamilyTree.action.centerNode, {
-        id: e,
-        options: s
-    }, i)
-}, FamilyTree.prototype.fit = function (e) {
-    this.config.scaleInitial = FamilyTree.match.boundary, this._draw(!0, FamilyTree.action.init, {
-        method: "fit"
-    }, e)
-}, FamilyTree.prototype.toggleFullScreen = function () {
-    var e = document.querySelector("[" + FamilyTree.attr.tlbr + "r='fullScreen']");
-    document.fullscreenElement == this.element || document.webkitFullscreenElement == this.element || document.mozFullScreenElement == this.element || document.msFullscreenElement == this.element ? (document.exitFullscreen ? document.exitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen ? document.webkitExitFullscreen() : document.msExitFullscreen && document.msExitFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.openFullScreenIcon)) : (this.element.requestFullscreen ? this.element.requestFullscreen() : this.element.mozRequestFullScreen ? this.element.mozRequestFullScreen() : this.element.webkitRequestFullscreen ? this.element.webkitRequestFullscreen() : this.element.msRequestFullscreen && this.element.msRequestFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.closeFullScreenIcon))
-}, FamilyTree.prototype.getNode = function (e) {
-    return this.nodes[e]
-}, FamilyTree.prototype.setLayout = function (e, t) {
-    t || (t = "base"), this._layoutConfigs[t].layout = e, this._draw(!1, FamilyTree.action.update)
-}, FamilyTree.prototype.setOrientation = function (e, t) {
-    t || (t = "base"), this._layoutConfigs[t].orientation = e, this._draw(!1, FamilyTree.action.update)
-}, FamilyTree.prototype.search = function (e, t, i) {
-    return FamilyTree.isNEU(t) && (t = this.config.searchFields), FamilyTree.isNEU(i) && (i = t), FamilyTree._search.search(this.config.nodes, e, t, i, this.config.searchDisplayField, this.config.searchFieldsWeight)
-}, FamilyTree.prototype._hideBeforeAnimation = function (e) {
-    if (1 != this._hideBeforeAnimationCompleted && !(e && e < FamilyTree.ANIM_THRESHOLD)) {
-        var t = this.element.getElementsByTagName("text");
-        if (t.length > FamilyTree.TEXT_THRESHOLD)
-            for (var i = 0; i < t.length; i++) t[i].style.display = "none";
-        var r = this.element.getElementsByTagName("image");
-        if (r.length > FamilyTree.IMAGES_THRESHOLD)
-            for (i = 0; i < r.length; i++) r[i].style.display = "none";
-        var a = this.element.querySelectorAll("[" + FamilyTree.attr.link_id + "]");
-        if (a.length > FamilyTree.LINKS_THRESHOLD)
-            for (i = 0; i < a.length; i++) a[i].style.display = "none";
-        var n = this.element.querySelectorAll("[" + FamilyTree.attr.control_expcoll_id + "]");
-        if (n.length > FamilyTree.BUTTONS_THRESHOLD)
-            for (i = 0; i < n.length; i++) n[i].style.display = "none";
-        var l = this.element.querySelectorAll("[" + FamilyTree.attr.control_up_id + "]");
-        if (l.length > FamilyTree.BUTTONS_THRESHOLD)
-            for (i = 0; i < l.length; i++) l[i].style.display = "none";
-        this._hideBeforeAnimationCompleted = !0
-    }
-}, FamilyTree.prototype._showAfterAnimation = function () {
-    for (var e = this.element.getElementsByTagName("text"), t = 0; t < e.length; t++)
-        e[t].style.display = "";
-    var i = this.element.getElementsByTagName("image");
-    for (t = 0; t < i.length; t++) i[t].style.display = "";
-    var r = this.element.querySelectorAll("[" + FamilyTree.attr.link_id + "]");
-    for (t = 0; t < r.length; t++) r[t].style.display = "";
-    var a = this.element.querySelectorAll("[" + FamilyTree.attr.control_expcoll_id + "]");
-    for (t = 0; t < a.length; t++) a[t].style.display = "";
-    var n = this.element.querySelectorAll("[" + FamilyTree.attr.control_up_id + "]");
-    for (t = 0; t < n.length; t++) n[t].style.display = "";
-    this._hideBeforeAnimationCompleted = !1
-}, FamilyTree.prototype.isChild = function (e, t) {
-    for (var i = this.getNode(t); i;) {
-        if (i.id == e) return !0;
-        i = i.parent ? i.parent : i.stParent
-    }
-    return !1
-}, FamilyTree.prototype.getCollapsedIds = function (e) {
-    for (var t = [], i = 0; i < e.childrenIds.length; i++) {
-        var r = this.getNode(e.childrenIds[i]);
-        1 == r.collapsed && t.push(r.id)
-    }
-    return t
-    // }, FamilyTree.prototype.stateToUrl = function () {
-    //     if (this.manager.state) {
-    //         var e = {};
-    //         return e.exp = this.manager.state.exp.join("*"), e.min = this.manager.state.min.join("*"), e.adjustify = this.manager.state.adjustify.x + "*" + this.manager.state.adjustify.y, e.scale = this.manager.state.scale, e.y = this.manager.state.x, e.x = this.manager.state.y, new URLSearchParams(e).toString()
-    //     }
-    //     return ""
-}, FamilyTree.prototype.generateId = function () {
-    for (; ;) {
-        var e = "_" + ("0000" + (Math.random() * Math.pow(36, 4) | 0).toString(36)).slice(-4);
-        if (!this.nodes.hasOwnProperty(e)) return e
-    }
-}, FamilyTree.prototype._nodeHasHiddenParent = function (e) {
-    return !e.parent && !FamilyTree.isNEU(e.pid) && this.getNode(e.pid)
-}, FamilyTree.prototype.destroy = function () {
-    this._removeEvent(window, "resize"), FamilyTree.events.removeForEventId(this._event_id), this.element.innerHTML = null
-}, FamilyTree.__defaultConfig = FamilyTree._defaultConfig, FamilyTree._defaultConfig = function (e) {
-    var t = FamilyTree.__defaultConfig();
-    return t.nodeTreeMenu = null, t.template = "tommy", t.mode = "light", t.minPartnerSeparation = 30, t.partnerChildrenSplitSeparation = 10, t.siblingSeparation = 35, t.tags["children-group"] = {
-        template: "cgroup",
-        subTreeConfig: {
-            siblingSeparation: 7,
-            columns: 1
+    }, FamilyTree.prototype.center = function (e, t, i) {
+        var r, a, n = e,
+            l = !0,
+            o = !0;
+        t && null != t.parentState && (r = t.parentState), t && null != t.childrenState && (a = t.childrenState), t && null != t.rippleId && (n = t.rippleId), t && null != t.vertical && (l = t.vertical), t && null != t.horizontal && (o = t.horizontal);
+        var s = {
+            parentState: r,
+            childrenState: a,
+            rippleId: n,
+            vertical: l,
+            horizontal: o
+        };
+        this._draw(!1, FamilyTree.action.centerNode, {
+            id: e,
+            options: s
+        }, i)
+    }, FamilyTree.prototype.fit = function (e) {
+        this.config.scaleInitial = FamilyTree.match.boundary, this._draw(!0, FamilyTree.action.init, {
+            method: "fit"
+        }, e)
+    }, FamilyTree.prototype.toggleFullScreen = function () {
+        var e = document.querySelector("[" + FamilyTree.attr.tlbr + "r='fullScreen']");
+        document.fullscreenElement == this.element || document.webkitFullscreenElement == this.element || document.mozFullScreenElement == this.element || document.msFullscreenElement == this.element ? (document.exitFullscreen ? document.exitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen ? document.webkitExitFullscreen() : document.msExitFullscreen && document.msExitFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.openFullScreenIcon)) : (this.element.requestFullscreen ? this.element.requestFullscreen() : this.element.mozRequestFullScreen ? this.element.mozRequestFullScreen() : this.element.webkitRequestFullscreen ? this.element.webkitRequestFullscreen() : this.element.msRequestFullscreen && this.element.msRequestFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.closeFullScreenIcon))
+    }, FamilyTree.prototype.getNode = function (e) {
+        return this.nodes[e]
+    }, FamilyTree.prototype.setLayout = function (e, t) {
+        t || (t = "base"), this._layoutConfigs[t].layout = e, this._draw(!1, FamilyTree.action.update)
+    }, FamilyTree.prototype.setOrientation = function (e, t) {
+        t || (t = "base"), this._layoutConfigs[t].orientation = e, this._draw(!1, FamilyTree.action.update)
+    }, FamilyTree.prototype.search = function (e, t, i) {
+        return FamilyTree.isNEU(t) && (t = this.config.searchFields), FamilyTree.isNEU(i) && (i = t), FamilyTree._search.search(this.config.nodes, e, t, i, this.config.searchDisplayField, this.config.searchFieldsWeight)
+    }, FamilyTree.prototype._hideBeforeAnimation = function (e) {
+        if (1 != this._hideBeforeAnimationCompleted && !(e && e < FamilyTree.ANIM_THRESHOLD)) {
+            var t = this.element.getElementsByTagName("text");
+            if (t.length > FamilyTree.TEXT_THRESHOLD)
+                for (var i = 0; i < t.length; i++) t[i].style.display = "none";
+            var r = this.element.getElementsByTagName("image");
+            if (r.length > FamilyTree.IMAGES_THRESHOLD)
+                for (i = 0; i < r.length; i++) r[i].style.display = "none";
+            var a = this.element.querySelectorAll("[" + FamilyTree.attr.link_id + "]");
+            if (a.length > FamilyTree.LINKS_THRESHOLD)
+                for (i = 0; i < a.length; i++) a[i].style.display = "none";
+            var n = this.element.querySelectorAll("[" + FamilyTree.attr.control_expcoll_id + "]");
+            if (n.length > FamilyTree.BUTTONS_THRESHOLD)
+                for (i = 0; i < n.length; i++) n[i].style.display = "none";
+            var l = this.element.querySelectorAll("[" + FamilyTree.attr.control_up_id + "]");
+            if (l.length > FamilyTree.BUTTONS_THRESHOLD)
+                for (i = 0; i < l.length; i++) l[i].style.display = "none";
+            this._hideBeforeAnimationCompleted = !0
         }
-    }, e && e.template ? (t.tags.male = {
-        template: e.template + "_male"
-    }, t.tags.female = {
-        template: e.template + "_female"
-    }) : (t.tags.male = {
-        template: t.template + "_male"
-    }, t.tags.female = {
-        template: t.template + "_female"
-    }), t
-}, FamilyTree.prototype.getRecentRootsByNodeId = function (e) {
-    this.recentRoots || (this.recentRoots = []);
-    var t = this.recentRoots,
-        i = this.getNode(e);
-    return i ? (i.rids.sort((function (e, i) {
-        var r = t.indexOf(e),
-            a = t.indexOf(i);
-        return -1 == r ? 1e3 : -1 == a ? -1e3 : r - a
-    })), i.rids) : []
-}, FamilyTree.prototype._nodeHasHiddenParent = function (e) {
-    return !(e.parent || FamilyTree.isNEU(e.pid) || !this.getNode(e.pid)) || (!(!e.isPartner || FamilyTree.isNEU(e.mid) || !this.getNode(e.mid)) || (!(!e.isPartner || FamilyTree.isNEU(e.fid) || !this.getNode(e.fid)) || !!(e.isPartner && e.pids.length > 1)))
-}, FamilyTree.prototype._center = FamilyTree.prototype.center,
+    }, FamilyTree.prototype._showAfterAnimation = function () {
+        for (var e = this.element.getElementsByTagName("text"), t = 0; t < e.length; t++)
+            e[t].style.display = "";
+        var i = this.element.getElementsByTagName("image");
+        for (t = 0; t < i.length; t++) i[t].style.display = "";
+        var r = this.element.querySelectorAll("[" + FamilyTree.attr.link_id + "]");
+        for (t = 0; t < r.length; t++) r[t].style.display = "";
+        var a = this.element.querySelectorAll("[" + FamilyTree.attr.control_expcoll_id + "]");
+        for (t = 0; t < a.length; t++) a[t].style.display = "";
+        var n = this.element.querySelectorAll("[" + FamilyTree.attr.control_up_id + "]");
+        for (t = 0; t < n.length; t++) n[t].style.display = "";
+        this._hideBeforeAnimationCompleted = !1
+    }, FamilyTree.prototype.isChild = function (e, t) {
+        for (var i = this.getNode(t); i;) {
+            if (i.id == e) return !0;
+            i = i.parent ? i.parent : i.stParent
+        }
+        return !1
+    }, FamilyTree.prototype.getCollapsedIds = function (e) {
+        for (var t = [], i = 0; i < e.childrenIds.length; i++) {
+            var r = this.getNode(e.childrenIds[i]);
+            1 == r.collapsed && t.push(r.id)
+        }
+        return t
+        // }, FamilyTree.prototype.stateToUrl = function () {
+        //     if (this.manager.state) {
+        //         var e = {};
+        //         return e.exp = this.manager.state.exp.join("*"), e.min = this.manager.state.min.join("*"), e.adjustify = this.manager.state.adjustify.x + "*" + this.manager.state.adjustify.y, e.scale = this.manager.state.scale, e.y = this.manager.state.x, e.x = this.manager.state.y, new URLSearchParams(e).toString()
+        //     }
+        //     return ""
+    }, FamilyTree.prototype.generateId = function () {
+        for (; ;) {
+            var e = "_" + ("0000" + (Math.random() * Math.pow(36, 4) | 0).toString(36)).slice(-4);
+            if (!this.nodes.hasOwnProperty(e)) return e
+        }
+    }, FamilyTree.prototype._nodeHasHiddenParent = function (e) {
+        return !e.parent && !FamilyTree.isNEU(e.pid) && this.getNode(e.pid)
+    }, FamilyTree.prototype.destroy = function () {
+        this._removeEvent(window, "resize"), FamilyTree.events.removeForEventId(this._event_id), this.element.innerHTML = null
+    }, FamilyTree.__defaultConfig = FamilyTree._defaultConfig, FamilyTree._defaultConfig = function (e) {
+        var t = FamilyTree.__defaultConfig();
+        return t.nodeTreeMenu = null, t.template = "tommy", t.mode = "light", t.minPartnerSeparation = 30, t.partnerChildrenSplitSeparation = 10, t.siblingSeparation = 35, t.tags["children-group"] = {
+            template: "cgroup",
+            subTreeConfig: {
+                siblingSeparation: 7,
+                columns: 1
+            }
+        }, e && e.template ? (t.tags.male = {
+            template: e.template + "_male"
+        }, t.tags.female = {
+            template: e.template + "_female"
+        }) : (t.tags.male = {
+            template: t.template + "_male"
+        }, t.tags.female = {
+            template: t.template + "_female"
+        }), t
+    }, FamilyTree.prototype.getRecentRootsByNodeId = function (e) {
+        this.recentRoots || (this.recentRoots = []);
+        var t = this.recentRoots,
+            i = this.getNode(e);
+        return i ? (i.rids.sort((function (e, i) {
+            var r = t.indexOf(e),
+                a = t.indexOf(i);
+            return -1 == r ? 1e3 : -1 == a ? -1e3 : r - a
+        })), i.rids) : []
+    }, FamilyTree.prototype._nodeHasHiddenParent = function (e) {
+        return !(e.parent || FamilyTree.isNEU(e.pid) || !this.getNode(e.pid)) || (!(!e.isPartner || FamilyTree.isNEU(e.mid) || !this.getNode(e.mid)) || (!(!e.isPartner || FamilyTree.isNEU(e.fid) || !this.getNode(e.fid)) || !!(e.isPartner && e.pids.length > 1)))
+    }, FamilyTree.prototype._center = FamilyTree.prototype.center,
     FamilyTree.prototype.center = function (e, t, i) {
         var r = this.getRecentRootsByNodeId(e);
         Array.isArray(this.config.roots) || (roots = []), FamilyTree._changeRootOption(this.config.roots, r, this.manager.rootList), this._center(e, t, i)
@@ -717,8 +726,7 @@ FamilyTree._defaultConfig = function (e) {
         for (var i = 0; i < e.addNodesData.length; i++) this.add(e.addNodesData[i]);
         for (i = 0; i < e.updateNodesData.length; i++) this.update(e.updateNodesData[i]);
         return FamilyTree.isNEU(e.removeNodeId) || this.remove(e.removeNodeId), !0
-    }, void 0 === FamilyTree && (FamilyTree = {}),
-    void 0 === FamilyTree && (FamilyTree = {}),
+    },
     FamilyTree.animate = function (e, t, i, r, a, n, l) {
         var o, s = 10,
             d = 1,
@@ -828,7 +836,7 @@ FamilyTree._defaultConfig = function (e) {
         return e < 0 ? 0 : e > 1 ? 1 : e < 1 ? -.5 * (Math.sqrt(1 - e * e) - 1) : .5 * (Math.sqrt(1 - (2 * e - 2) * (2 * e - 2)) + 1)
     }, FamilyTree.anim.outBack = function (e) {
         return e < 0 ? 0 : e > 1 ? 1 : (e - 1) * (e - 1) * (2.70158 * (e - 1) + 1.70158) + 1
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.prototype._attachInitEventHandlers = function (e) {
+    }, FamilyTree.prototype._attachInitEventHandlers = function (e) {
         this._addEvent(window, "resize", this._resizeHandler)
     }, FamilyTree.prototype._attachEventHandlers = function (e) {
         if (this.config.interactive) {
@@ -858,7 +866,7 @@ FamilyTree._defaultConfig = function (e) {
             var i = e.getListenerList[t];
             e.removeEventListener(t, i, !1), delete e.getListenerList[t]
         }
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.VERSION = "8.08.06", FamilyTree.orientation = {},
+    }, FamilyTree.orientation = {},
     FamilyTree.orientation.top = 0, FamilyTree.orientation.bottom = 1, FamilyTree.orientation.right = 2, FamilyTree.orientation.left = 3, FamilyTree.orientation.top_left = 4, FamilyTree.orientation.bottom_left = 5, FamilyTree.orientation.right_top = 6, FamilyTree.orientation.left_top = 7, FamilyTree.align = {}, FamilyTree.align.center = FamilyTree.CENTER = 8,
     FamilyTree.align.orientation = FamilyTree.ORIENTATION = 9, FamilyTree.attr = {}, FamilyTree.attr.l = "data-l",
     FamilyTree.attr.id = "data-id", FamilyTree.attr.sl = "data-sl", FamilyTree.attr.lbl = "data-lbl",
@@ -920,7 +928,6 @@ FamilyTree._defaultConfig = function (e) {
     FamilyTree.CSV_DELIMITER = ",",
     FamilyTree.EDITFORM_CLOSE_BTN = '<svg data-edit-from-close class="bft-edit-form-close"><path style="fill:#ffffff;" d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z"></path></svg>', FamilyTree.ESCAPE_HTML = !1,
     FamilyTree.VERTICAL_CHILDREN_ASSISTANT = !1, "undefined" != typeof module && (module.exports = FamilyTree),
-    FamilyTree.OC_VERSION = FamilyTree.VERSION, FamilyTree.VERSION = "1.07.09",
     FamilyTree.RENDER_LINKS_BEFORE_NODES = !0, FamilyTree.ARRAY_FIELDS = ["tags", "pids"],
     FamilyTree._intersects = function (e, t, i) {
         var r = e.x - i.siblingSeparation / 4,
@@ -1346,9 +1353,7 @@ FamilyTree._defaultConfig = function (e) {
         }
     }, FamilyTree.circleMenuUI.prototype.on = function (e, t) {
         return FamilyTree.events.on(e, t, this._event_id), this
-    }, void 0 === FamilyTree && (FamilyTree = {}),
-
-    FamilyTree.toolbarUI = function () { }, FamilyTree.toolbarUI.expandAllIcon = '<svg style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#757575" /></marker><line x1="11" y1="11" x2="6" y2="6" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="21" y1="11" x2="26" y2="6" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="21" y1="21" x2="26" y2="26" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="11" y1="21" x2="6" y2="26" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><rect x="12" y="12" width="8" height="8" fill="#757575"></rect></svg>', FamilyTree.toolbarUI.fitIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><circle cx="16" cy="16" r="5" fill="#757575"></circle></svg>', FamilyTree.toolbarUI.openFullScreenIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><line x1="5" y1="5" x2="27" y2="27" stroke-width="3" stroke="#757575"></line><line x1="5" y1="27" x2="27" y2="5" stroke-width="3" stroke="#757575"></line></svg>', FamilyTree.toolbarUI.closeFullScreenIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><rect x="11" y="11" width="10" height="10" stroke-width="3" fill="none" stroke="#757575" ></rect></svg>', FamilyTree.toolbarUI.zoomInIcon = '<svg style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border-left: 1px solid #cacaca; border-right: 1px solid #cacaca; border-top: 1px solid #cacaca; background-color: #f9f9f9;display: block; cursor: pointer;" width="32px" height="32px" ><g><rect fill="#f9f9f9" x="0" y="0" width="32" height="32" ></rect><line x1="8" y1="16" x2="24" y2="16" stroke-width="3" stroke="#757575"></line><line x1="16" y1="8" x2="16" y2="24" stroke-width="3" stroke="#757575"></line></g><line x1="4" y1="32" x2="28" y2="32" stroke-width="1" stroke="#cacaca"></line></svg>', FamilyTree.toolbarUI.zoomOutIcon = '<svg style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); margin-bottom:7px; border-left: 1px solid #cacaca; border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; background-color: #f9f9f9;display: block; cursor: pointer;" width="32px" height="32px" ><g><rect fill="#f9f9f9" x="0" y="0" width="32" height="32" ></rect><line x1="8" y1="16" x2="24" y2="16" stroke-width="3" stroke="#757575"></line></g></svg>', FamilyTree.toolbarUI.layoutIcon = "<svg " + FamilyTree.attr.tlbr + '="layout" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M8,24 L16,14 L24,24"></path><path stroke-width="3" fill="none" stroke="#757575" d="M8,16 L16,8 L24,16"></path></svg>', FamilyTree.toolbarUI.prototype.init = function (e, t) {
+    }, FamilyTree.toolbarUI = function () { }, FamilyTree.toolbarUI.expandAllIcon = '<svg style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#757575" /></marker><line x1="11" y1="11" x2="6" y2="6" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="21" y1="11" x2="26" y2="6" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="21" y1="21" x2="26" y2="26" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><line x1="11" y1="21" x2="6" y2="26" stroke="#757575" stroke-width="2" marker-end="url(#arrow)" /><rect x="12" y="12" width="8" height="8" fill="#757575"></rect></svg>', FamilyTree.toolbarUI.fitIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><circle cx="16" cy="16" r="5" fill="#757575"></circle></svg>', FamilyTree.toolbarUI.openFullScreenIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><line x1="5" y1="5" x2="27" y2="27" stroke-width="3" stroke="#757575"></line><line x1="5" y1="27" x2="27" y2="5" stroke-width="3" stroke="#757575"></line></svg>', FamilyTree.toolbarUI.closeFullScreenIcon = '<svg  style="margin-bottom:7px;box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M4,11 L4,4 L11,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,11 L28,4 L21,4"></path><path stroke-width="3" fill="none" stroke="#757575" d="M28,21 L28,28 L21,28"></path><path stroke-width="3" fill="none" stroke="#757575" d="M4,21 L4,28 L11,28"></path><rect x="11" y="11" width="10" height="10" stroke-width="3" fill="none" stroke="#757575" ></rect></svg>', FamilyTree.toolbarUI.zoomInIcon = '<svg style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border-left: 1px solid #cacaca; border-right: 1px solid #cacaca; border-top: 1px solid #cacaca; background-color: #f9f9f9;display: block; cursor: pointer;" width="32px" height="32px" ><g><rect fill="#f9f9f9" x="0" y="0" width="32" height="32" ></rect><line x1="8" y1="16" x2="24" y2="16" stroke-width="3" stroke="#757575"></line><line x1="16" y1="8" x2="16" y2="24" stroke-width="3" stroke="#757575"></line></g><line x1="4" y1="32" x2="28" y2="32" stroke-width="1" stroke="#cacaca"></line></svg>', FamilyTree.toolbarUI.zoomOutIcon = '<svg style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); margin-bottom:7px; border-left: 1px solid #cacaca; border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; background-color: #f9f9f9;display: block; cursor: pointer;" width="32px" height="32px" ><g><rect fill="#f9f9f9" x="0" y="0" width="32" height="32" ></rect><line x1="8" y1="16" x2="24" y2="16" stroke-width="3" stroke="#757575"></line></g></svg>', FamilyTree.toolbarUI.layoutIcon = "<svg " + FamilyTree.attr.tlbr + '="layout" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.3); border: 1px solid #cacaca;background-color: #f9f9f9;display: block;cursor: pointer;" width="32px" height="32px"><path stroke-width="3" fill="none" stroke="#757575" d="M8,24 L16,14 L24,24"></path><path stroke-width="3" fill="none" stroke="#757575" d="M8,16 L16,8 L24,16"></path></svg>', FamilyTree.toolbarUI.prototype.init = function (e, t) {
         if (t) {
             this.obj = e, this.toolbar = t, this._visible = !1, this.div = document.createElement("div"), this.div.classList.add("bft-toolbar-container"), Object.assign(this.div.style, {
                 position: "absolute",
@@ -1419,7 +1424,7 @@ FamilyTree._defaultConfig = function (e) {
     }, FamilyTree.notifierUI.prototype.show = function (e, t) {
         return !1
 
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree._validateConfig = function (e) {
+    }, FamilyTree._validateConfig = function (e) {
         return !!e || (console.error("config is not defined"), !1)
     }, FamilyTree._arrayContains = function (e, t) {
         if (e && Array.isArray(e))
@@ -2216,8 +2221,7 @@ FamilyTree._defaultConfig = function (e) {
             if (FamilyTree.loading.hide(i), !1 === a) return !1;
         }
 
-    }, void 0 === FamilyTree && (FamilyTree = {}),
-    FamilyTree.events = function () {
+    }, FamilyTree.events = function () {
         var e = {};
         return {
             on: function (t, i, r) {
@@ -2243,7 +2247,7 @@ FamilyTree._defaultConfig = function (e) {
                         for (var r = e[i].length - 1; r >= 0; r--) e[i][r].event_id == t && e[i].splice(r, 1)
             },
             publish: function (t, i) {
-            	//circles lost if remove this code??
+                //circles lost if remove this code??
                 if (e[t]) {
                     for (var r = [], a = 0; a < e[t].length; a++) {
                         var n = e[t][a];
@@ -2277,7 +2281,7 @@ FamilyTree._defaultConfig = function (e) {
                         }
                         "" != n.id.trim() && a.push(n)
                     }
-                    var d = {
+                    d = {
                         nodes: a,
                         columnNames: i[0]
                     };
@@ -2922,7 +2926,7 @@ FamilyTree._defaultConfig = function (e) {
         } else console.error("movePosition parameter not defined")
     }, FamilyTree.prototype.stopMove = function () {
         this._moveInterval && (clearInterval(this._moveInterval), this._moveInterval = null, this._movePosition = null)
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.node = function (e, t, i, r) {
+    }, FamilyTree.node = function (e, t, i, r) {
         this.templateName = r, this.id = e, this.pid = t, this.children = [], this.childrenIds = [], this.parent = null, this.stpid = null, this.stParent = null, this.stChildren = [], this.stChildrenIds = [], this.tags = i, this.tags || (this.tags = [])
     }, FamilyTree.prototype._mouseDownHandler = function (e, t, i) {
         var r = this;
@@ -3032,7 +3036,7 @@ FamilyTree._defaultConfig = function (e) {
         }))
     }, FamilyTree.searchUI.createItem = function (e, t, i, r) {
         return i && (i = "<b>" + i + "</b>"), `<tr data-search-item-id="${t}">\n                <td class="bft-search-image-td">\n                    ${e = e ? `<div class="bft-search-photo" style="background-image: url(${e})"></div>` : `<div class="bft-search-photo">${FamilyTree.icon.user(32, 32, "#aeaeae")}</div>`}\n                </td>\n                <td class="bft-search-text-td">${i} <br/>${r}</td>\n            </tr>`
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.manager = function (e) {
+    }, FamilyTree.manager = function (e) {
         this.config = e.config, this.layoutConfigs = e._layoutConfigs, this.visibleNodeIds = [], this.viewBox = null, this.action = null, this.actionParams = null, this.nodes = {}, this.oldNodes = {}, this.maxX = null, this.maxY = null, this.minX = null, this.minY = null, this.bordersByRootIdAndLevel = null, this.roots = null, this.state = null, this.vbIsInitializedFromState = !1, this.rootList = [], this.instance = e
     }, FamilyTree.manager.prototype.read = function (e, t, i, r, a, n, l, o) {
         var s = this;
@@ -3086,7 +3090,7 @@ FamilyTree._defaultConfig = function (e) {
                 adjustify: l
             })
         }), a)
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.manager._initDinamicNode = function (e, t, i) {
+    }, FamilyTree.manager._initDinamicNode = function (e, t, i) {
         t && (e.lcn = t), i && (e.isAssistant = !0);
         var r = FamilyTree.t(e.templateName);
         e.w = r && r.size ? r.size[0] : 0, e.h = r && r.size ? r.size[1] : 0, e.isSplit = "split" == e.templateName
@@ -3181,6 +3185,7 @@ FamilyTree._defaultConfig = function (e) {
             o = {},
             s = [],
             d = [];
+        checkConsistency(t.nodes);
         if (FamilyTree.manager.__createNodes(o, s, t, r, a, n, d, e), null != t.roots) {
             s = [];
             for (var c = 0; c < t.roots.length; c++) {
@@ -4699,7 +4704,7 @@ FamilyTree._defaultConfig = function (e) {
             var i = e.element.querySelector("#bft-ppdf-btns");
             i.parentNode.removeChild(i)
         }
-    }, void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.events.on("renderdefs", (function (e, t) {
+    }, FamilyTree.events.on("renderdefs", (function (e, t) {
         for (var i = 0; i < e.config.clinks.length; i++) {
             var r = e.config.clinks[i].template;
             r || (r = "orange");
@@ -4792,8 +4797,7 @@ FamilyTree._defaultConfig = function (e) {
         defs: '<marker id="arrowYellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path fill="#FFCA28" d="M 0 0 L 10 5 L 0 10 z" /></marker><marker id="dotYellow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5"> <circle cx="5" cy="5" r="5" fill="#FFCA28" /></marker>',
         link: '<path marker-start="url(#dotYellow)" marker-end="url(#arrowYellow)" stroke="#FFCA28" stroke-width="2" fill="none" d="{d}" />',
         label: '<text fill="#FFCA28"  text-anchor="middle" x="{x}" y="{y}">{val}</text>'
-    }, void 0 === FamilyTree && (FamilyTree = {}),
-    FamilyTree.events.on("renderdefs", (function (e, t) {
+    }, FamilyTree.events.on("renderdefs", (function (e, t) {
         for (var i = 0; i < e.config.slinks.length; i++) {
             var r = e.config.slinks[i].template;
             r || (r = "orange");
@@ -5357,8 +5361,7 @@ FamilyTree._defaultConfig = function (e) {
                 FamilyTree._magnify[t] && FamilyTree._magnify[t].front && (e[0].parentNode.removeChild(e[0]), FamilyTree._magnify[t] = null), i && i(e[0])
             }))
         }
-    }, void 0 === FamilyTree && (FamilyTree = {}),
-    FamilyTree.events.on("init", (function (e, t) {
+    }, FamilyTree.events.on("init", (function (e, t) {
         if (e.config.keyNavigation && (e._addEvent(window, "keydown", e._windowKeyDownHandler), FamilyTree.isNEU(e._keyNavigationActiveNodeId) && e.roots && e.roots.length)) {
             var i = e.roots[0].id;
             FamilyTree.isNEU(e.config.keyNavigation.focusId) || (i = e.config.keyNavigation.focusId), e._keyNavigationActiveNodeId = i, e.center(e._keyNavigationActiveNodeId)
@@ -5747,7 +5750,7 @@ FamilyTree._defaultConfig = function (e) {
                 r = r.parentNode
             }
         }
-    })), void 0 === FamilyTree && (FamilyTree = {}), FamilyTree.prototype.onField = function (e) {
+    })), FamilyTree.prototype.onField = function (e) {
         return this.on("field", (function (t, i) {
             return e.call(t, i)
         }))
@@ -5914,7 +5917,8 @@ FamilyTree._defaultConfig = function (e) {
                 }
             })), this.instance.element.appendChild(c)
         }
-    }, void 0 === FamilyTree && (FamilyTree = {}), void 0 === FamilyTree.remote && (FamilyTree.remote = {}), FamilyTree.LIMIT_NODES = !0, FamilyTree.remote._fromResDTO = function (e, t, i, r, a) {
+    }, FamilyTree.LIMIT_NODES = !0,
+    FamilyTree.remote._fromResDTO = function (e, t, i, r, a) {
         var n = t[e.id];
         e.x = n.p[0], e.y = n.p[1], e.w = n.p[2], e.h = n.p[3], null != n.ln && (e.leftNeighbor = a[n.ln]), null != n.rn && (e.rightNeighbor = a[n.rn]);
         for (var l = 0; l < e.stChildren.length; l++) FamilyTree.remote._fromResDTO(e.stChildren[l], t, i, r, a);
@@ -5937,12 +5941,13 @@ FamilyTree._defaultConfig = function (e) {
         for (var t = [], i = 0; i < e.length; i++) t.push(e[i].id);
         return t
     }, FamilyTree.remote._setPositions = function (e, t, i, r) {
-        for (var a = [], n = [], l = FamilyTree.remote._toReqLayoutConfigsDTO(t), o = 0; o < e.length; o++) n.push(e[o].id), FamilyTree.remote._toReqDTO(e[o], a);
+        for (var a = [], n = [], l = FamilyTree.remote._toReqLayoutConfigsDTO(t), o = 0; o < e.length; o++)
+            n.push(e[o].id), FamilyTree.remote._toReqDTO(e[o], a);
         var s = {
             n: a,
             c: l,
             r: n,
-            v: "8.07.00"
+            v: "8.07.00"//version
         };
         if (FamilyTree.LIMIT_NODES || (s.l = !0), null != FamilyTree.remote._fromReqDTO) FamilyTree.remote._fromReqDTO(s.n, s.r, s.c, (function (t) {
             for (var a = 0; a < e.length; a++) FamilyTree.remote._fromResDTO(e[a], t, 0, e, r);
@@ -5953,11 +5958,14 @@ FamilyTree._defaultConfig = function (e) {
             var result = {};
             const root = n[0];
             var z = JSON.parse(s);
+            // checkConsistency(z);
+
+
             let totalnodes = z.n.length;
             // let nodePointer = FamilyTree.remote.findnodePointer(root, z);
             d = FamilyTree.remote.findchildsposition(totalnodes, r, root, z, 0, 0,
                 result, totalnodes, totalnodes, t, z.n[0].p[3], z.n[0].p[4]);
-
+            let node = 0;
             if (result["4609"] != undefined) //filomena
                 if (result["6612"] != undefined) //filomena
                     if ((result["4609"].hasOwnProperty("p")) && (result["6612"].hasOwnProperty("p"))) {
@@ -6027,7 +6035,7 @@ FamilyTree._defaultConfig = function (e) {
             return 0;//for false 
         if (r[node].pids.length == 0)
             return 0;
-        nodePointer = FamilyTree.remote.findnodePointer(node, d);
+        let nodePointer = FamilyTree.remote.findnodePointer(node, d);
         let totalcouples = r[node].pids.length;
         if (d.n[nodePointer].hasOwnProperty("c")) {
             return d.n[nodePointer].c.length - totalcouples;
@@ -6217,7 +6225,7 @@ FamilyTree._defaultConfig = function (e) {
                         }
                     }
                 } else {
-                    haswife = true;
+                    // haswife = true;
                 }
             }
             //miramos si alguno de los hermanos tiene offset
@@ -6328,11 +6336,11 @@ FamilyTree._defaultConfig = function (e) {
         }
         for (const key in result) {
             if (result[key].p && !result_copy[key]?.pos) {
-                if (result_copy[key]?.newoffsetx > 0) {
+                if (result_copy[key]?.newoffsetx) {
                     result[key].p[0] += result_copy[key].newoffsetx;
                     result_copy[key].newoffsetx = 0;
                 }
-                if (result_copy[key]?.newoffsety > 0) {
+                if (result_copy[key]?.newoffsety) {
                     result[key].p[1] += result_copy[key].newoffsety;
                     result_copy[key].newoffsety = 0;
                 }
@@ -6374,3 +6382,6 @@ FamilyTree._defaultConfig = function (e) {
         }
         return result;
     };
+
+
+export { FamilyTree };
