@@ -1,5 +1,4 @@
 function findNodeWithInvalidPids(nodes) {
-    // Collect all unique pid values
     // const allPids = new Set(nodes.map(node => node.id));
     let result = [];
     for (const node of nodes) {

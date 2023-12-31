@@ -1,7 +1,7 @@
 
 import { checkConsistency } from './check-consistency.js';
-import { calculapositions } from './calculapositions.js';
-var result_copy = {}
+import { calculateTreePosition } from './calculapositions.js';
+
 var d = {};
 var FamilyTree = function (e, t) {
 
@@ -37,31 +37,33 @@ var FamilyTree = function (e, t) {
         }
     if (this._event_id = FamilyTree._guid(), !this.config.searchFields.length && this.config.nodeBinding)
         for (var n in this.config.nodeBinding) - 1 == n.indexOf("img") && "function" != typeof this.config.nodeBinding[n] && this.config.searchFields.push(this.config.nodeBinding[n]);
-    FamilyTree._validateConfig(this.config) && (this._vScroll = {}, this.config.ui || (this.ui = FamilyTree.ui), this.config.editUI ? this.editUI = this.config.editUI : this.editUI = new FamilyTree.editUI, this.editUI.init(this), this.config.filterUI ? this.filterUI = this.config.filterUI : this.filterUI = new FamilyTree.filterUI, this.filterUI.init(this), this.manager = new FamilyTree.manager(this), this.config.searchUI ? this.searchUI = this.config.searchUI : this.searchUI = new FamilyTree.searchUI, this.config.nodeMenuUI ? this.nodeMenuUI = this.config.nodeMenuUI : this.nodeMenuUI = new FamilyTree.menuUI, this.nodeMenuUI.init(this, this.config.nodeMenu), this.config.nodeCircleMenuUI ? this.nodeCircleMenuUI = this.config.nodeCircleMenuUI : this.nodeCircleMenuUI = new FamilyTree.circleMenuUI, this.nodeCircleMenuUI.init(this, this.config.nodeCircleMenu), this.config.nodeContextMenuUI ? this.nodeContextMenuUI = this.config.nodeContextMenuUI : this.nodeContextMenuUI = new FamilyTree.menuUI, this.nodeContextMenuUI.init(this, this.config.nodeContextMenu), this.config.toolbarUI ? this.toolbarUI = this.config.toolbarUI : this.toolbarUI = new FamilyTree.toolbarUI, this.config.notifierUI ? this.notifierUI = this.config.notifierUI : this.notifierUI = new FamilyTree.notifierUI, this.notifierUI.init(this), this.config.menuUI ? this.menuUI = this.config.menuUI : this.menuUI = new FamilyTree.menuUI, this.menuUI.init(this, this.config.menu), this.config.xScrollUI || (this.xScrollUI = new FamilyTree.xScrollUI(this.element, this.config, (function () {
-        return {
-            boundary: i.response.boundary,
-            scale: i.getScale(),
-            viewBox: i.getViewBox(),
-            padding: i.config.padding
-        }
-    }), (function (e) {
-        i.setViewBox(e)
-    }), (function () {
-        i._draw(!0, FamilyTree.action.xScroll)
-    }))), this.config.yScrollUI || (this.yScrollUI = new FamilyTree.yScrollUI(this.element, this.config, (function () {
-        return {
-            boundary: i.response.boundary,
-            scale: i.getScale(),
-            viewBox: i.getViewBox(),
-            padding: i.config.padding
-        }
-    }), (function (e) {
-        i.setViewBox(e)
-    }), (function () {
-        i._draw(!0, FamilyTree.action.xScroll)
-    }))), this.element.classList.add("bft-" + this.config.mode), this._gragStartedId = null, this._timeout = null, this._touch = null, this._initialized = !1, this._loaded = !1, this._moveInterval = null, this._movePosition = null, this.response = null, this.nodes = null, this.isVisible = null, FamilyTree._intersectionObserver(this.element, (function (e) {
-        i.isVisible = e, !1 !== FamilyTree.events.publish("visibility-change", [i]) && FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
-    })))
+    FamilyTree._validateConfig(this.config) && (this._vScroll = {}, this.config.ui || (this.ui = FamilyTree.ui), this.config.editUI ? this.editUI = this.config.editUI : this.editUI = new FamilyTree.editUI, this.editUI.init(this), this.config.filterUI ? this.filterUI = this.config.filterUI : this.filterUI = new FamilyTree.filterUI, this.filterUI.init(this),
+        this.manager = new FamilyTree.manager(this),
+        this.config.searchUI ? this.searchUI = this.config.searchUI : this.searchUI = new FamilyTree.searchUI, this.config.nodeMenuUI ? this.nodeMenuUI = this.config.nodeMenuUI : this.nodeMenuUI = new FamilyTree.menuUI, this.nodeMenuUI.init(this, this.config.nodeMenu), this.config.nodeCircleMenuUI ? this.nodeCircleMenuUI = this.config.nodeCircleMenuUI : this.nodeCircleMenuUI = new FamilyTree.circleMenuUI, this.nodeCircleMenuUI.init(this, this.config.nodeCircleMenu), this.config.nodeContextMenuUI ? this.nodeContextMenuUI = this.config.nodeContextMenuUI : this.nodeContextMenuUI = new FamilyTree.menuUI, this.nodeContextMenuUI.init(this, this.config.nodeContextMenu), this.config.toolbarUI ? this.toolbarUI = this.config.toolbarUI : this.toolbarUI = new FamilyTree.toolbarUI, this.config.notifierUI ? this.notifierUI = this.config.notifierUI : this.notifierUI = new FamilyTree.notifierUI, this.notifierUI.init(this), this.config.menuUI ? this.menuUI = this.config.menuUI : this.menuUI = new FamilyTree.menuUI, this.menuUI.init(this, this.config.menu), this.config.xScrollUI || (this.xScrollUI = new FamilyTree.xScrollUI(this.element, this.config, (function () {
+            return {
+                boundary: i.response.boundary,
+                scale: i.getScale(),
+                viewBox: i.getViewBox(),
+                padding: i.config.padding
+            }
+        }), (function (e) {
+            i.setViewBox(e)
+        }), (function () {
+            i._draw(!0, FamilyTree.action.xScroll)
+        }))), this.config.yScrollUI || (this.yScrollUI = new FamilyTree.yScrollUI(this.element, this.config, (function () {
+            return {
+                boundary: i.response.boundary,
+                scale: i.getScale(),
+                viewBox: i.getViewBox(),
+                padding: i.config.padding
+            }
+        }), (function (e) {
+            i.setViewBox(e)
+        }), (function () {
+            i._draw(!0, FamilyTree.action.xScroll)
+        }))), this.element.classList.add("bft-" + this.config.mode), this._gragStartedId = null, this._timeout = null, this._touch = null, this._initialized = !1, this._loaded = !1, this._moveInterval = null, this._movePosition = null, this.response = null, this.nodes = null, this.isVisible = null, FamilyTree._intersectionObserver(this.element, (function (e) {
+            i.isVisible = e, !1 !== FamilyTree.events.publish("visibility-change", [i]) && FamilyTree.LAZY_LOADING && i.isVisible && (i._loaded ? i._draw(!1, FamilyTree.action.update) : (i._setInitialSizeIfNotSet(), i._draw(!1, FamilyTree.action.init)))
+        })))
 };
 FamilyTree._defaultConfig = function (e) {
     return {
@@ -212,12 +214,17 @@ FamilyTree._defaultConfig = function (e) {
                         for (var c = 0; c < e.visibleNodeIds.length; c++) {
                             var m = e.nodes[e.visibleNodeIds[c]],
                                 p = a._get(m.id);
-                            FamilyTree.RENDER_LINKS_BEFORE_NODES && (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.node(m, p, e.animations, a.config, void 0, void 0, void 0, t, o, a)
+                            FamilyTree.RENDER_LINKS_BEFORE_NODES && (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)),
+                                l += a.ui.node(m, p, e.animations, a.config, void 0, void 0, void 0, t, o, a)
                         }
                         for (c = 0; c < e.visibleNodeIds.length; c++) {
                             m = e.nodes[e.visibleNodeIds[c]];
-                            FamilyTree.RENDER_LINKS_BEFORE_NODES || (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)), l += a.ui.expandCollapseBtn(a, m, a._layoutConfigs, t, o)
+                            FamilyTree.RENDER_LINKS_BEFORE_NODES || (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)),
+                                l += a.ui.expandCollapseBtn(a, m, a._layoutConfigs, t, o)
                         }
+                        //Añadiendo circulos
+                        // l += "<g><use xlink:href=\"#dot\" x=\"660\" y=\"6122\"></use></g>";
+
                         n = {
                             content: l,
                             res: e
@@ -339,9 +346,10 @@ FamilyTree._defaultConfig = function (e) {
             options: s
         }, i)
     }, FamilyTree.prototype.fit = function (e) {
-        this.config.scaleInitial = FamilyTree.match.boundary, this._draw(!0, FamilyTree.action.init, {
-            method: "fit"
-        }, e)
+        this.config.scaleInitial = FamilyTree.match.boundary,
+            this._draw(!0, FamilyTree.action.init, {
+                method: "fit"
+            }, e)
     }, FamilyTree.prototype.toggleFullScreen = function () {
         var e = document.querySelector("[" + FamilyTree.attr.tlbr + "r='fullScreen']");
         document.fullscreenElement == this.element || document.webkitFullscreenElement == this.element || document.mozFullScreenElement == this.element || document.msFullscreenElement == this.element ? (document.exitFullscreen ? document.exitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen ? document.webkitExitFullscreen() : document.msExitFullscreen && document.msExitFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.openFullScreenIcon)) : (this.element.requestFullscreen ? this.element.requestFullscreen() : this.element.mozRequestFullScreen ? this.element.mozRequestFullScreen() : this.element.webkitRequestFullscreen ? this.element.webkitRequestFullscreen() : this.element.msRequestFullscreen && this.element.msRequestFullscreen(), e && (e.innerHTML = FamilyTree.toolbarUI.closeFullScreenIcon))
@@ -554,12 +562,13 @@ FamilyTree._defaultConfig = function (e) {
             };
             if (!1 !== this._fireUpdate_addUpdateRemove(a, i)) {
                 var n = "";
-                FamilyTree.isNEU(a.addNodesData[0].pid) ? FamilyTree.isNEU(a.addNodesData[0].mid) ? FamilyTree.isNEU(a.addNodesData[0].fid) || (n = a.addNodesData[0].fid) : n = a.addNodesData[0].mid : n = a.addNodesData[0].pid, r._draw(!1, FamilyTree.action.insert, {
-                    id: n,
-                    insertedNodeId: a.addNodesData[0].id
-                }, (function () {
-                    r.ripple(a.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, a]), r.filterUI.update()
-                })), FamilyTree.events.publish("updating", [r, a])
+                FamilyTree.isNEU(a.addNodesData[0].pid) ? FamilyTree.isNEU(a.addNodesData[0].mid) ? FamilyTree.isNEU(a.addNodesData[0].fid) || (n = a.addNodesData[0].fid) : n = a.addNodesData[0].mid : n = a.addNodesData[0].pid,
+                    r._draw(!1, FamilyTree.action.insert, {
+                        id: n,
+                        insertedNodeId: a.addNodesData[0].id
+                    }, (function () {
+                        r.ripple(a.addNodesData[0].id), t && t(), FamilyTree.events.publish("updated", [r, a]), r.filterUI.update()
+                    })), FamilyTree.events.publish("updating", [r, a])
             }
         }
     }, FamilyTree.prototype.addChildAndPartnerNodes = function (e, t, i, r, a) {
@@ -580,11 +589,12 @@ FamilyTree._defaultConfig = function (e) {
                 var d = this.getRecentRootsByNodeId(e);
                 FamilyTree._changeRootOption(this.config.roots, d, this.manager.rootList);
                 var c = "";
-                o ? c = o.id : FamilyTree.isNEU(t.pid) ? FamilyTree.isNEU(t.mid) ? FamilyTree.isNEU(t.fid) || (c = t.fid) : c = t.mid : c = t.pid, n._draw(!1, FamilyTree.action.update, {
-                    id: c
-                }, (function () {
-                    n.ripple(t.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, s]), n.filterUI.update()
-                })), FamilyTree.events.publish("updating", [n, s])
+                o ? c = o.id : FamilyTree.isNEU(t.pid) ? FamilyTree.isNEU(t.mid) ? FamilyTree.isNEU(t.fid) || (c = t.fid) : c = t.mid : c = t.pid,
+                    n._draw(!1, FamilyTree.action.update, {
+                        id: c
+                    }, (function () {
+                        n.ripple(t.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, s]), n.filterUI.update()
+                    })), FamilyTree.events.publish("updating", [n, s])
             }
         } else console.error("addChildAndPartnerNodes invalid data")
     }, FamilyTree.prototype.addPartnerAndParentNodes = function (e, t, i, r, a) {
@@ -608,11 +618,12 @@ FamilyTree._defaultConfig = function (e) {
                     var c = this.getRecentRootsByNodeId(e);
                     FamilyTree._changeRootOption(this.config.roots, c, this.manager.rootList);
                     var m = "";
-                    s ? m = s.id : FamilyTree.isNEU(o.pid) ? FamilyTree.isNEU(o.mid) ? FamilyTree.isNEU(o.fid) || (m = o.fid) : m = o.mid : m = o.pid, n._draw(!1, FamilyTree.action.update, {
-                        id: m
-                    }, (function () {
-                        n.ripple(o.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
-                    })), FamilyTree.events.publish("updating", [n, d])
+                    s ? m = s.id : FamilyTree.isNEU(o.pid) ? FamilyTree.isNEU(o.mid) ? FamilyTree.isNEU(o.fid) || (m = o.fid) : m = o.mid : m = o.pid,
+                        n._draw(!1, FamilyTree.action.update, {
+                            id: m
+                        }, (function () {
+                            n.ripple(o.id), n.ripple(i.id), r && r(), FamilyTree.events.publish("updated", [n, d]), n.filterUI.update()
+                        })), FamilyTree.events.publish("updating", [n, d])
                 }
             } else console.error("father id (fid) or mather id (mid) has to be null or undefined")
         } else console.error("addPartnerAndParentNodes invalid data")
@@ -875,7 +886,8 @@ FamilyTree._defaultConfig = function (e) {
     FamilyTree.attr.field_name = "data-f-name",
     FamilyTree.attr.c_link_to = "data-c-l-to", FamilyTree.attr.c_link_from = "data-c-l-from",
     FamilyTree.attr.s_link_to = "data-s-l-to", FamilyTree.attr.s_link_from = "data-s-l-from",
-    FamilyTree.attr.control_add = "data-ctrl-add", FamilyTree.attr.control_expcoll_id = "data-ctrl-ec-id",
+    FamilyTree.attr.control_add = "data-ctrl-add",
+    FamilyTree.attr.control_expcoll_id = "data-ctrl-ec-id",
     FamilyTree.attr.control_up_id = "data-ctrl-up-id", FamilyTree.attr.control_export_menu = "data-ctrl-menu",
     FamilyTree.attr.control_node_menu_id = "data-ctrl-n-menu-id",
     FamilyTree.attr.control_node_circle_menu_id = "data-ctrl-n-c-menu-id",
@@ -883,7 +895,8 @@ FamilyTree._defaultConfig = function (e) {
     FamilyTree.attr.control_node_circle_menu_wrraper_id = "data-ctrl-n-c-menu-wrapper-id",
     FamilyTree.attr.width = "data-width", FamilyTree.attr.text_overflow = "data-text-overflow",
     FamilyTree.ID = "id", FamilyTree.PID = "pid", FamilyTree.STPID = "stpid", FamilyTree.TAGS = "tags",
-    FamilyTree.NODES = "nodes", FamilyTree.ELASTIC = "elastic", FamilyTree.ASSISTANT = "Assistant",
+    FamilyTree.NODES = "nodes",
+    FamilyTree.ELASTIC = "elastic", FamilyTree.ASSISTANT = "Assistant",
     FamilyTree.action = {}, FamilyTree.action.expand = 0, FamilyTree.action.collapse = 1, FamilyTree.action.maximize = 101,
     FamilyTree.action.minimize = 102, FamilyTree.action.expandCollapse = 501, FamilyTree.action.edit = 1,
     FamilyTree.action.zoom = 2, FamilyTree.action.ctrlZoom = 22, FamilyTree.action.scroll = 41,
@@ -3041,7 +3054,9 @@ FamilyTree._defaultConfig = function (e) {
     }, FamilyTree.manager.prototype.read = function (e, t, i, r, a, n, l, o) {
         var s = this;
         FamilyTree.state._get(this.config.state, t, i, (function (d) {
-            s.state = d, s.action = a, s.actionParams = n, a != FamilyTree.action.init || !s.state || n && n.method && "fit" == n.method ? (s.viewBox = r, s.vbIsInitializedFromState = !1) : (s.viewBox = s.state.vb, s.vbIsInitializedFromState = !0, Array.isArray(s.state.roots) && (s.config.roots = s.state.roots));
+            s.state = d, s.action = a, s.actionParams = n, a != FamilyTree.action.init || !s.state || n && n.method && "fit" == n.method
+                ? (s.viewBox = r, s.vbIsInitializedFromState = !1) : (s.viewBox = s.state.vb,
+                    s.vbIsInitializedFromState = !0, Array.isArray(s.state.roots) && (s.config.roots = s.state.roots));
             var c = s.maxX,
                 m = s.maxY,
                 p = s.minX,
@@ -3050,15 +3065,22 @@ FamilyTree._defaultConfig = function (e) {
                 u = s.roots,
                 y = s.nodes;
             if (e) {
-                var g = FamilyTree.manager._getResponse(t, i, s.visibleNodeIds, s.config, c, m, p, h, s.viewBox, u, s.action, s.actionParams, y, s.oldNodes, s.vbIsInitializedFromState);
-                a != FamilyTree.action.exporting && (s.maxX = c, s.maxY = m, s.minX = p, s.minY = h, s.roots = u, s.nodes = y, s.visibleNodeIds = g.visibleNodeIds), g.bordersByRootIdAndLevel = f, g.roots = u, g.adjustify = {
-                    x: 0,
-                    y: 0
-                }, s.state && (g.adjustify = s.state.adjustify), l(g)
+                var g = FamilyTree.manager._getResponse(t, i, s.visibleNodeIds, s.config, c, m, p, h, s.viewBox, u,
+                    s.action, s.actionParams, y, s.oldNodes, s.vbIsInitializedFromState);
+                a != FamilyTree.action.exporting && (s.maxX = c, s.maxY = m, s.minX = p, s.minY = h, s.roots = u,
+                    s.nodes = y, s.visibleNodeIds = g.visibleNodeIds), g.bordersByRootIdAndLevel = f, g.roots = u,
+                    g.adjustify = {
+                        x: 0,
+                        y: 0
+                    }, s.state && (g.adjustify = s.state.adjustify), l(g)
             } else s.oldNodes = y || null, s._read((function (e) {
                 c = e.maxX, m = e.maxY, p = e.minX, h = e.minY, f = e.bordersByRootIdAndLevel, u = e.roots, y = e.nodes;
-                var r = FamilyTree.manager._getResponse(t, i, s.visibleNodeIds, s.config, c, m, p, h, s.viewBox, u, s.action, s.actionParams, y, s.oldNodes, s.vbIsInitializedFromState);
-                r.notif = e.limit, r.roots = u, r.bordersByRootIdAndLevel = f, r.adjustify = e.adjustify, a != FamilyTree.action.exporting && (s.maxX = c, s.maxY = m, s.minX = p, s.minY = h, s.roots = u, s.nodes = y, s.visibleNodeIds = r.visibleNodeIds, s.bordersByRootIdAndLevel = f, s.rootList = e.rootList), l(r)
+                var r = FamilyTree.manager._getResponse(t, i, s.visibleNodeIds, s.config, c, m, p, h, s.viewBox, u, s.action,
+                    s.actionParams, y, s.oldNodes, s.vbIsInitializedFromState);
+                r.notif = e.limit, r.roots = u, r.bordersByRootIdAndLevel = f, r.adjustify = e.adjustify,
+                    a != FamilyTree.action.exporting && (s.maxX = c, s.maxY = m, s.minX = p, s.minY = h,
+                        s.roots = u, s.nodes = y,
+                        s.visibleNodeIds = r.visibleNodeIds, s.bordersByRootIdAndLevel = f, s.rootList = e.rootList), l(r)
             }), o)
         }))
     }, FamilyTree.manager.prototype._read = function (e, t) {
@@ -3068,28 +3090,31 @@ FamilyTree._defaultConfig = function (e) {
         var a = r.nodes,
             n = r.roots,
             l = FamilyTree.remote;
-        null == l && (l = FamilyTree.local), l._setPositions(n, i.layoutConfigs, (function (t) {
-            var l = FamilyTree.manager._doNotChangePositionOfClickedNodeIfAny(n, a, i.action, i.actionParams, i.oldNodes, i.config.orientation);
-            i.state && i.action == FamilyTree.action.init && (l = i.state.adjustify);
-            for (var o = {
-                minX: null,
-                minY: null,
-                maxX: null,
-                maxY: null
-            }, s = {}, d = 0; d < n.length; d++) FamilyTree.manager._setMinMaxXYAdjustifyIterate(n[d], n[d], o, 0, s, l, i.config.orientation);
-            e({
-                minX: o.minX,
-                minY: o.minY,
-                maxX: o.maxX,
-                maxY: o.maxY,
-                bordersByRootIdAndLevel: s,
-                nodes: a,
-                roots: n,
-                rootList: r.rootList,
-                limit: t,
-                adjustify: l
-            })
-        }), a)
+        null == l && (l = FamilyTree.local),
+            l._setPositions(n, i.layoutConfigs, (function (t) {
+                var l = FamilyTree.manager._doNotChangePositionOfClickedNodeIfAny(n, a, i.action, i.actionParams, i.oldNodes, i.config.orientation);
+                i.state && i.action == FamilyTree.action.init && (l = i.state.adjustify);
+                for (var o = {
+                    minX: null,
+                    minY: null,
+                    maxX: null,
+                    maxY: null
+                }, s = {}, d = 0; d < n.length; d++)
+                    FamilyTree.manager._setMinMaxXYAdjustifyIterate(n[d], n[d], o, 0, s, l, i.config.orientation);
+                e({
+                    minX: o.minX,
+                    minY: o.minY,
+                    maxX: o.maxX,
+                    maxY: o.maxY,
+                    bordersByRootIdAndLevel: s,
+                    nodes: a,
+                    roots: n,
+                    rootList: r.rootList,
+                    limit: t,
+                    adjustify: l
+                })
+            }),
+                a)
     }, FamilyTree.manager._initDinamicNode = function (e, t, i) {
         t && (e.lcn = t), i && (e.isAssistant = !0);
         var r = FamilyTree.t(e.templateName);
@@ -3993,6 +4018,7 @@ FamilyTree._defaultConfig = function (e) {
             return FamilyTree.events.publish("renderbuttons", [e, f]), f.html
         },
         link: function (e, t, i, r, a, n) {
+            //plotting links
             var l = e.lcn ? e.lcn : "base",
                 o = t._layoutConfigs[l],
                 s = FamilyTree.t(e.templateName, e.min, i),
@@ -4016,13 +4042,13 @@ FamilyTree._defaultConfig = function (e) {
                     partnerChildrenSplitSeparation: t.config.partnerChildrenSplitSeparation
                 };
                 for (var u = 0; u < e.children.length; u++) {
-                    (y = e.children[u]).parentPartner ? (f.ppnodes[y.id] = y.parentPartner, f.ids.push(y.id), 1 == y.parentPartner.isPartner ? (-1 == f.rightIds.indexOf(y.parentPartner.id) && f.rightIds.push(y.parentPartner.id), f.indexes[y.id] = f.rightIds.indexOf(y.parentPartner.id), f.firstRight || (f.firstRight = y)) : 2 == y.parentPartner.isPartner && (-1 == f.leftIds.indexOf(y.parentPartner.id) && f.leftIds.push(y.parentPartner.id), f.indexes[y.id] = f.leftIds.indexOf(y.parentPartner.id), f.lastLeft = y)) : y.isPartner || (f.lastLeft = y, f.firstRight || (f.firstRight = y))
+                    (dddnode = e.children[u]).parentPartner ? (f.ppnodes[dddnode.id] = dddnode.parentPartner, f.ids.push(dddnode.id), 1 == dddnode.parentPartner.isPartner ? (-1 == f.rightIds.indexOf(dddnode.parentPartner.id) && f.rightIds.push(dddnode.parentPartner.id), f.indexes[dddnode.id] = f.rightIds.indexOf(dddnode.parentPartner.id), f.firstRight || (f.firstRight = dddnode)) : 2 == dddnode.parentPartner.isPartner && (-1 == f.leftIds.indexOf(dddnode.parentPartner.id) && f.leftIds.push(dddnode.parentPartner.id), f.indexes[dddnode.id] = f.leftIds.indexOf(dddnode.parentPartner.id), f.lastLeft = dddnode)) : dddnode.isPartner || (f.lastLeft = dddnode, f.firstRight || (f.firstRight = dddnode))
                 }
                 f.maxSidePartnersWithChildren = Math.max(f.leftIds.length, f.rightIds.length), m = 0 == f.maxSidePartnersWithChildren ? t.config.minPartnerSeparation / 2 : t.config.minPartnerSeparation / 2 + f.partnerChildrenSplitSeparation * f.maxSidePartnersWithChildren + f.partnerChildrenSplitSeparation / 2
             }
             for (u = 0; u < e.children.length; u++) {
-                var y = e.children[u],
-                    g = r[p][y.sl],
+                var dddnode = e.children[u],
+                    g = r[p][dddnode.sl],
                     T = {
                         xa: 0,
                         ya: 0,
@@ -4036,121 +4062,136 @@ FamilyTree._defaultConfig = function (e) {
                         y: 0,
                         rotate: 0
                     },
-                    b = (s = FamilyTree.t(y.templateName, y.min, i)).link;
-                if (y.isChildOfPartner) switch (o.orientation) {
+                    b = (s = FamilyTree.t(dddnode.templateName, dddnode.min, i)).link;
+                if (dddnode.isChildOfPartner) switch (o.orientation) {
                     case FamilyTree.orientation.top:
                     case FamilyTree.orientation.top_left:
-                        var v = 1 == y.layout ? void 0 : g.minY - (g.minY - h.maxY) / 2;
-                        T = FamilyTree.ui._linkTopToBottom(y.parentPartner, y, s, c, v);
+                        var v = 1 == dddnode.layout ? void 0 : g.minY - (g.minY - h.maxY) / 2;
+                        T = FamilyTree.ui._linkTopToBottom(dddnode.parentPartner, dddnode, s, c, v);
                         break;
                     case FamilyTree.orientation.bottom:
                     case FamilyTree.orientation.bottom_left:
-                        v = 1 == y.layout ? void 0 : g.maxY - (g.maxY - h.minY) / 2;
-                        T = FamilyTree.ui._linkBottomToTop(y.parentPartner, y, s, c, v);
+                        v = 1 == dddnode.layout ? void 0 : g.maxY - (g.maxY - h.minY) / 2;
+                        T = FamilyTree.ui._linkBottomToTop(dddnode.parentPartner, dddnode, s, c, v);
                         break;
                     case FamilyTree.orientation.right:
                     case FamilyTree.orientation.right_top:
-                        v = 1 == y.layout ? void 0 : g.maxX - (g.maxX - h.minX) / 2;
-                        T = FamilyTree.ui._linkRightToLeft(y.parentPartner, y, s, c, v);
+                        v = 1 == dddnode.layout ? void 0 : g.maxX - (g.maxX - h.minX) / 2;
+                        T = FamilyTree.ui._linkRightToLeft(dddnode.parentPartner, dddnode, s, c, v);
                         break;
                     case FamilyTree.orientation.left:
                     case FamilyTree.orientation.left_top:
-                        v = 1 == y.layout ? void 0 : g.minX - (g.minX - h.maxX) / 2;
-                        T = FamilyTree.ui._linkLeftToRight(y.parentPartner, y, s, c, v)
-                } else if (f && -1 != f.ids.indexOf(y.id)) switch (o.orientation) {
+                        v = 1 == dddnode.layout ? void 0 : g.minX - (g.minX - h.maxX) / 2;
+                        T = FamilyTree.ui._linkLeftToRight(dddnode.parentPartner, dddnode, s, c, v)
+                } else if (f && -1 != f.ids.indexOf(dddnode.id)) switch (o.orientation) {
                     case FamilyTree.orientation.top:
                     case FamilyTree.orientation.top_left:
-                        T = FamilyTree.ui._linkPpTop(f, e, y, g, h, s);
+                        T = FamilyTree.ui._linkPpTop(f, e, dddnode, g, h, s);
                         break;
                     case FamilyTree.orientation.bottom:
                     case FamilyTree.orientation.bottom_left:
-                        T = FamilyTree.ui._linkPpBottom(f, e, y, g, h, s);
+                        T = FamilyTree.ui._linkPpBottom(f, e, dddnode, g, h, s);
                         break;
                     case FamilyTree.orientation.right:
                     case FamilyTree.orientation.right_top:
-                        T = FamilyTree.ui._linkPpRight(f, e, y, g, h, s);
+                        T = FamilyTree.ui._linkPpRight(f, e, dddnode, g, h, s);
                         break;
+                    //es este
                     case FamilyTree.orientation.left:
                     case FamilyTree.orientation.left_top:
-                        T = FamilyTree.ui._linkPpLeft(f, e, y, g, h, s)
+                        T = FamilyTree.ui._linkPpLeft(f, e, dddnode, g, h, s)
                 } else {
-                    var F = y.isAssistant && y.rightNeighbor && y.rightNeighbor.isAssistant && y.parent == y.rightNeighbor.parent,
-                        x = y.isAssistant && y.leftNeighbor && y.leftNeighbor.isAssistant && y.parent == y.leftNeighbor.parent;
-                    if ((F || 2 == y.layout) && y.rightNeighbor && y.rightNeighbor.isSplit) switch (o.orientation) {
+                    var F = dddnode.isAssistant && dddnode.rightNeighbor && dddnode.rightNeighbor.isAssistant && dddnode.parent == dddnode.rightNeighbor.parent,
+                        x = dddnode.isAssistant && dddnode.leftNeighbor && dddnode.leftNeighbor.isAssistant && dddnode.parent == dddnode.leftNeighbor.parent;
+                    if ((F || 2 == dddnode.layout) && dddnode.rightNeighbor && dddnode.rightNeighbor.isSplit) switch (o.orientation) {
                         case FamilyTree.orientation.top:
                         case FamilyTree.orientation.top_left:
                         case FamilyTree.orientation.bottom:
                         case FamilyTree.orientation.bottom_left:
-                            T = FamilyTree.ui._linkRightToLeft(y.rightNeighbor, y, s, c);
+                            T = FamilyTree.ui._linkRightToLeft(dddnode.rightNeighbor, dddnode, s, c);
                             break;
                         case FamilyTree.orientation.right:
                         case FamilyTree.orientation.right_top:
                         case FamilyTree.orientation.left:
                         case FamilyTree.orientation.left_top:
-                            T = FamilyTree.ui._linkBottomToTop(y.rightNeighbor, y, s, c)
-                    } else if ((x || 2 == y.layout) && y.leftNeighbor && y.leftNeighbor.isSplit) switch (o.orientation) {
+                            T = FamilyTree.ui._linkBottomToTop(dddnode.rightNeighbor, dddnode, s, c)
+                    } else if ((x || 2 == dddnode.layout) && dddnode.leftNeighbor && dddnode.leftNeighbor.isSplit) switch (o.orientation) {
                         case FamilyTree.orientation.top:
                         case FamilyTree.orientation.top_left:
                         case FamilyTree.orientation.bottom:
                         case FamilyTree.orientation.bottom_left:
-                            T = FamilyTree.ui._linkLeftToRight(y.leftNeighbor, y, s, c);
+                            T = FamilyTree.ui._linkLeftToRight(dddnode.leftNeighbor, dddnode, s, c);
                             break;
                         case FamilyTree.orientation.right:
                         case FamilyTree.orientation.right_top:
                         case FamilyTree.orientation.left:
                         case FamilyTree.orientation.left_top:
-                            T = FamilyTree.ui._linkTopToBottom(y.leftNeighbor, y, s, c)
+                            T = FamilyTree.ui._linkTopToBottom(dddnode.leftNeighbor, dddnode, s, c)
                     } else switch (o.orientation) {
                         case FamilyTree.orientation.top:
                         case FamilyTree.orientation.top_left:
-                            if (1 == y.isPartner) T = FamilyTree.ui._linkLeftToRight(e, y, s, m);
-                            else if (2 == y.isPartner) T = FamilyTree.ui._linkRightToLeft(e, y, s, m);
+                            if (1 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkLeftToRight(e, dddnode, s, m);
+                            else if (2 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkRightToLeft(e, dddnode, s, m);
                             else {
-                                v = 1 == y.layout ? void 0 : g.minY - (g.minY - h.maxY) / 2;
-                                T = FamilyTree.ui._linkTopToBottom(e, y, s, c, v)
+                                v = 1 == dddnode.layout ? void 0 : g.minY - (g.minY - h.maxY) / 2;
+                                T = FamilyTree.ui._linkTopToBottom(e, dddnode, s, c, v)
                             }
                             break;
                         case FamilyTree.orientation.bottom:
                         case FamilyTree.orientation.bottom_left:
-                            if (1 == y.isPartner) T = FamilyTree.ui._linkLeftToRight(e, y, s, m);
-                            else if (2 == y.isPartner) T = FamilyTree.ui._linkRightToLeft(e, y, s, m);
+                            if (1 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkLeftToRight(e, dddnode, s, m);
+                            else if (2 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkRightToLeft(e, dddnode, s, m);
                             else {
-                                v = 1 == y.layout ? void 0 : g.maxY - (g.maxY - h.minY) / 2;
-                                T = FamilyTree.ui._linkBottomToTop(e, y, s, c, v)
+                                v = 1 == dddnode.layout ? void 0 : g.maxY - (g.maxY - h.minY) / 2;
+                                T = FamilyTree.ui._linkBottomToTop(e, dddnode, s, c, v)
                             }
                             break;
                         case FamilyTree.orientation.right:
                         case FamilyTree.orientation.right_top:
-                            if (1 == y.isPartner) T = FamilyTree.ui._linkTopToBottom(e, y, s, m);
-                            else if (2 == y.isPartner) T = FamilyTree.ui._linkBottomToTop(e, y, s, m);
+                            if (1 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkTopToBottom(e, dddnode, s, m);
+                            else if (2 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkBottomToTop(e, dddnode, s, m);
                             else {
-                                v = 1 == y.layout ? void 0 : g.maxX - (g.maxX - h.minX) / 2;
-                                T = FamilyTree.ui._linkRightToLeft(e, y, s, c, v)
+                                v = 1 == dddnode.layout ? void 0 : g.maxX - (g.maxX - h.minX) / 2;
+                                T = FamilyTree.ui._linkRightToLeft(e, dddnode, s, c, v)
                             }
                             break;
+                        //es este2
                         case FamilyTree.orientation.left:
                         case FamilyTree.orientation.left_top:
-                            if (1 == y.isPartner) T = FamilyTree.ui._linkTopToBottom(e, y, s, m);
-                            else if (2 == y.isPartner) T = FamilyTree.ui._linkBottomToTop(e, y, s, m);
+                            if (1 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkTopToBottom(e, dddnode, s, m);
+                            else if (2 == dddnode.isPartner)
+                                T = FamilyTree.ui._linkBottomToTop(e, dddnode, s, m);
                             else {
-                                v = 1 == y.layout ? void 0 : g.minX - (g.minX - h.maxX) / 2;
-                                T = FamilyTree.ui._linkLeftToRight(e, y, s, c, v)
+                                v = 1 == dddnode.layout ? void 0 : g.minX - (g.minX - h.maxX) / 2;
+                                T = FamilyTree.ui._linkLeftToRight(e, dddnode, s, c, v)
                             }
                     }
                 }
                 if (-1 != b.indexOf("{rounded}"))
-                    if (T.xa == T.xb && T.xa == T.xc && T.xa == T.xd || T.ya == T.yb && T.ya == T.yc && T.ya == T.yd) b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xd + "," + T.yd);
-                    else if (Math.abs(T.xa - T.xd) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.xa - T.xc) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.xa - T.xb) <= FamilyTree.LINK_ROUNDED_CORNERS) b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xa + "," + T.yd);
-                    else if (Math.abs(T.ya - T.yd) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.ya - T.yc) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.ya - T.yb) <= FamilyTree.LINK_ROUNDED_CORNERS) b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xd + "," + T.ya);
+                    if (T.xa == T.xb && T.xa == T.xc && T.xa == T.xd || T.ya == T.yb && T.ya == T.yc && T.ya == T.yd)
+                        b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xd + "," + T.yd);
+                    else if (Math.abs(T.xa - T.xd) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.xa - T.xc) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.xa - T.xb) <= FamilyTree.LINK_ROUNDED_CORNERS)
+                        b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xa + "," + T.yd);
+                    else if (Math.abs(T.ya - T.yd) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.ya - T.yc) <= FamilyTree.LINK_ROUNDED_CORNERS && Math.abs(T.ya - T.yb) <= FamilyTree.LINK_ROUNDED_CORNERS)
+                        b = b.replace("{rounded}", "M" + T.xa + "," + T.ya + " L" + T.xd + "," + T.ya);
                     else {
                         var _ = FamilyTree.ui._roundedEdge(T.xa, T.ya, T.xb, T.yb, T.xc, T.yc),
                             w = FamilyTree.ui._roundedEdge(T.xb, T.yb, T.xc, T.yc, T.xd, T.yd);
                         b = b.replace("{rounded}", "M" + _.x1 + "," + _.y1 + " " + _.x2 + "," + _.y2 + " Q" + _.qx1 + "," + _.qy1 + " " + _.qx2 + "," + _.qy2 + " L" + w.x2 + "," + w.y2 + " Q" + w.qx1 + "," + w.qy1 + " " + w.qx2 + "," + w.qy2 + " L" + w.x3 + "," + w.y3)
-                    } else b = -1 != b.indexOf("{edge}") ? b.replace("{edge}", "M" + T.xa + "," + T.ya + " " + T.xb + "," + T.yb + " " + T.xc + "," + T.yc + " L" + T.xd + "," + T.yd) : -1 != b.indexOf("{curve}") ? b.replace("{curve}", "M" + T.xa + "," + T.ya + " C" + T.xb + "," + T.yb + " " + T.xc + "," + T.yc + " " + T.xd + "," + T.yd) : b.replaceAll("{xa}", T.xa).replaceAll("{ya}", T.ya).replaceAll("{xb}", T.xb).replaceAll("{yb}", T.yb).replaceAll("{xc}", T.xc).replaceAll("{yc}", T.yc).replaceAll("{xd}", T.xd).replaceAll("{yd}", T.yd);
-                d.push(FamilyTree.linkOpenTag.replace("{id}", e.id).replace("{class}", "link " + y.tags.join(" ")).replace("{child-id}", y.id));
+                    }
+                else
+                    b = -1 != b.indexOf("{edge}") ? b.replace("{edge}", "M" + T.xa + "," + T.ya + " " + T.xb + "," + T.yb + " " + T.xc + "," + T.yc + " L" + T.xd + "," + T.yd) : -1 != b.indexOf("{curve}") ? b.replace("{curve}", "M" + T.xa + "," + T.ya + " C" + T.xb + "," + T.yb + " " + T.xc + "," + T.yc + " " + T.xd + "," + T.yd) : b.replaceAll("{xa}", T.xa).replaceAll("{ya}", T.ya).replaceAll("{xb}", T.xb).replaceAll("{yb}", T.yb).replaceAll("{xc}", T.xc).replaceAll("{yc}", T.yc).replaceAll("{xd}", T.xd).replaceAll("{yd}", T.yd);
+                d.push(FamilyTree.linkOpenTag.replace("{id}", e.id).replace("{class}", "link " + dddnode.tags.join(" ")).replace("{child-id}", dddnode.id));
                 var k = {
                     node: e,
-                    cnode: y,
+                    cnode: dddnode,
                     p: T,
                     html: b,
                     action: n
@@ -4159,7 +4200,7 @@ FamilyTree._defaultConfig = function (e) {
                 var S = "";
                 for (var C in t.config.linkBinding) {
                     var I = t.config.linkBinding[C],
-                        N = t._get(y.id);
+                        N = t._get(dddnode.id);
                     if (N) {
                         var A = N[I];
                         k.value = A, k.element = s[C], k.name = I, (FamilyTree.isNEU(k.value) || FamilyTree.isNEU(k.element) || (S += k.element.replace("{val}", k.value)))
@@ -4522,7 +4563,8 @@ FamilyTree._defaultConfig = function (e) {
                 d._draw(!0, FamilyTree.action.zoom, null, r)
             }), 500))
         }
-    }, FamilyTree.loading = {}, FamilyTree.loading.show = function (e) {
+    }, FamilyTree.loading = {
+    }, FamilyTree.loading.show = function (e) {
         var t = document.createElement("div");
         t.id = "bft-loading", t.innerHTML = '<style>@-webkit-keyframes dot-keyframes {0% { opacity: .4; -webkit-transform: scale(1, 1);transform: scale(1, 1);}50% {opacity: 1;-webkit-transform: scale(1.2, 1.2);transform: scale(1.2, 1.2);}100% {opacity: .4;-webkit-transform: scale(1, 1);transform: scale(1, 1);}}@keyframes dot-keyframes {0% {opacity: .4;-webkit-transform: scale(1, 1);transform: scale(1, 1);}50% {opacity: 1;-webkit-transform: scale(1.2, 1.2);transform: scale(1.2, 1.2);}100% {opacity: .4;-webkit-transform: scale(1, 1);transform: scale(1, 1);}}.bft-loading-dots div {margin: 10px;}      .bft-dot-1 {background-color: #039BE5;}.bft-dot-2 {background-color: #F57C00;}.bft-dot-3 {background-color: #FFCA28;}      .bft-loading-dots {text-align: center;width: 100%; position: absolute; top: 0;}.bft-loading-dots--dot {-webkit-animation: dot-keyframes 1.5s infinite ease-in-out;animation: dot-keyframes 1.5s infinite ease-in-out;        border-radius: 10px;display: inline-block;height: 10px;width: 10px;}.bft-loading-dots--dot:nth-child(2) {-webkit-animation-delay: .5s;animation-delay: .5s;}.bft-loading-dots--dot:nth-child(3) {-webkit-animation-delay: 1s;animation-delay: 1s;}</style><div class="bft-loading-dots"><div class="bft-loading-dots--dot bft-dot-1"></div><div class="bft-loading-dots--dot bft-dot-2"></div><div class="bft-loading-dots--dot bft-dot-3"></div></div>', e.element.appendChild(t)
     }, FamilyTree.loading.hide = function (e) {
@@ -5442,7 +5484,7 @@ FamilyTree._defaultConfig = function (e) {
         };
         var n = "";
         return t.btn && (n = `<a href="#" bft-input-btn="" class="bft-link bft-link-bft-button">${t.btn}</a>`), {
-            html: `<div class="bft-form-field" style="min-width: ${i};">\n                    <div class="bft-input" data-bft-input="" ${a.disabledAttribute} ${a.vlidators}>\n                        <label for="${a.id}">${FamilyTree._escapeGreaterLessSign(a.label)}</label>\n                        <input ${a.readOnlyAttribute} data-binding="${FamilyTree._escapeDoubleQuotes(a.binding)}" maxlength="256" id="${a.id}" name="${a.id}" type="text" value="${FamilyTree._escapeDoubleQuotes(a.value)}" autocomplete="off">\n                        ${n}\n                    </div>\n                </div>`,
+            html: `<div class="bft-form-field" style="min-width: ${i};">\n                    <div class="bft-input" data-bft-input="" ${a.disabledAttribute} ${a.vlidators}>\n                        <label for="${a.id}">${FamilyTree._escapeGreaterLessSign(a.label)}</label>\n <input ${a.readOnlyAttribute} data-binding="${FamilyTree._escapeDoubleQuotes(a.binding)}" maxlength="256" id="${a.id}" name="${a.id}" type="text" value="${FamilyTree._escapeDoubleQuotes(a.value)}" autocomplete="off">\n                        ${n}\n                    </div>\n                </div>`,
             id: a.id,
             value: a.value
         }
@@ -5737,6 +5779,7 @@ FamilyTree._defaultConfig = function (e) {
                 var r = e.recentRoots.indexOf(e.config.roots[i]); - 1 != r && e.recentRoots.splice(r, 1), e.recentRoots.unshift(e.config.roots[i])
             }
     })), FamilyTree.events.on("render-link", (function (e, t) {
+        //ponemos un circle/dot
         null != t.cnode.ppid && t.cnode.layout != FamilyTree.mixed && (t.html += '<use xlink:href="#dot" x="' + t.p.xa + '" y="' + t.p.ya + '"/>')
     })), FamilyTree.events.on("click", (function (e, t) {
         if (e instanceof FamilyTree) {
@@ -5824,9 +5867,7 @@ FamilyTree._defaultConfig = function (e) {
         }))
     }, FamilyTree.prototype.onNodeDoubleClick = function (e) {
         return this.on("dbclick", (function (t, i) {
-            var r = {
-                data: i
-            };
+            var r = { data: i };
             return e.call(t, r)
         }))
     }, FamilyTree.filterUI = function () { }, FamilyTree.filterUI.prototype.init = function (e) {
@@ -5893,11 +5934,11 @@ FamilyTree._defaultConfig = function (e) {
                     if (!e.target.hasAttribute("data-filter-field")) return;
                     var l = d.instance.element.querySelector(`[data-filter-menu="${t}"]`);
                     if (!l) {
-                        var o = `<div>\n                    <input data-all type="checkbox" id="${t}" name="${t}" checked>\n                    <label for="${t}">[All]</label>\n                </div>`;
+                        var o = `<div>\n   <input data-all type="checkbox" id="${t}" name="${t}" checked>\n                    <label for="${t}">[All]</label>\n                </div>`;
                         for (var s in d.filterBy[t]) {
                             var c = d.filterBy[t][s],
                                 m = c.text;
-                            null == m && (m = s), o += `<div>\n                        <input  type="checkbox" id="${s}" name="${s}" ${c.checked ? "checked" : ""}>\n                        <label for="${s}">${m}</label>\n                    </div>`
+                            null == m && (m = s), o += `<div>\n   <input  type="checkbox" id="${s}" name="${s}" ${c.checked ? "checked" : ""}>\n                        <label for="${s}">${m}</label>\n                    </div>`
                         } (l = document.createElement("div")).innerHTML = `<fieldset>\n                                                    <legend>Filter by ${t}:</legend>\n                                                    ${o}\n                                                </fieldset>`, l.setAttribute("data-filter-menu", t), l.classList.add("bft-filter-menu"), e.target.parentNode.parentNode.appendChild(l);
                         var p = l.querySelectorAll("input");
                         for (r = 0; r < p.length; r++) p[r].addEventListener("change", (function (e) {
@@ -5921,13 +5962,27 @@ FamilyTree._defaultConfig = function (e) {
     FamilyTree.remote._fromResDTO = function (e, t, i, r, a) {
         var n = t[e.id];
         e.x = n.p[0], e.y = n.p[1], e.w = n.p[2], e.h = n.p[3], null != n.ln && (e.leftNeighbor = a[n.ln]), null != n.rn && (e.rightNeighbor = a[n.rn]);
-        for (var l = 0; l < e.stChildren.length; l++) FamilyTree.remote._fromResDTO(e.stChildren[l], t, i, r, a);
-        for (l = 0; l < e.children.length; l++) FamilyTree.remote._fromResDTO(e.children[l], t, i, r, a)
+        for (var l = 0; l < e.stChildren.length; l++)
+            FamilyTree.remote._fromResDTO(e.stChildren[l], t, i, r, a);
+        for (l = 0; l < e.children.length; l++)
+            FamilyTree.remote._fromResDTO(e.children[l], t, i, r, a)
     }, FamilyTree.remote._toReqDTO = function (e, t) {
         var i = {
             p: [e.id, null != e.parent ? e.parent.id : null, null != e.stParent ? e.stParent.id : null, e.w, e.h]
         };
-        e.children.length > 0 && (i.c = FamilyTree.remote._convertToIdArray(e.children)), e.stChildren.length > 0 && (i.v = FamilyTree.remote._convertToIdArray(e.stChildren)), null != e.layout && 0 != e.layout && (i.l = e.layout), e.isAssistant && (i.a = 1), e.isSplit && (i.s = e.isSplit), e.padding && (i.q = e.padding), e.lcn && (i.k = e.lcn), e.stContainerNodes && (i.b = FamilyTree.remote._convertToIdArray(e.stContainerNodes)), e._m && (i.m = e._m.id), e.isPartner && (i.i = e.isPartner), e.hasPartners && (i.g = e.hasPartners), e.partnerSeparation && (i.e = e.partnerSeparation), t.push(i);
+        e.children.length > 0 && (i.c = FamilyTree.remote._convertToIdArray(e.children)),
+            e.stChildren.length > 0
+            && (i.v = FamilyTree.remote._convertToIdArray(e.stChildren)),
+            null != e.layout && 0 != e.layout && (i.l = e.layout),
+            e.isAssistant && (i.a = 1), e.isSplit && (i.s = e.isSplit),
+            e.padding && (i.q = e.padding),
+            e.lcn && (i.k = e.lcn),
+            e.stContainerNodes && (i.b = FamilyTree.remote._convertToIdArray(e.stContainerNodes)),
+            e._m && (i.m = e._m.id),
+            e.isPartner && (i.i = e.isPartner),
+            e.hasPartners && (i.g = e.hasPartners),
+            e.partnerSeparation && (i.e = e.partnerSeparation),
+            t.push(i);
         for (var r = 0; r < e.stChildren.length; r++) FamilyTree.remote._toReqDTO(e.stChildren[r], t);
         for (r = 0; r < e.children.length; r++) FamilyTree.remote._toReqDTO(e.children[r], t)
     }, FamilyTree.remote._toReqLayoutConfigsDTO = function (e) {
@@ -5941,13 +5996,16 @@ FamilyTree._defaultConfig = function (e) {
         for (var t = [], i = 0; i < e.length; i++) t.push(e[i].id);
         return t
     }, FamilyTree.remote._setPositions = function (e, t, i, r) {
-        for (var a = [], n = [], l = FamilyTree.remote._toReqLayoutConfigsDTO(t), o = 0; o < e.length; o++)
-            n.push(e[o].id), FamilyTree.remote._toReqDTO(e[o], a);
+        var a = [], n = [], l = FamilyTree.remote._toReqLayoutConfigsDTO(t);
+        for (var o = 0; o < e.length; o++) {
+            n.push(e[o].id);
+            FamilyTree.remote._toReqDTO(e[o], a);
+        }
         var s = {
             n: a,
             c: l,
-            r: n,
-            v: "8.07.00"//version
+            // v: "8.07.00"//version
+            r: n
         };
         if (FamilyTree.LIMIT_NODES || (s.l = !0), null != FamilyTree.remote._fromReqDTO) FamilyTree.remote._fromReqDTO(s.n, s.r, s.c, (function (t) {
             for (var a = 0; a < e.length; a++) FamilyTree.remote._fromResDTO(e[a], t, 0, e, r);
@@ -5955,45 +6013,16 @@ FamilyTree._defaultConfig = function (e) {
         }));
         else {
             s = JSON.stringify(s);
-            var result = {};
             const root = n[0];
             var z = JSON.parse(s);
-            // checkConsistency(z);
-
-
-            let totalnodes = z.n.length;
-            // let nodePointer = FamilyTree.remote.findnodePointer(root, z);
-            d = FamilyTree.remote.findchildsposition(totalnodes, r, root, z, 0, 0,
-                result, totalnodes, totalnodes, t, z.n[0].p[3], z.n[0].p[4]);
-            let node = 0;
-            if (result["4609"] != undefined) //filomena
-                if (result["6612"] != undefined) //filomena
-                    if ((result["4609"].hasOwnProperty("p")) && (result["6612"].hasOwnProperty("p"))) {
-                        node = "4609";
-                        if (result[node] != undefined)
-                            if (result[node].hasOwnProperty("p")) {
-                                result[node].p[1] = result["6612"].p[1] - 200;
-                            }
-                        node = "4708";
-                        if (result[node] != undefined)
-                            if (result[node].hasOwnProperty("p")) {
-                                result[node].p[1] = result["6612"].p[1] - 100;
-                            }
-                        node = "4711";
-                        if (result[node] != undefined)
-                            if (result[node].hasOwnProperty("p")) {
-                                result[node].p[1] = result["6612"].p[1] - 100;
-                            }
-                        node = "4707";
-                        if (result[node] != undefined)
-                            if (result[node].hasOwnProperty("p")) {
-                                result[node].p[0] = result["4609"].p[0];
-                                result[node].p[1] = result["6612"].p[1] - 300;
-                            }
-                    }
+            d = calculateTreePosition(
+                r,
+                root,
+                t,
+                z.n[0].p[3], z.n[0].p[4]);
             FamilyTree.remote._proceed(e, d, r, i);
             // for debugging console.log("result" + JSON.stringify(d));
-            // let t={
+            // let dd={
             //     "base": {
             //         "orientation": 3,
             //         "levelSeparation": 30,
@@ -6019,369 +6048,17 @@ FamilyTree._defaultConfig = function (e) {
             //         "partnerNodeSeparation": 15
             //     }
             // }; 
-            // FamilyTree.remote._proceed(e, t, r, i);
-            // FamilyTree.localStorage.setItem(s, JSON.stringify(t));
+            // FamilyTree.remote._proceed(e, dd, r, i);
+            // FamilyTree.localStorage.setItem(s, JSON.stringify(dd));
         }
-    }, FamilyTree.remote._proceed = function (e, t, i, r) {
-        if ("string" == typeof t && (t = JSON.parse(t)), t.limit && 1 == t.limit) r(t.limit);
+    }, FamilyTree.remote._proceed = function (e, d, r, i) {
+        if ("string" == typeof d && (d = JSON.parse(d)), d.limit && 1 == d.limit)
+            i(d.limit);
         else {
-            for (var a = 0; a < e.length; a++) FamilyTree.remote._fromResDTO(e[a], t, 0, e, i);
-            r()
+            for (var a = 0; a < e.length; a++)
+                FamilyTree.remote._fromResDTO(e[a], d, 0, e, r);
+            i()
         }
-
-    },
-    FamilyTree.remote.findtotalchildren = function (node, r, d) {
-        if (r[node] == undefined)
-            return 0;//for false 
-        if (r[node].pids.length == 0)
-            return 0;
-        let nodePointer = FamilyTree.remote.findnodePointer(node, d);
-        let totalcouples = r[node].pids.length;
-        if (d.n[nodePointer].hasOwnProperty("c")) {
-            return d.n[nodePointer].c.length - totalcouples;
-        } else {
-            return 0;
-        }
-    },
-    //devuelve la position+1 de couple en la lista de parejas de node
-    FamilyTree.remote.findcoupleposition = function (couple, node, r) {
-        if (r[node] == undefined)
-            return 0;//for false
-        if (r[couple] == undefined)
-            return 0;//for false
-        var totalcouples = r[node].pids.length;
-        for (let i = 0; i < totalcouples; i++) {
-            if (r[node].pids[i] == couple) {
-                //now we look for the position of the node in the couple list
-                var totalwives = r[couple].pids.length;
-                for (let j = 0; j < totalwives; j++) {
-                    if (r[couple].pids[j] == node) {
-                        return i + 1;//position of the couple
-                    }
-                }
-                console.log("warning not found couple of " + node + " in the list of " + couple);
-                return 1;//not expected to reach this point ever
-            }
-        }
-        return 0;
-    },
-    FamilyTree.remote.getTotalesposas = function (node, nodePointer, d, rrr) {
-        let totalesposas = 0;
-        if (rrr[node] != undefined) {
-            if (rrr[node].pids != undefined) {
-                // la lista de esposas esta en rrr[node].pids
-                // el total deberia ser rrr[node].pids.length
-                // pero si alguna esposa no tiene datos, entonces no aparece en rrr[node].c
-                // por ello el total de esposas son las que estan en pids y tambien en c
-                for (let n = 0; n < rrr[node].pids.length; n++) {
-                    for (let m = 0; m < d.n[nodePointer].c?.length; m++) {
-                        if (rrr[node].pids[n] == d.n[nodePointer].c[m]) {
-                            totalesposas += 1;
-                        }
-                    }
-                }
-            }
-        }
-        return totalesposas;
-    },
-    //no puede devoler nada mayor que totalnodes
-    FamilyTree.remote.findnodePointer = function (node, d) {
-        var totalnodes = d.n.length;
-        for (let i = 0; i < totalnodes; i++) {
-            if (d.n[i].p[0] == node) {
-                return i;
-            }
-        }
-        return totalnodes; //stands for not found
-    },
-    //this function corrects the position of children when changing to a new tree
-    FamilyTree.remote.actualizaposchildren = function (sibling, offsetx, offsety, d, rrr) {
-        if (!result_copy[sibling]) {
-            result_copy[sibling] = {};
-        }
-        if (result_copy[sibling] && !result_copy[sibling].updated) {
-            result_copy[sibling].pos[0] += offsetx;
-            result_copy[sibling].pos[1] += offsety;
-            result_copy[sibling].updated = true;
-        }
-        //hay que actualizar las esposas de los hermanos
-        // let siblingtotalesposas = FamilyTree.remote.getTotalesposas(node, nodePointer, d, rrr);
-        const siblingkeypointer = FamilyTree.remote.findnodePointer(sibling, d);
-        const siblingtotalesposas = FamilyTree.remote.getTotalesposas(sibling, siblingkeypointer, d, rrr);
-        for (let j = 0; j < d.n[siblingkeypointer].c?.length; j++) {
-            if (j < siblingtotalesposas) {
-                //las parejas del hermano sibling:
-                const siblingcouple = d.n[siblingkeypointer].c[j];
-                //const siblingcouplePointer = FamilyTree.remote.findnodePointer(d.n[siblingkeypointer].c[j], d);
-                if (!result_copy[siblingcouple]) {
-                    result_copy[siblingcouple] = {};
-                }
-                if (result_copy[siblingcouple].pos && !result_copy[siblingcouple].updated) {
-                    result_copy[siblingcouple].pos[0] += offsetx;
-                    result_copy[siblingcouple].pos[1] += offsety;
-                    result_copy[siblingcouple].updated = true;
-                }
-            } else {
-                //los hijos del hermano sibling:
-                const siblingKid = d.n[siblingkeypointer].c[j];
-                if (!result_copy[siblingKid]) {
-                    result_copy[siblingKid] = {};
-                }
-                if (result_copy[siblingKid].pos && !result_copy[siblingKid].updated) {
-                    result_copy[siblingKid].pos[0] += offsetx;
-                    result_copy[siblingKid].pos[1] += offsety;
-                    result_copy[siblingKid].updated = true;
-                }
-                FamilyTree.remote.actualizaposchildren(siblingKid, offsetx, offsety, d, rrr);
-            }
-        }
-    },
-    FamilyTree.remote.findchildsposition = function (
-        parent,
-        rrr,
-        node,
-        d,
-        startx,
-        starty,
-        result,
-        smallbrother,
-        bigbrother, t,
-        widebox, heightbox
-    ) {
-
-
-        const nodePointer = FamilyTree.remote.findnodePointer(node, d);
-        const siblingSeparation = t.base.siblingSeparation;// 15;
-        const extraspacemarriedwithchildren = 10;
-        const levelSeparation = t.base.levelSeparation;//30; 
-        const totalnodes = d.n.length;
-        if (nodePointer >= totalnodes) return result;
-        let maxy = starty;
-        let miny = starty;
-        let childnodePointer = 0;
-        if (d.n[nodePointer].hasOwnProperty("c")) {
-            const totalesposas = FamilyTree.remote.getTotalesposas(node, nodePointer, d, rrr);
-            for (let j = 0; j < d.n[nodePointer].c.length; j++) {
-                let bb = totalnodes;
-                let sb = totalnodes;
-                if (j > 0) {
-                    sb = d.n[nodePointer].c[j - 1];
-                }
-                if (j + 1 < d.n[nodePointer].c.length) {
-                    bb = d.n[nodePointer].c[j + 1];
-                }
-                let desplazamiento = heightbox + 2 * siblingSeparation;
-                let marginBrotherwife = 0;
-                if (j > totalesposas) {//no somos el primer hijo
-                    //si el hijo anterior tenia esposa
-                    if (d.n[childnodePointer].hasOwnProperty("c")) {
-                        let slotsforwives = 0;
-                        let brothernodePointer = FamilyTree.remote.findnodePointer(d.n[nodePointer].c[j - 1], d);
-                        let childtotalesposasBrother = FamilyTree.remote.getTotalesposas(d.n[nodePointer].c[j - 1], brothernodePointer, d, rrr);
-
-                        slotsforwives = (childtotalesposasBrother > 1) ? 2 : 1;
-                        //si este hijo tambien tiene mas de 1 esposa, entonces aumentamos tambien.
-                        let childtotalesposas = FamilyTree.remote.getTotalesposas(d.n[nodePointer].c[j], childnodePointer, d, rrr);
-                        if (childtotalesposas > 0) {
-                            slotsforwives += 1;
-                        }
-                        marginBrotherwife = desplazamiento * slotsforwives;
-                        let totalchidren = FamilyTree.remote.findtotalchildren(d.n[nodePointer].c[j - 1], rrr, d);
-                        if (totalchidren > 0) {
-                            marginBrotherwife = desplazamiento + extraspacemarriedwithchildren;
-                        }
-                    }
-                }
-                //if have more than 2 wives need extra space, 
-                let extraxmargin = 0; //magin: 0 y 1=0, 2 y 3 = 1 ... 
-                if (totalesposas > 2) {
-                    if ((totalesposas % 2) == 0) {//par/even
-                        extraxmargin = (widebox + levelSeparation) * totalesposas / 2;
-                    } else {
-                        extraxmargin = (widebox + levelSeparation) * (totalesposas - 1) / 2;
-                    }
-                }
-                childnodePointer = FamilyTree.remote.findnodePointer(d.n[nodePointer].c[j], d);
-                result = FamilyTree.remote.findchildsposition(
-                    node,
-                    rrr,
-                    d.n[nodePointer].c[j],
-                    d,
-                    startx + (widebox + levelSeparation) + extraxmargin,
-                    starty + marginBrotherwife,
-                    result,
-                    sb,
-                    bb, t, widebox, heightbox
-                );
-                var iswife = FamilyTree.remote.findcoupleposition(node, d.n[nodePointer].c[j], rrr);
-                if (iswife == 0) {
-                    if (result[d.n[nodePointer].c[j]].yy != undefined) {
-                        if (maxy < result[d.n[nodePointer].c[j]].yy[1])
-                            maxy = result[d.n[nodePointer].c[j]].yy[1];
-                        //maxy = d.n[childnodePointer].y[2];
-                        if (j + 1 < d.n[nodePointer].c.length) {
-                            //y = d.n[childnodePointer].y[2] + siblingSeparation + heightbox;
-                            starty = result[d.n[nodePointer].c[j]].yy[1] + siblingSeparation + heightbox;
-                        }
-                    }
-                } else {
-                    // haswife = true;
-                }
-            }
-            //miramos si alguno de los hermanos tiene offset
-            //borramos el campo offset-x-y y se lo aplicamos a todos los hermanos y parejas.
-            let found = d.n[nodePointer].c.length;
-            let foundnode = 0;
-            for (let j = totalesposas; j < d.n[nodePointer].c.length; j++) {
-                if (result_copy[d.n[nodePointer].c[j]]?.offsetx && result_copy[d.n[nodePointer].c[j]]?.offsety) {
-                    found = j;
-                    foundnode = d.n[nodePointer].c[j];
-                }
-            }
-            if (found < d.n[nodePointer].c.length) {
-                for (let j = 0; j < totalesposas; j++) {
-                    if (!result_copy[d.n[nodePointer].c[j]]) {
-                        result_copy[d.n[nodePointer].c[j]] = {};
-                    }
-                    result_copy[d.n[nodePointer].c[j]].updated = true;
-                }
-                //hay que marcar a todos los hijos 
-                for (let j = 0; j < rrr[foundnode].ftChildrenIds.length; j++) {
-                    if (!result_copy[rrr[foundnode].ftChildrenIds[j]]) {
-                        result_copy[rrr[foundnode].ftChildrenIds[j]] = {};
-                    }
-                    result_copy[rrr[foundnode].ftChildrenIds[j]].updated = true;
-                }
-                for (let j = totalesposas; j < d.n[nodePointer].c.length; j++) {
-                    //no hay que actualizar esposa/marido
-                    if (j != found) {
-                        let sibling = d.n[nodePointer].c[j];
-                        FamilyTree.remote.actualizaposchildren(sibling, result_copy[foundnode].offsetx, result_copy[foundnode].offsety, d, rrr);
-                    }
-                }
-            }
-        }
-        //ahora calculamos nuestra propia posicion:
-        let mstring = {};
-        const iamiswife = FamilyTree.remote.findcoupleposition(node, parent, rrr);
-        if (iamiswife == 0) {//las posiciones son relativas al ancho del arbol de cada hijo
-            let bigbrotherPointer = FamilyTree.remote.findnodePointer(bigbrother, d);
-            let smallbrotherPointer = FamilyTree.remote.findnodePointer(smallbrother, d);
-            if (bigbrotherPointer < totalnodes && smallbrotherPointer < totalnodes) {
-                mstring = {
-                    p: [startx, miny + (maxy - miny) / 2, widebox, heightbox],
-                    yy: [miny, maxy],
-                    ln: smallbrother,
-                    rn: bigbrother
-                };
-            } else if (bigbrotherPointer < totalnodes && smallbrotherPointer >= totalnodes) {
-                mstring = {
-                    p: [startx, miny + (maxy - miny) / 2, widebox, heightbox],
-                    yy: [miny, maxy],
-                    rn: bigbrother
-                };
-            } else if (bigbrotherPointer >= totalnodes && smallbrotherPointer < totalnodes) {
-                mstring = {
-                    p: [startx, miny + (maxy - miny) / 2, widebox, heightbox],
-                    yy: [miny, maxy],
-                    ln: smallbrother,
-                };
-            } else {
-                mstring = {
-                    p: [startx, miny + (maxy - miny) / 2, widebox, heightbox],
-                    yy: [miny, maxy]
-                };
-            }
-        }
-        result[node] = mstring;
-        //ahora corregimos la posición de las esposas, sumándoles nuestra posición
-        //nuestra posición es: mstring = { p: []}
-        if (d.n[nodePointer].hasOwnProperty("c")) {
-            const totalesposas = FamilyTree.remote.getTotalesposas(node, nodePointer, d, rrr);
-            for (let j = 0; j < d.n[nodePointer].c.length; j++) {
-                var iswife = FamilyTree.remote.findcoupleposition(d.n[nodePointer].c[j], node, rrr);
-                // 1-0=1
-                // 2-1=1 
-                // 3-0=3
-                // 4-1=3
-                if (iswife > 0) {
-                    let desplazamientoy = heightbox + 2 * siblingSeparation;
-                    if (rrr[node]?.pids.length > 0) {
-                        const totalchidren = FamilyTree.remote.findtotalchildren(node, rrr, d);
-                        if (totalchidren > 0) {
-                            desplazamientoy += extraspacemarriedwithchildren;
-                        }
-                    }
-                    let desplx = iswife - 1;
-                    // if(totalesposas==3) desplx = iswife;
-                    const moduloWife = (iswife % 2);
-                    if (moduloWife == 0) {//par/even
-                        desplx = (iswife - 2);
-                        desplazamientoy = -1 * desplazamientoy
-                    }
-                    result[d.n[nodePointer].c[j]] = {
-                        p: [startx + (widebox + levelSeparation) * (desplx) / 2,
-                        result[node].p[1] + desplazamientoy, widebox, heightbox]
-                    }
-                }
-            }
-            //si tenemos más de 2 esposas, no desplazamos (totalesposas/2)*(desplazamientox/2) 
-            if (totalesposas > 2) {
-                if ((totalesposas % 2) != 0) {//impar/odd
-                    result[node].p[0] += ((widebox + levelSeparation) / 2) * (totalesposas + 1) / 4;
-                } else {
-                    result[node].p[0] += ((widebox + levelSeparation) / 2) * (totalesposas) / 4;
-                }
-            }
-        }
-        for (const key in result) {
-            if (result[key].p && !result_copy[key]?.pos) {
-                if (result_copy[key]?.newoffsetx) {
-                    result[key].p[0] += result_copy[key].newoffsetx;
-                    result_copy[key].newoffsetx = 0;
-                }
-                if (result_copy[key]?.newoffsety) {
-                    result[key].p[1] += result_copy[key].newoffsety;
-                    result_copy[key].newoffsety = 0;
-                }
-                result_copy[key] = { ...(result_copy[key] ?? {}), pos: [...result[key].p] };
-            } else if (result[key].p && result_copy[key]?.pos) {
-                //only if both parents are not calculated, offset used for brothers and sisters, couples and children
-                let parentslist = d.n ? d.n.filter(item => item.p[0] === parseInt(key)) : [];
-                if (result[key].p != result_copy[key].pos && !result_copy[parentslist[0].p[1]]?.pos) {
-                    result_copy[key].offsetx = result_copy[key].pos[0] - result[key].p[0];
-                    result_copy[key].offsety = result_copy[key].pos[1] - result[key].p[1];
-                }
-                //ahora los padres
-                const parentA = parentslist[0].p[1];
-                const temp = d.n ? d.n.filter(item => item.p[0] === parseInt(parentA)) : [];
-                const parentB = temp ? temp[0]?.c[0] : null;//esto si solo tiene una esposa                
-                if (parentA != null && !result_copy[parentA]?.pos) {
-                    if (!result_copy[parentA]) {
-                        result_copy[parentA] = {};
-                    }
-                    if (result_copy[parentA].newoffsetx === undefined) {
-                        result_copy[parentA].newoffsetx = result_copy[key].pos[0] - result[key].p[0];
-                        result_copy[parentA].newoffsety = result_copy[key].pos[1] - result[key].p[1];
-                    }
-                }
-                if (parentB != null && !result_copy[parentB]?.pos) {
-                    if (!result_copy[parentB]) {
-                        result_copy[parentB] = {};
-                    }
-                    if (result_copy[parentB].newoffsetx === undefined) {
-                        result_copy[parentB].newoffsetx = result_copy[key].pos[0] - result[key].p[0];
-                        result_copy[parentB].newoffsety = result_copy[key].pos[1] - result[key].p[1];
-                    }
-                }
-                // result[key] = { ...result[key], p: [...result_copy[key].pos] }; 
-                result[key].p = result_copy[key].pos;
-                //hay que ajustar el offset en la posicion todos los antepasados
-                //los descendientes no tienen que cambiar.
-            }
-        }
-        return result;
     };
-
 
 export { FamilyTree };
