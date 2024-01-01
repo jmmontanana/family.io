@@ -60,12 +60,12 @@ function findNodesDisconnected(nodes) {
 
 function checkConsistency(nodes) {
     //testing example
-    const nodestest = [
-        { id: 120, pids: [null], mid: 33 },
-        { id: 210, pids: [80, 120], mid: 111 },
-        { id: 33, pids: [210, 125], mid: null },
-        { id: 127, pids: [null], mid: 11 }
-    ];
+    // const nodestest = [
+    //     { id: 120, pids: [null], mid: 33 },
+    //     { id: 210, pids: [80, 120], mid: 111 },
+    //     { id: 33, pids: [210, 125], mid: null },
+    //     { id: 127, pids: [null], mid: 11 }
+    // ];
     //Tenemos que:
     // 0-contar cuantas fichas hay
     // 1-si hay parejas que apunta a fichas que no existen, o que no hay correspondencia en la referencia

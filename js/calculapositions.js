@@ -3,9 +3,8 @@ var result_copy = {}
 // function findnodePointer(node, d) {
 //     var totalnodes = d.n.length;
 //     for (let i = 0; i < totalnodes; i++) {
-//         if (d.n[i].p[0] == node) {
+//         if (d.n[i].p[0] == node)
 //             return i;
-//         }
 //     }
 //     return totalnodes; //stands for not found
 // }
@@ -26,11 +25,7 @@ function getTotalesposas(node, rrr//,d
     // for (let m = 0; m < d.n[nodePointer].c?.length; m++) {
     // if (rrr[node].pids[n] == d.n[nodePointer].c[m]) {
     // totalesposas += 1;
-    // }
-    // }
-    // }
-    //     }
-    // }
+    // } } } } }
     // return totalesposas;
 }
 function findtotalchildren(node, r //,d
@@ -77,7 +72,7 @@ function calculateTreePosition(
     t,
     widebox, heightbox
 ) {
-    //build rrr, copy pids into childrenIds,
+    //complete rrr, copy pids into childrenIds,
     //follow all the table and fill with the fid and mid fields the childrenIds and ftChildrenIds
     for (const key in rrr) {
         for (let j = 0; j < rrr[key].pids.length; j++) {//is not a wife
@@ -105,59 +100,10 @@ function calculateTreePosition(
         }
         // if (rrr[smallBrothercase].hasOwnProperty("childrenIds")) {
     }
-
     let totalnodes = 0; for (const id in rrr) { totalnodes++ };//d.n.length;
     let smallbrother = totalnodes;//d.n.length;
-    let bigbrother = totalnodes;//totalnodes
-    let result1 = findchildsposition(
-        null,//parent = none 
-        rrr,
-        4510, //Aliaga 
-        0,// startx,
-        0,// starty,
-        {},// current_result, 
-        smallbrother,
-        bigbrother,
-        t,
-        widebox, heightbox, totalnodes
-    );
-    for (const key in result1) {
-        if (result1[key].p && !result_copy[key]?.p)
-            result_copy[key] = { ...(result1[key] ?? {}), p: [...result1[key].p] };
-    }
-    let result2 = findchildsposition(
-        null,//parent = none 
-        rrr,
-        42632, //Montañana 
-        0,// startx,
-        0,// starty,
-        {},// current_result, 
-        smallbrother,
-        bigbrother,
-        t,
-        widebox, heightbox, totalnodes
-    );
-    let offsetx = 0;
-    let offsety = 0;
-    for (const id in result2) {
-        // Check if the same id exists in result2
-        if (result_copy[id]?.p) {
-            offsetx = result_copy[id].p[0] - result2[id].p[0];
-            offsety = result_copy[id].p[1] - result2[id].p[1];
-            if (offsetx != 0 || offsety != 0)
-                break; // we got the offset
-        }
-    }
-    for (const id in result2) {
-        if (result2[id].p && !result_copy[id]?.p) {
-            result2[id].p[0] += offsetx;
-            result2[id].p[1] += offsety;
-            result_copy[id] = { ...(result2[id] ?? {}), p: [...result2[id].p] };
-        } else if (result2[id].p && result_copy[id]?.p)
-            result2[id].p = result_copy[id].p;
-    }
-
-    let result3 = findchildsposition(
+    let bigbrother = totalnodes;//totalnodes  
+    let result = findchildsposition(
         null,//parent = none 
         rrr,
         node,
@@ -183,26 +129,26 @@ function calculateTreePosition(
     //     //...
     // };
 
-    offsetx = 0;
-    offsety = 0;
-    for (const id in result3) {
+    let offsetx = 0;
+    let offsety = 0;
+    for (const id in result) {
         // Check if the same id exists in result2
         if (result_copy[id]?.p) {
-            offsetx = result_copy[id].p[0] - result3[id].p[0];
-            offsety = result_copy[id].p[1] - result3[id].p[1];
+            offsetx = result_copy[id].p[0] - result[id].p[0];
+            offsety = result_copy[id].p[1] - result[id].p[1];
             if (offsetx != 0 || offsety != 0)
                 break; // we got the offset
         }
     }
-    for (const id in result3) {
-        if (result3[id].p && !result_copy[id]?.p) {
-            result3[id].p[0] += offsetx;
-            result3[id].p[1] += offsety;
-            result_copy[id] = { ...(result3[id] ?? {}), p: [...result3[id].p] };
-        } else if (result3[id].p && result_copy[id]?.p)
-            result3[id].p = result_copy[id].p;
+    for (const id in result) {
+        if (result[id].p && !result_copy[id]?.p) {
+            result[id].p[0] += offsetx;
+            result[id].p[1] += offsety;
+            result_copy[id] = { ...(result[id] ?? {}), p: [...result[id].p] };
+        } else if (result[id].p && result_copy[id]?.p)
+            result[id].p = result_copy[id].p;
     }
-    return result3;
+    return result;
 }
 
 function findchildsposition(
@@ -366,7 +312,7 @@ function findchildsposition(
         }
     }
 
-    //intercambiamos las posiciones de la pareja para que el hombre aparezca en primer lugar,
+    //Intercambiamos las posiciones de la pareja para que el hombre aparezca en primer lugar,
     //asi cuando cambiamos de arbol y mantenemos las fichas donde están,
     //los cálculos coinciden para desplazar el nuevo arbol y que no se superpongan fichas en la pantalla
     for (const key in result) {
