@@ -226,8 +226,62 @@ FamilyTree._defaultConfig = function (e) {
                             FamilyTree.RENDER_LINKS_BEFORE_NODES || (l += a.ui.link(m, a, o, e.bordersByRootIdAndLevel, e.nodes, t)),
                                 l += a.ui.expandCollapseBtn(a, m, a._layoutConfigs, t, o)
                         }
-                        //Añadiendo circulos
-                        // l += "<g><use xlink:href=\"#dot\" x=\"660\" y=\"6122\"></use></g>";
+                        //Añadiendo circulos:
+                        //a.nodes contiene todos los datos
+                        //a.visibleNodeIds contiene la lista de los nodos visible
+                        for (let id = 0; id < a.visibleNodeIds.length; id++) {
+                            let couplenodeA = a.visibleNodeIds[id];
+                            let nodePidsA = a.nodes[couplenodeA].pids;
+                            for (let pidId = 0; pidId < nodePidsA.length; pidId++) {
+                                if (nodePidsA[pidId] != null && a.visibleNodeIds.includes(nodePidsA[pidId])) {
+                                    let couplenodeB = nodePidsA[pidId];
+                                    let nodePidsB = a.nodes[couplenodeB].pids;
+                                    if (nodePidsB.length === 1) {//queremos procesar los que tienen multiples solo en primer lugar
+                                        //ahora ponemos un circulo entre ellos: 
+                                        let centerx = a.nodes[couplenodeB].w / 2;
+                                        centerx += a.nodes[couplenodeB].x
+                                        let centery = a.nodes[couplenodeB].h / 2;
+                                        let espacioentrenodos = -a.nodes[couplenodeB].h;
+                                        let startline = a.nodes[couplenodeB].h;
+                                        if (a.nodes[couplenodeA].y < a.nodes[couplenodeB].y) {
+                                            centery += a.nodes[couplenodeA].y + (a.nodes[couplenodeB].y - a.nodes[couplenodeA].y) / 2;
+                                            espacioentrenodos += a.nodes[couplenodeB].y - a.nodes[couplenodeA].y;
+                                            startline += a.nodes[couplenodeA].y;
+                                        } else {
+                                            centery += a.nodes[couplenodeB].y + (a.nodes[couplenodeA].y - a.nodes[couplenodeB].y) / 2;
+                                            espacioentrenodos += a.nodes[couplenodeA].y - a.nodes[couplenodeB].y;
+                                            startline += a.nodes[couplenodeB].y;
+                                        }
+                                        let endline = startline + espacioentrenodos;
+                                        l += "<g data-l-id=\"[" + couplenodeA + "][" + couplenodeB + "]\" class=\"link female partner\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M" + centerx + "," + startline + " L" + centerx + "," + endline + "\"></path></g>";
+                                        let sequenceChildren = a.nodes[couplenodeA].ftChildrenIds;
+                                        if (sequenceChildren.length === 0)
+                                            sequenceChildren = a.nodes[couplenodeB].ftChildrenIds;
+                                        for (let childid = 0; childid < sequenceChildren.length; childid++) {
+                                            let childnode = sequenceChildren[childid];
+                                            if (a.nodes[childnode].mid === couplenodeB || a.nodes[childnode].mid === null) {
+                                                let childx = a.nodes[childnode].x;
+                                                let childy = a.nodes[childnode].y + a.nodes[childnode].h / 2;
+                                                //aqui
+                                                let gapYa = centery + ((childy > centery) ? 5 : -5);
+                                                let gapYb = childy + ((childy > centery) ? -5 : 5);
+                                                let gapXa = centerx + 77.5;
+                                                l += "<g data-l-id=\"[" + couplenodeA + "][" + childnode + "]\" class=\"link male\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M"
+                                                    + centerx + "," + centery
+                                                    + " " + gapXa + "," + centery
+                                                    + " Q" + gapXa + "," + centery
+                                                    + " " + gapXa + "," + gapYa
+                                                    + " L" + gapXa + "," + gapYb
+                                                    + " Q" + gapXa + "," + childy
+                                                    + " " + gapXa + "," + childy
+                                                    + " L" + childx + "," + childy + "\"></path></g>";
+                                            }
+                                        }
+                                        l += "<g><use xlink:href=\"#dot\" x=\"" + centerx + "\" y=\"" + centery + "\"></use></g>";
+                                    }
+                                }
+                            }
+                        }
 
                         n = {
                             content: l,
@@ -3899,7 +3953,7 @@ FamilyTree._defaultConfig = function (e) {
         },
         expandCollapseSize: 0,
         svg: '<svg class="{randId} {template} bft-{mode}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  style="display:block;" width="{w}" height="{h}" viewBox="{viewBox}">{content}</svg>',
-        link: '<path stroke-linejoin="round" stroke="#222222" stroke-width="1px" fill="none" d="{rounded}" />',
+        link: '',//'<path stroke-linejoin="round" stroke="#333333" stroke-width="1px" fill="none" d="{rounded}" />',//aqui: 
         assistanseLink: '<path stroke-linejoin="round" stroke="#aeaeae" stroke-width="2px" fill="none" d="M{xa},{ya} {xb},{yb} {xc},{yc} {xd},{yd} L{xe},{ye}"/>',
         pointer: '<g data-pointer="pointer" transform="matrix(0,0,0,0,100,100)"><radialGradient id="pointerGradient"><stop stop-color="#ffffff" offset="0" /><stop stop-color="#C1C1C1" offset="1" /></radialGradient><circle cx="16" cy="16" r="16" stroke-width="1" stroke="#acacac" fill="url(#pointerGradient)"></circle></g>',
         node: '<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" stroke="#aeaeae" rx="7" ry="7"></rect>',
@@ -5785,7 +5839,7 @@ FamilyTree._defaultConfig = function (e) {
             }
     })), FamilyTree.events.on("render-link", (function (e, t) {
         //ponemos un circle/dot
-        null != t.cnode.ppid && t.cnode.layout != FamilyTree.mixed && (t.html += '<use xlink:href="#dot" x="' + t.p.xa + '" y="' + t.p.ya + '"/>')
+        null != t.cnode.ppid && t.cnode.layout != FamilyTree.mixed //&& (t.html += '<use xlink:href="#dot" x="' + t.p.xa + '" y="' + t.p.ya + '"/>')
     })), FamilyTree.events.on("click", (function (e, t) {
         if (e instanceof FamilyTree) {
             var i = e._get(t.node.id);
