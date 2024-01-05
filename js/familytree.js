@@ -1,11 +1,11 @@
 
-import { checkConsistency } from './check-consistency.js';
-import { calculateTreePosition } from './calculapositions.js';
-import {
-    iconPng, iconPdf, iconSvg, iconCsv, iconTeddy, iconMother, iconFather, iconHusband, iconWife, iconSon, iconDaughter, iconClose, iconAddUser, iconHappy, iconSad, iconLink, iconShare, iconFt, iconUser,
-    iconSearch, iconXml, iconEdit, iconExcel, iconJson,
-    iconDetails, iconRemove, iconAdd
-} from './icons.js';
+// import { checkConsistency } from './check-consistency.js';
+// import { calculateTreePosition } from './calculapositions.js';
+// import {
+//     iconPng, iconPdf, iconSvg, iconCsv, iconTeddy, iconMother, iconFather, iconHusband, iconWife, iconSon, iconDaughter, iconClose, iconAddUser, iconHappy, iconSad, iconLink, iconShare, iconFt, iconUser,
+//     iconSearch, iconXml, iconEdit, iconExcel, iconJson,
+//     iconDetails, iconRemove, iconAdd
+// } from './icons.js';
 
 var d = {};
 var FamilyTree = function (e, t) {
@@ -6120,4 +6120,4 @@ FamilyTree._defaultConfig = function (e) {
         }
     };
 
-export { FamilyTree };
+// export { FamilyTree };

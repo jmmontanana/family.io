@@ -86,4 +86,4 @@ function checkConsistency(nodes) {
     console.log("nodos que no tienen ninguna conexion: " + pidsDisconnected);
 }
 
-export { checkConsistency };
+// export { checkConsistency };

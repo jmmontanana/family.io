@@ -334,4 +334,4 @@ function findchildsposition(
     return result;
 }
 
-export { calculateTreePosition };
+// export { calculateTreePosition };

@@ -1,4 +1,5 @@
-export const data = [
+// export
+const data = [
     {
         id: 7101,
         pids: [null],
@@ -3484,7 +3485,7 @@ export const data = [
         mid: 10924,
         fid: 10824,
         apellidos: "1 Urios",
-        name: "Kike",
+        name: "Quique",
         gender: "male",
         birthDate: "2016",
         photo: "img/KikeUrios.jpg",
@@ -5196,6 +5197,7 @@ export const data = [
         name: "Maruja",
         gender: "female",
         job: "puesto en el mercado",
+        photo: "img/marujamontañana.jpg",
     },
     {
         id: 42673,
@@ -5205,6 +5207,7 @@ export const data = [
         apellidos: "",
         name: "Luis",
         gender: "male",
+        photo: "img/luis-de-montañana.jpg"
     },
 
     {
@@ -5871,7 +5874,7 @@ export const data = [
     },
     {
         id: 19034,
-        pids: [19133, 19135],
+        pids: [19135, 19133],
         mid: 6922,
         fid: 7033,
         apellidos: "13 Aliaga Urios",
