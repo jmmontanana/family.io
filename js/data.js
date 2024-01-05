@@ -982,7 +982,7 @@ const data = [
     },
     {
         id: 7408,
-        pids: [7408],
+        pids: [7308],
         mid: null,
         fid: null,
         apellidos: "Girona",
