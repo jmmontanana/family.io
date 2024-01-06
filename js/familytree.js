@@ -238,22 +238,55 @@ FamilyTree._defaultConfig = function (e) {
                                     let nodePidsB = a.nodes[couplenodeB].pids;
                                     if (nodePidsB.length === 1) {//queremos procesar los que tienen multiples solo en primer lugar
                                         //ahora ponemos un circulo entre ellos: 
-                                        let centerx = a.nodes[couplenodeB].w / 2;
-                                        centerx += a.nodes[couplenodeB].x
-                                        let centery = a.nodes[couplenodeB].h / 2;
-                                        let espacioentrenodos = -a.nodes[couplenodeB].h;
-                                        let startline = a.nodes[couplenodeB].h;
+                                        let centerxB = a.nodes[couplenodeB].w / 2;
+                                        centerxB += a.nodes[couplenodeB].x//xstart of wife
+                                        let centerxA = a.nodes[couplenodeA].w / 2;
+                                        centerxA += a.nodes[couplenodeA].x//xstart of husband
+                                        let centeryB = a.nodes[couplenodeB].h / 2;
+                                        let espacioentrenodosY = -a.nodes[couplenodeB].h;
+                                        let startlineY = a.nodes[couplenodeB].h;
                                         if (a.nodes[couplenodeA].y < a.nodes[couplenodeB].y) {
-                                            centery += a.nodes[couplenodeA].y + (a.nodes[couplenodeB].y - a.nodes[couplenodeA].y) / 2;
-                                            espacioentrenodos += a.nodes[couplenodeB].y - a.nodes[couplenodeA].y;
-                                            startline += a.nodes[couplenodeA].y;
+                                            centeryB += a.nodes[couplenodeA].y + (a.nodes[couplenodeB].y - a.nodes[couplenodeA].y) / 2;
+                                            espacioentrenodosY += a.nodes[couplenodeB].y - a.nodes[couplenodeA].y;
+                                            startlineY += a.nodes[couplenodeA].y;
                                         } else {
-                                            centery += a.nodes[couplenodeB].y + (a.nodes[couplenodeA].y - a.nodes[couplenodeB].y) / 2;
-                                            espacioentrenodos += a.nodes[couplenodeA].y - a.nodes[couplenodeB].y;
-                                            startline += a.nodes[couplenodeB].y;
+                                            centeryB += a.nodes[couplenodeB].y + (a.nodes[couplenodeA].y - a.nodes[couplenodeB].y) / 2;
+                                            espacioentrenodosY += a.nodes[couplenodeA].y - a.nodes[couplenodeB].y;
+                                            startlineY += a.nodes[couplenodeB].y;
                                         }
-                                        let endline = startline + espacioentrenodos;
-                                        l += "<g data-l-id=\"[" + couplenodeA + "][" + couplenodeB + "]\" class=\"link female partner\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M" + centerx + "," + startline + " L" + centerx + "," + endline + "\"></path></g>";
+                                        let endlineY = startlineY + espacioentrenodosY;
+                                        let centerxCircle = centerxB;
+                                        if (nodePidsA.length > 1) {
+                                            let middleY = startlineY + (endlineY - startlineY) / 2;
+                                            let centerxAB = centerxB + (centerxA - centerxB) / 2;
+                                            centerxCircle = centerxB + (centerxAB - centerxB) / 2;
+                                            if (a.nodes[couplenodeA].y > a.nodes[couplenodeB].y) {
+                                                l += "<g data-l-id=\"[" + couplenodeA + "][" + couplenodeB + "]\" class=\"link male\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M"
+                                                    + centerxB + "," + startlineY
+                                                    + " " + centerxB + "," + middleY
+                                                    + " Q" + centerxAB + "," + middleY
+                                                    + " " + centerxAB + "," + middleY
+                                                    + " L" + centerxAB + "," + middleY
+                                                    + " Q" + centerxAB + "," + middleY
+                                                    + " " + centerxAB + "," + endlineY
+                                                    + " L" + centerxAB + "," + endlineY + "\"></path></g>";
+                                            } else {
+                                                l += "<g data-l-id=\"[" + couplenodeA + "][" + couplenodeB + "]\" class=\"link male\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M"
+                                                    + centerxB + "," + endlineY
+                                                    + " " + centerxB + "," + middleY
+                                                    + " Q" + centerxAB + "," + middleY
+                                                    + " " + centerxAB + "," + middleY
+                                                    + " L" + centerxAB + "," + middleY
+                                                    + " Q" + centerxAB + "," + middleY
+                                                    + " " + centerxAB + "," + startlineY
+                                                    + " L" + centerxAB + "," + startlineY + "\"></path></g>";
+                                            }
+                                        } else {
+                                            l += "<g data-l-id=\"[" + couplenodeA + "][" + couplenodeB + "]\" class=\"link female partner\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M"
+                                                + centerxB + "," + startlineY
+                                                + " L" + centerxB + "," + endlineY + "\"></path></g>";
+                                        }
+
                                         let sequenceChildren = a.nodes[couplenodeA].ftChildrenIds;
                                         if (sequenceChildren.length === 0)
                                             sequenceChildren = a.nodes[couplenodeB].ftChildrenIds;
@@ -263,13 +296,18 @@ FamilyTree._defaultConfig = function (e) {
                                                 let childx = a.nodes[childnode].x;
                                                 let childy = a.nodes[childnode].y + a.nodes[childnode].h / 2;
                                                 //aqui
-                                                let gapYa = centery + ((childy > centery) ? 5 : -5);
-                                                let gapYb = childy + ((childy > centery) ? -5 : 5);
-                                                let gapXa = centerx + 77.5;
+                                                let gapYa = centeryB + ((childy > centeryB) ? 5 : -5);
+                                                let gapYb = childy + ((childy > centeryB) ? -5 : 5);
+                                                let gapXa = centerxB + 77.5;
+                                                if (nodePidsA.length > 1 && pidId == 0) {
+                                                    gapXa += 5;
+                                                } else if (nodePidsA.length > 1 && pidId > 0) {
+                                                    gapXa -= 5;
+                                                }
                                                 l += "<g data-l-id=\"[" + couplenodeA + "][" + childnode + "]\" class=\"link male\"><path stroke-linejoin=\"round\" stroke=\"#222222\" stroke-width=\"1px\" fill=\"none\" d=\"M"
-                                                    + centerx + "," + centery
-                                                    + " " + gapXa + "," + centery
-                                                    + " Q" + gapXa + "," + centery
+                                                    + centerxB + "," + centeryB
+                                                    + " " + gapXa + "," + centeryB
+                                                    + " Q" + gapXa + "," + centeryB
                                                     + " " + gapXa + "," + gapYa
                                                     + " L" + gapXa + "," + gapYb
                                                     + " Q" + gapXa + "," + childy
@@ -277,7 +315,7 @@ FamilyTree._defaultConfig = function (e) {
                                                     + " L" + childx + "," + childy + "\"></path></g>";
                                             }
                                         }
-                                        l += "<g><use xlink:href=\"#dot\" x=\"" + centerx + "\" y=\"" + centery + "\"></use></g>";
+                                        l += "<g><use xlink:href=\"#dot\" x=\"" + centerxCircle + "\" y=\"" + centeryB + "\"></use></g>";
                                     }
                                 }
                             }

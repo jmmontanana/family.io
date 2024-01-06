@@ -8,6 +8,21 @@ function findNodeWithInvalidPids(nodes) {
             }
         }
     }
+    if (result.length === 0) result.push(" OK");
+    return result;
+}
+
+function findNodeWithcyclicPids(nodes) {
+    // const allPids = new Set(nodes.map(node => node.id));
+    let result = [];
+    for (const node of nodes) {
+        for (const pid of node.pids) {
+            if (pid != null && node.id === pid) {
+                result.push(node.id);
+            }
+        }
+    }
+    if (result.length === 0) result.push(" OK");
     return result;
 }
 
@@ -18,6 +33,7 @@ function findNodeWithInvalidMid(nodes) {
             result.push(" node.id:" + node.id + "- mid:" + node.mid);
         }
     }
+    if (result.length === 0) result.push(" OK");
     return result;
 }
 
@@ -28,6 +44,7 @@ function findNodeWithInvalidFid(nodes) {
             result.push(" node.id:" + node.id + "- fid:" + node.fid);
         }
     }
+    if (result.length === 0) result.push(" OK");
     return result;
 }
 
@@ -55,6 +72,7 @@ function findNodesDisconnected(nodes) {
         if (disconectedpids && disconectedmid && disconectedfid)
             invalidPids.push(node.id);
     }
+    if (invalidPids.length === 0) invalidPids.push(" OK");
     return invalidPids;
 }
 
@@ -76,6 +94,9 @@ function checkConsistency(nodes) {
 
     const missingcouples = findNodeWithInvalidPids(nodes);
     console.log("si hay parejas que apunta a fichas que no existen: " + missingcouples);
+
+    const cicliccouples = findNodeWithcyclicPids(nodes);
+    console.log("si hay parejas que apunta a ficha ciclica: " + cicliccouples);
 
     const missingmids = findNodeWithInvalidMid(nodes);
     console.log("madres que no existen: " + missingmids);
