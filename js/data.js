@@ -847,7 +847,7 @@ const data = [
         mid: 5508,
         fid: 5409,
         apellidos: "Mínez-Cubells Portella",
-        name: "José Mª",
+        name: "José María",
         gender: "male",
     },
     {
