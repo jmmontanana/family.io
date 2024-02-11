@@ -5120,7 +5120,10 @@ const data = [
         fid: 12532,
         apellidos: "2 Montañana Vicedo",
         name: "Francisco",
+        birthDate: "1932-09-25",
+        deathDate: "1999-07-03",
         gender: "male",
+        source:"https://ancestors.familysearch.org/es/GGNK-58Q/francisco-monta%C3%B1ana-vicedo-1932-1999"
     },
     {
         id: 42653,
