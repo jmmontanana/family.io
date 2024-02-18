@@ -877,6 +877,7 @@ const data = [
         name: "Salvador",
         gender: "male",
         photo: "img/YayoSal.jpg",
+        inhumation: "16-01-1983"
     },
     {
         id: 6907,
@@ -2701,6 +2702,7 @@ const data = [
         name: "Isabel",
         gender: "female",
         photo: "img/YayaIsabel.jpg",
+        inhumation: "27-05-1987",
     },
     {
         id: 6918,
@@ -3145,6 +3147,7 @@ const data = [
         gender: "female",
         birthDate: "1922",
         photo: "img/IsabelUdeA.jpg",
+        inhumation: "11-03-2006",
     },
     {
         id: 7522,
@@ -3175,6 +3178,7 @@ const data = [
         name: "Enrique",
         gender: "male",
         photo: "img/EnriqueUriosMartínez.jpg",
+        inhumation: "02-06-2021?",
     },
     {
         id: 7623,
@@ -4880,6 +4884,7 @@ const data = [
         name: "Paco",
         gender: "male",
         photo: "img/pacoAliagaZanon.jpg",
+        inhumation: "16-06-2002",
     },
     {
         id: 1733,
@@ -4930,6 +4935,7 @@ const data = [
         name: "Julio",
         gender: "male",
         photo: "img/JulioAliagaZanon.jpg",
+        inhumation: "29-10-2005",
     },
     {
         id: 4933,
