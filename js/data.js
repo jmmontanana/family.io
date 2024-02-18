@@ -4966,6 +4966,7 @@ const data = [
         gender: "male",
         birthDate: "1917",
         photo: "img/AlbertoA.jpg",
+        inhumation:"29-10-2005",
     },
     {
         id: 7133,
@@ -5230,6 +5231,7 @@ const data = [
         birthDate: "1949-09-30",
         job: "Administrativo",
         photo: "img/papa.png",
+        inhumation:"24-06-2022",
     },
     {
         id: 13633,
