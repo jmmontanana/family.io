@@ -5729,6 +5729,7 @@ const data = [
         name: "Rafaelín",
         gender: "male",
         birthDate: "1944",
+        inhumation: "24-01-1945",
     },
     {
         id: 9134,
@@ -5791,10 +5792,11 @@ const data = [
         mid: 6922,
         fid: 7033,
         apellidos: "8 Aliaga Urios",
-        name: "Carlos",
+        name: "Carlos Javier",
         gender: "male",
         birthDate: "1954",
         photo: "img/CarlosAliaga.jpg",
+        inhumation: "26-03-1990",
     },
     {
         id: 15934,
